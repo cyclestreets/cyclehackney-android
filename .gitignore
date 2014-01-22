@@ -1,0 +1,10 @@
+build
+*/build
+bin
+gen
+local.properties
+lint.xml
+.gradle
+.idea/libraries
+*~
+libraries
