@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="14f8d852-f31b-49ca-9150-c782d0f177bc" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libraries/cyclestreets-fragments/src/main/java/net/cyclestreets/AboutFragment.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cyclehackney/cyclehackney.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libraries/cyclestreets-core/cyclestreets-core.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libraries/cyclestreets-fragments/cyclestreets-fragments.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libraries/cyclestreets-view/cyclestreets-view.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libraries/libraries.iml" />
+      <change type="DELETED" beforePath="C:\work\CycleStreets\hackney\cyclehackney\src\main\res\drawable-mdpi\icon.png" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cyclehackney/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/cyclehackney/src/main/AndroidManifest.xml" />
     </list>
     <ignored path="hackney.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -103,19 +99,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="AboutActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/libraries/cyclestreets-fragments/src/main/java/net/cyclestreets/AboutActivity.java">
+      <file leaf-file-name="AboutFragment.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libraries/cyclestreets-fragments/src/main/java/net/cyclestreets/AboutFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="0" selection-start="203" selection-end="203" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="195">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CycleHackney.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/CycleHackney.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="17" selection-start="498" selection-end="498" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="345">
+            <state line="17" column="62" selection-start="582" selection-end="582" vertical-scroll-proportion="0.0" vertical-offset="65" max-vertical-offset="630">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -123,21 +110,52 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FragmentHolder.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/libraries/cyclestreets-fragments/src/main/java/net/cyclestreets/FragmentHolder.java">
+      <file leaf-file-name="MainTabbedActivity.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/libraries/cyclestreets-fragments/src/main/java/net/cyclestreets/MainTabbedActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="41" selection-start="529" selection-end="570" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="315">
+            <state line="232" column="16" selection-start="6715" selection-end="6715" vertical-scroll-proportion="0.5540541" vertical-offset="2930" max-vertical-offset="4440">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AboutFragment.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/libraries/cyclestreets-fragments/src/main/java/net/cyclestreets/AboutFragment.java">
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libraries/cyclestreets-view/src/main/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="62" selection-start="582" selection-end="582" vertical-scroll-proportion="0.5135135" vertical-offset="65" max-vertical-offset="630">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="180">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/AndroidManifest.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="14" column="41" selection-start="832" selection-end="832" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="480">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="strings.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/res/values/strings.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="150">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Dialog.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libraries/cyclestreets-view/src/main/java/net/cyclestreets/util/Dialog.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="39" column="69" selection-start="1099" selection-end="1127" vertical-scroll-proportion="0.0" vertical-offset="360" max-vertical-offset="1725">
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="imports" expanded="false" />
+                <element signature="e#2089#2309#0" expanded="false" />
+                <element signature="e#2293#2294#0" expanded="false" />
+                <element signature="e#3356#3529#0" expanded="false" />
+                <element signature="e#3510#3511#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -156,16 +174,9 @@
         <entry file="file://$PROJECT_DIR$/libraries/cyclestreets-fragments/src/main/java/net/cyclestreets/CycleStreetsAppSupport.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="25" column="0" selection-start="694" selection-end="694" vertical-scroll-proportion="0.0" vertical-offset="206" max-vertical-offset="660">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ContextWrapper.class" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://$PROJECT_DIR$/../../android-sdk/platforms/android-8/android.jar!/android/content/ContextWrapper.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="37" column="26" selection-start="1407" selection-end="1407" vertical-scroll-proportion="0.0" vertical-offset="435" max-vertical-offset="2385">
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -1687,6 +1698,8 @@
         <option value="$PROJECT_DIR$/libraries/cyclestreets-fragments/src/main/java/net/cyclestreets/AboutActivity.java" />
         <option value="$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/CycleHackney.java" />
         <option value="$PROJECT_DIR$/libraries/cyclestreets-fragments/src/main/java/net/cyclestreets/AboutFragment.java" />
+        <option value="$PROJECT_DIR$/libraries/cyclestreets-fragments/src/main/java/net/cyclestreets/MainTabbedActivity.java" />
+        <option value="$PROJECT_DIR$/cyclehackney/src/main/AndroidManifest.xml" />
       </list>
     </option>
   </component>
@@ -1768,7 +1781,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="cyclestreets-fragments" />
+              <option name="myItemId" value="cyclestreets-view" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1786,7 +1799,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="cyclestreets-fragments" />
+              <option name="myItemId" value="cyclestreets-view" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -1795,40 +1808,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="hackney" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="hackney" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cyclestreets-fragments" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cyclestreets" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1865,6 +1844,66 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hackney" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hackney" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cyclehackney" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="values" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hackney" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hackney" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cyclehackney" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="drawable-mdpi" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -2048,7 +2087,7 @@
       <option name="DEPLOY" value="true" />
       <option name="ARTIFACT_NAME" value="" />
       <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
-      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="true" />
       <option name="PREFERRED_AVD" value="" />
       <option name="USE_COMMAND_LINE" value="true" />
       <option name="COMMAND_LINE" value="" />
@@ -2165,7 +2204,9 @@
     <entry file="file://$PROJECT_DIR$/libraries/cyclestreets-fragments/src/main/java/net/cyclestreets/CycleStreetsAppSupport.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="25" column="0" selection-start="694" selection-end="694" vertical-scroll-proportion="0.0" vertical-offset="206" max-vertical-offset="660">
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2192,10 +2233,51 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/libraries/cyclestreets-fragments/src/main/java/net/cyclestreets/AboutFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="62" selection-start="582" selection-end="582" vertical-scroll-proportion="0.5135135" vertical-offset="65" max-vertical-offset="630">
+        <state line="17" column="62" selection-start="582" selection-end="582" vertical-scroll-proportion="0.0" vertical-offset="65" max-vertical-offset="630">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="370">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libraries/cyclestreets-view/src/main/java/net/cyclestreets/util/Dialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="39" column="69" selection-start="1099" selection-end="1127" vertical-scroll-proportion="0.0" vertical-offset="360" max-vertical-offset="1725">
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#2089#2309#0" expanded="false" />
+            <element signature="e#2293#2294#0" expanded="false" />
+            <element signature="e#3356#3529#0" expanded="false" />
+            <element signature="e#3510#3511#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libraries/cyclestreets-view/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="370">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="41" selection-start="832" selection-end="832" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="480">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libraries/cyclestreets-fragments/src/main/java/net/cyclestreets/MainTabbedActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="232" column="16" selection-start="6715" selection-end="6715" vertical-scroll-proportion="0.5540541" vertical-offset="2930" max-vertical-offset="4440">
+          <folding />
         </state>
       </provider>
     </entry>
