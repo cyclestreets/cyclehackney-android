@@ -39,6 +39,7 @@ public class LogJourneyFragment extends Fragment implements View.OnClickListener
     }
 
     startActivity(new Intent(getActivity(), RecordingActivity.class));
+    getActivity().finish();
   } // onClick
 
   private void alertNoGps() {
