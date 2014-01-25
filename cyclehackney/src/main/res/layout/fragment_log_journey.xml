@@ -1,13 +1,27 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="uk.gov.hackney.LogJourneyFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+  <Button android:layout_height="wrap_content"
+          android:id="@+id/ButtonStart"
+          android:text="@string/startNewTrip"
+          android:textStyle="bold"
+          android:layout_width="match_parent"
+          android:drawableLeft="@drawable/bike"
+          android:layout_margin="8sp"
+          android:hapticFeedbackEnabled="true"
+          android:textSize="24sp"></Button>
 
-</FrameLayout>
+  <TextView android:layout_height="wrap_content"
+            android:id="@+id/TextViewPreviousTrips"
+            android:text="@string/previous_trips"
+            android:layout_width="match_parent"
+            android:gravity="center"></TextView>
+
+  <ListView android:layout_height="wrap_content"
+            android:id="@+id/ListSavedTrips"
+            android:layout_width="match_parent"></ListView>
+
+</LinearLayout>
