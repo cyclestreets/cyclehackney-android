@@ -15,6 +15,8 @@ import android.widget.Button;
 
 import net.cyclestreets.util.MessageBox;
 
+import uk.gov.hackney.track.RecordingActivity;
+
 public class LogJourneyFragment extends Fragment implements View.OnClickListener {
   @Override
   public View onCreateView(final LayoutInflater inflater,
@@ -36,7 +38,7 @@ public class LogJourneyFragment extends Fragment implements View.OnClickListener
       return;
     }
 
-    //startActivity(i);
+    startActivity(new Intent(getActivity(), RecordingActivity.class));
   } // onClick
 
   private void alertNoGps() {
@@ -44,7 +46,7 @@ public class LogJourneyFragment extends Fragment implements View.OnClickListener
         "Your phone's GPS is disabled. Cycle Hackney needs GPS to determine your location.\n\nGo to System Settings now to enable GPS?",
         new DialogInterface.OnClickListener() {
           public void onClick(final DialogInterface dialog, final int id) {
-            final ComponentName toLaunch = new ComponentName("com.android.settings","com.android.settings.SecuritySettings");
+            final ComponentName toLaunch = new ComponentName("com.android.settings", "com.android.settings.SecuritySettings");
             final Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
             intent.addCategory(Intent.CATEGORY_LAUNCHER);
             intent.setComponent(toLaunch);
