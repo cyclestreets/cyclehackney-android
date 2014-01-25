@@ -10,6 +10,7 @@ import net.cyclestreets.fragments.R;
 public class CycleHackney extends MainTabbedActivity
 {
   protected void addTabs(final TabHost tabHost) {
+    addTab("Journey Log", R.drawable.ic_menu_live_ride, LogJourneyFragment.class);
     addTab("Route Map", R.drawable.ic_tab_planroute, RouteMapFragment.class);
     //addTab("Photomap", R.drawable.ic_tab_photomap, PhotoMapFragment.class);
     addTab("About", R.drawable.ic_tab_more, AboutFragment.class);
