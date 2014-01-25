@@ -1,6 +1,11 @@
 package uk.gov.hackney;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.widget.TabHost;
 
 import net.cyclestreets.MainTabbedActivity;
@@ -8,12 +13,18 @@ import net.cyclestreets.RouteMapFragment;
 import net.cyclestreets.AboutFragment;
 import net.cyclestreets.fragments.R;
 
+import uk.gov.hackney.track.RecordingService;
+
 public class CycleHackney extends MainTabbedActivity
 {
   public void onCreate(final Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    // check to see if already recording here
+    // Not first run - set up the list view of saved trips
+    //ListView listSavedTrips = (ListView)findViewById(R.id.ListSavedTrips);
+    //populateList(listSavedTrips);
+
+    RecordingService.isAlreadyActive(this);
   } // onCreate
 
   protected void addTabs(final TabHost tabHost) {

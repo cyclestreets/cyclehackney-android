@@ -3,12 +3,15 @@ package uk.gov.hackney.track;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -281,4 +284,28 @@ public class RecordingService extends Service implements LocationListener {
     		recordActivity.updateStatus(trip.numpoints, distanceTraveled, curSpeed, maxSpeed);
     	}
     }
-}
+
+  public static void isAlreadyActive(final Activity activity) {
+    // check to see if already recording here
+    Intent rService = new Intent(activity, RecordingService.class);
+    ServiceConnection sc = new ServiceConnection() {
+      public void onServiceDisconnected(ComponentName name) {}
+      public void onServiceConnected(ComponentName name, IBinder service) {
+        IRecordService rs = (IRecordService)service;
+        int state = rs.getState();
+        if (state > RecordingService.STATE_IDLE) {
+          if (state == RecordingService.STATE_FULL) {
+            activity.startActivity(new Intent(activity, SaveTrip.class));
+          } else {  // RECORDING OR PAUSED:
+            activity.startActivity(new Intent(activity, RecordingActivity.class));
+          }
+          activity.finish();
+        }
+        activity.unbindService(this); // race?  this says we no longer care
+      }
+    };
+    // This needs to block until the onServiceConnected (above) completes.
+    // Thus, we can check the recording status before continuing on.
+    activity.bindService(rService, sc, Context.BIND_AUTO_CREATE);
+  } // isAlreadyActive
+} // RecordingService

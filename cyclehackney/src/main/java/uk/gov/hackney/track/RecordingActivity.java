@@ -22,7 +22,6 @@ import uk.gov.hackney.CycleHackney;
 import uk.gov.hackney.R;
 
 public class RecordingActivity extends Activity {
-  private Intent fi;
   private TripData trip;
   private boolean isRecording = false;
   private Button finishButton;
@@ -97,6 +96,7 @@ public class RecordingActivity extends Activity {
     // Finish button
     finishButton.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
+        Intent fi;
         // If we have points, go to the save-trip activity
         if (trip.numpoints > 0) {
           // Save trip so far (points and extent, but no purpose or notes)
