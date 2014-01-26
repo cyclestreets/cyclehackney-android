@@ -1,11 +1,12 @@
 package uk.gov.hackney.track;
 
 public interface IRecordService {
-	public int  getState();
-	public void startRecording(TripData trip);
+	public int getState();
+
+	public TripData startRecording();
 	public void cancelRecording();
-	public long finishRecording(); // returns trip-id
-	public long getCurrentTrip();  // returns trip-id
+	public long finishRecording();
 	public void reset();
+
 	public void setListener(RecordingActivity ra);
 }

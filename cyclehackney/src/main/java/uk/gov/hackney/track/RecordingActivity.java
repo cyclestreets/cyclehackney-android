@@ -21,13 +21,11 @@ import android.widget.Toast;
 import uk.gov.hackney.CycleHackney;
 import uk.gov.hackney.R;
 
-public class RecordingActivity extends Activity {
-  private TripData trip;
-  private boolean isRecording = false;
-  private Button finishButton;
-  private Timer timer;
-  private float curDistance;
+public class RecordingActivity extends Activity implements View.OnClickListener {
+  private TripData trip_;
+  private float curDistance_;
 
+  private Button finishButton_;
   private TextView txtStat;
   private TextView txtDistance;
   private TextView txtDuration;
@@ -37,9 +35,9 @@ public class RecordingActivity extends Activity {
 
   private final SimpleDateFormat sdf = new SimpleDateFormat("H:mm:ss");
 
-  // Need handler for callbacks to the UI thread
-  private final Handler mHandler = new Handler();
-  private final Runnable mUpdateTimer = new Runnable() {
+  private Timer timer_;
+  private final Handler handler_ = new Handler();
+  private final Runnable updateTimer_ = new Runnable() {
     public void run() {
       updateTimer();
     }
@@ -58,7 +56,7 @@ public class RecordingActivity extends Activity {
     txtMaxSpeed = (TextView)findViewById(R.id.TextMaxSpeed);
     txtAvgSpeed = (TextView)findViewById(R.id.TextAvgSpeed);
 
-    finishButton = (Button)findViewById(R.id.ButtonFinished);
+    finishButton_ = (Button)findViewById(R.id.ButtonFinished);
 
     sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
 
@@ -68,25 +66,11 @@ public class RecordingActivity extends Activity {
     ServiceConnection sc = new ServiceConnection() {
       public void onServiceDisconnected(ComponentName name) {}
       public void onServiceConnected(ComponentName name, IBinder service) {
-        IRecordService rs = (IRecordService) service;
+        IRecordService rs = (IRecordService)service;
 
-        switch (rs.getState()) {
-          case RecordingService.STATE_IDLE:
-            trip = TripData.createTrip(RecordingActivity.this);
-            rs.startRecording(trip);
-            isRecording = true;
-            RecordingActivity.this.setTitle("Cycle Hackney - Recording...");
-            break;
-          case RecordingService.STATE_RECORDING:
-            long id = rs.getCurrentTrip();
-            trip = TripData.fetchTrip(RecordingActivity.this, id);
-            isRecording = true;
-            RecordingActivity.this.setTitle("Cycle Hackney - Recording...");
-            break;
-          case RecordingService.STATE_FULL:
-            // Should never get here, right?
-            break;
-        }
+        trip_ = rs.startRecording();
+        RecordingActivity.this.setTitle("Cycle Hackney - Recording...");
+
         rs.setListener(RecordingActivity.this);
         unbindService(this);
       }
@@ -94,39 +78,14 @@ public class RecordingActivity extends Activity {
     bindService(rService, sc, Context.BIND_AUTO_CREATE);
 
     // Finish button
-    finishButton.setOnClickListener(new View.OnClickListener() {
-      public void onClick(View v) {
-        Intent fi;
-        // If we have points, go to the save-trip activity
-        if (trip.numpoints > 0) {
-          // Save trip so far (points and extent, but no purpose or notes)
-          fi = new Intent(RecordingActivity.this, SaveTrip.class);
-          trip.updateTrip("","","","");
-        }
-        // Otherwise, cancel and go back to main screen
-        else {
-          Toast.makeText(getBaseContext(),"No GPS data acquired; nothing to submit.", Toast.LENGTH_SHORT).show();
-
-          cancelRecording();
-
-          // Go back to main screen
-          fi = new Intent(RecordingActivity.this, CycleHackney.class);
-          fi.putExtra("keep", true);
-        }
-
-        // Either way, activate next task, and then kill this task
-        startActivity(fi);
-        RecordingActivity.this.finish();
-      }
-    });
-  }
+    finishButton_.setOnClickListener(this);
+  } // onCreate
 
   public void updateStatus(int points, float distance, float spdCurrent, float spdMax) {
-    this.curDistance = distance;
+    curDistance_ = distance;
 
-    //TODO: check task status before doing this?
     if (points>0) {
-      txtStat.setText(""+points+" data points received...");
+      txtStat.setText(points + " data points received...");
     } else {
       txtStat.setText("Waiting for GPS fix...");
     }
@@ -135,22 +94,9 @@ public class RecordingActivity extends Activity {
 
     float miles = 0.0006212f * distance;
     txtDistance.setText(String.format("%1.1f miles", miles));
-  }
+  } // updateStatus
 
-  void setListener() {
-    Intent rService = new Intent(this, RecordingService.class);
-    ServiceConnection sc = new ServiceConnection() {
-      public void onServiceDisconnected(ComponentName name) {}
-      public void onServiceConnected(ComponentName name, IBinder service) {
-        IRecordService rs = (IRecordService) service;
-        unbindService(this);
-      }
-    };
-    // This should block until the onServiceConnected (above) completes, but doesn't
-    bindService(rService, sc, Context.BIND_AUTO_CREATE);
-  }
-
-  void cancelRecording() {
+  private void cancelRecording() {
     Intent rService = new Intent(this, RecordingService.class);
     ServiceConnection sc = new ServiceConnection() {
       public void onServiceDisconnected(ComponentName name) {}
@@ -162,38 +108,71 @@ public class RecordingActivity extends Activity {
     };
     // This should block until the onServiceConnected (above) completes.
     bindService(rService, sc, Context.BIND_AUTO_CREATE);
-  }
+  } // cancelRecording
 
-  // onResume is called whenever this activity comes to foreground.
-  // Use a timer to update the trip duration.
+  /////////////////////////////////////////////////////////////////////////////
+  @Override
+  public void onClick(final View v) {
+    Intent fi;
+    // If we have points, go to the save-trip activity
+    if (trip_.numpoints > 0) {
+      // Save trip so far (points and extent, but no purpose or notes)
+      fi = new Intent(RecordingActivity.this, SaveTrip.class);
+      trip_.updateTrip("","","","");
+    } else {
+      // Otherwise, cancel and go back to main screen
+      Toast.makeText(getBaseContext(),"No GPS data acquired; nothing to submit.", Toast.LENGTH_SHORT).show();
+
+      cancelRecording();
+
+      fi = new Intent(RecordingActivity.this, CycleHackney.class);
+      fi.putExtra("keep", true);
+    } // if ...
+
+    // Either way, activate next task, and then kill this task
+    startActivity(fi);
+    RecordingActivity.this.finish();
+  } // onClick
+
+  /////////////////////////////////////////////////////////////////////////////
+  @Override
+  public void onPause() {
+    super.onPause();
+    stopTimer();
+  } // onPause
+
   @Override
   public void onResume() {
     super.onResume();
 
-    timer = new Timer();
-    timer.scheduleAtFixedRate(new TimerTask() {
+    startTimer();
+  } // onResume
+
+  /////////////////////////////////////////////////////////////////////////////
+  private void updateTimer() {
+    if (trip_ == null)
+      return;
+
+    double dd = System.currentTimeMillis() - trip_.startTime;
+
+    txtDuration.setText(sdf.format(dd));
+
+    double avgSpeed = 3600.0 * 0.6212 * curDistance_ / dd;
+    txtAvgSpeed.setText(String.format("%1.1f mph", avgSpeed));
+  } // updateTimer
+
+  private void startTimer() {
+    timer_ = new Timer();
+    timer_.scheduleAtFixedRate(new TimerTask() {
       @Override
       public void run() {
-        mHandler.post(mUpdateTimer);
+        handler_.post(updateTimer_);
       }
     }, 0, 1000);  // every second
-  }
+  } // startTimer
 
-  void updateTimer() {
-    if (trip != null && isRecording) {
-      double dd = System.currentTimeMillis() - trip.startTime;
-
-      txtDuration.setText(sdf.format(dd));
-
-      double avgSpeed = 3600.0 * 0.6212 * this.curDistance / dd;
-      txtAvgSpeed.setText(String.format("%1.1f mph", avgSpeed));
-    }
-  }
-
-  // Don't do pointless UI updates if the activity isn't being shown.
-  @Override
-  public void onPause() {
-    super.onPause();
-    if (timer != null) timer.cancel();
-  }
-}
+  private void stopTimer() {
+    if (timer_ != null)
+      timer_.cancel();
+  } // stopTimer
+} // class RecordingActivity
