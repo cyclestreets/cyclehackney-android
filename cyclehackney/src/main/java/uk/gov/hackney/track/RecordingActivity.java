@@ -21,7 +21,9 @@ import android.widget.Toast;
 import uk.gov.hackney.CycleHackney;
 import uk.gov.hackney.R;
 
-public class RecordingActivity extends Activity implements View.OnClickListener {
+public class RecordingActivity extends Activity
+    implements View.OnClickListener, ServiceConnection {
+  private IRecordService rs_;
   private TripData trip_;
   private float curDistance_;
 
@@ -60,22 +62,9 @@ public class RecordingActivity extends Activity implements View.OnClickListener 
 
     sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
 
-    // Query the RecordingService to figure out what to do.
-    Intent rService = new Intent(this, RecordingService.class);
+    final Intent rService = new Intent(this, RecordingService.class);
     startService(rService);
-    ServiceConnection sc = new ServiceConnection() {
-      public void onServiceDisconnected(ComponentName name) {}
-      public void onServiceConnected(ComponentName name, IBinder service) {
-        IRecordService rs = (IRecordService)service;
-
-        trip_ = rs.startRecording();
-        RecordingActivity.this.setTitle("Cycle Hackney - Recording...");
-
-        rs.setListener(RecordingActivity.this);
-        unbindService(this);
-      }
-    };
-    bindService(rService, sc, Context.BIND_AUTO_CREATE);
+    bindService(rService, this, Context.BIND_AUTO_CREATE);
 
     // Finish button
     finishButton_.setOnClickListener(this);
@@ -84,11 +73,7 @@ public class RecordingActivity extends Activity implements View.OnClickListener 
   public void updateStatus(int points, float distance, float spdCurrent, float spdMax) {
     curDistance_ = distance;
 
-    if (points>0) {
-      txtStat.setText(points + " data points received...");
-    } else {
-      txtStat.setText("Waiting for GPS fix...");
-    }
+    txtStat.setText((points>0) ? points + " data points received..." : "Waiting for GPS fix...");
     txtCurSpeed.setText(String.format("%1.1f mph", spdCurrent));
     txtMaxSpeed.setText(String.format("Max Speed: %1.1f mph", spdMax));
 
@@ -97,18 +82,24 @@ public class RecordingActivity extends Activity implements View.OnClickListener 
   } // updateStatus
 
   private void cancelRecording() {
-    Intent rService = new Intent(this, RecordingService.class);
-    ServiceConnection sc = new ServiceConnection() {
-      public void onServiceDisconnected(ComponentName name) {}
-      public void onServiceConnected(ComponentName name, IBinder service) {
-        IRecordService rs = (IRecordService) service;
-        rs.cancelRecording();
-        unbindService(this);
-      }
-    };
-    // This should block until the onServiceConnected (above) completes.
-    bindService(rService, sc, Context.BIND_AUTO_CREATE);
+    rs_.cancelRecording();
   } // cancelRecording
+
+  /////////////////////////////////////////////////////////////////////////////
+  @Override
+  public void onServiceConnected(ComponentName name, IBinder service) {
+    rs_ = (IRecordService)service;
+
+    trip_ = rs_.startRecording();
+    setTitle("Cycle Hackney - Recording...");
+
+    rs_.setListener(this);
+  } // onServiceConnected
+
+  @Override
+  public void onServiceDisconnected(ComponentName name) {
+    rs_ = null;
+  } // onServiceDisconnected
 
   /////////////////////////////////////////////////////////////////////////////
   @Override
@@ -117,7 +108,7 @@ public class RecordingActivity extends Activity implements View.OnClickListener 
     // If we have points, go to the save-trip activity
     if (trip_.numpoints > 0) {
       // Save trip so far (points and extent, but no purpose or notes)
-      fi = new Intent(RecordingActivity.this, SaveTrip.class);
+      fi = new Intent(this, SaveTrip.class);
       trip_.updateTrip("","","","");
     } else {
       // Otherwise, cancel and go back to main screen
@@ -125,13 +116,13 @@ public class RecordingActivity extends Activity implements View.OnClickListener 
 
       cancelRecording();
 
-      fi = new Intent(RecordingActivity.this, CycleHackney.class);
+      fi = new Intent(this, CycleHackney.class);
       fi.putExtra("keep", true);
     } // if ...
 
     // Either way, activate next task, and then kill this task
     startActivity(fi);
-    RecordingActivity.this.finish();
+    finish();
   } // onClick
 
   /////////////////////////////////////////////////////////////////////////////
@@ -147,6 +138,12 @@ public class RecordingActivity extends Activity implements View.OnClickListener 
 
     startTimer();
   } // onResume
+
+  @Override
+  protected void onDestroy() {
+    unbindService(this);
+    super.onDestroy();
+  }
 
   /////////////////////////////////////////////////////////////////////////////
   private void updateTimer() {
