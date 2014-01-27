@@ -25,6 +25,8 @@ import android.os.IBinder;
 import uk.gov.hackney.R;
 
 public class RecordingService extends Service implements LocationListener {
+  private static int updateDistance = 5;  // metres
+  private static int updateTime = 5000;    // milliseconds
   private static final int NOTIFICATION_ID = 1;
 
   private RecordingActivity recordActivity;
@@ -119,7 +121,7 @@ public class RecordingService extends Service implements LocationListener {
     lastLocation = null;
 
     // Start listening for GPS updates!
-    locationManager_.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, this);
+    locationManager_.requestLocationUpdates(LocationManager.GPS_PROVIDER, updateTime, updateDistance, this);
 
     // Set up timer for bike bell
     if (timer != null) {
