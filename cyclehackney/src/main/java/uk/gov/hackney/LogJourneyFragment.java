@@ -25,6 +25,7 @@ import java.sql.SQLException;
 
 import uk.gov.hackney.track.DbAdapter;
 import uk.gov.hackney.track.RecordingActivity;
+import uk.gov.hackney.track.ShowJourney;
 
 public class LogJourneyFragment extends Fragment implements View.OnClickListener {
   @Override
@@ -108,10 +109,10 @@ public class LogJourneyFragment extends Fragment implements View.OnClickListener
 
     lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
       public void onItemClick(AdapterView<?> parent, View v, int pos, long id) {
-        //final Intent i = new Intent(getActivity(), ShowMap.class);
-        //i.putExtra("showtrip", id);
-        //startActivity(i);
-      }
+        final Intent i = new Intent(getActivity(), ShowJourney.class);
+        i.putExtra("showtrip", id);
+        startActivity(i);
+      } // onItemClick
     });
   } // populateList
 } // LogJourneyFragment
