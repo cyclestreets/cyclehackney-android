@@ -7,6 +7,9 @@ import android.location.Location;
 
 import org.osmdroid.util.GeoPoint;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TripData {
   long tripid;
   double startTime = 0;
@@ -16,7 +19,7 @@ public class TripData {
   int status;
   float distance;
   String purp, fancystart, info;
-  //private ItemizedOverlayTrack gpspoints;
+  List<GeoPoint> gpspoints;
   GeoPoint startpoint, endpoint;
 
   DbAdapter mDb;
@@ -103,62 +106,50 @@ public class TripData {
     mDb.close();
   }
 
-  /*
-	public ItemizedOverlayTrack getPoints(Drawable d) {
+	public Iterable<GeoPoint> journey() {
 		// If already built, don't build again!
 		if (gpspoints != null && gpspoints.size()>0) {
 			return gpspoints;
 		}
 
 		// Otherwise, we need to query DB and build points from scratch.
-		gpspoints = new ItemizedOverlayTrack(d);
+		gpspoints = new ArrayList<GeoPoint>();
 
 		try {
 			mDb.openReadOnly();
 
 			Cursor points = mDb.fetchAllCoordsForTrip(tripid);
-            int COL_LAT = points.getColumnIndex("lat");
-            int COL_LGT = points.getColumnIndex("lgt");
-            int COL_TIME = points.getColumnIndex("time");
-            int COL_ACC  = points.getColumnIndex(DbAdapter.K_POINT_ACC);
+      int COL_LAT = points.getColumnIndex("lat");
+      int COL_LGT = points.getColumnIndex("lgt");
+      int COL_TIME = points.getColumnIndex("time");
+      int COL_ACC  = points.getColumnIndex(DbAdapter.K_POINT_ACC);
 
-            numpoints = points.getCount();
+      numpoints = points.getCount();
 
-            points.moveToLast();
-            this.endpoint   = new CyclePoint(points.getInt(COL_LAT), points.getInt(COL_LGT), points.getDouble(COL_TIME));
+      points.moveToLast();
+      this.endpoint   = new CyclePoint(points.getInt(COL_LAT), points.getInt(COL_LGT), points.getDouble(COL_TIME));
 
-            points.moveToFirst();
-            this.startpoint = new CyclePoint(points.getInt(COL_LAT), points.getInt(COL_LGT), points.getDouble(COL_TIME));
+      points.moveToFirst();
+      this.startpoint = new CyclePoint(points.getInt(COL_LAT), points.getInt(COL_LGT), points.getDouble(COL_TIME));
 
 			while (!points.isAfterLast()) {
-                int lat = points.getInt(COL_LAT);
-                int lgt = points.getInt(COL_LGT);
-                double time = points.getDouble(COL_TIME);
-                float acc = (float) points.getDouble(COL_ACC);
+        int lat = points.getInt(COL_LAT);
+        int lgt = points.getInt(COL_LGT);
+        double time = points.getDouble(COL_TIME);
+        float acc = (float) points.getDouble(COL_ACC);
 
-                addPointToSavedMap(lat, lgt, time, acc);
+        gpspoints.add(new CyclePoint(lat, lgt, time));
+
 				points.moveToNext();
-			}
+			} // while
 			points.close();
 			mDb.close();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		gpspoints.repopulate();
 
 		return gpspoints;
 	}
-  */
-
-	/*
-	private void addPointToSavedMap(int lat, int lgt, double currentTime, float acc) {
-		CyclePoint pt = new CyclePoint(lat, lgt, currentTime, acc);
-
-		OverlayItem opoint = new OverlayItem(pt, null, null);
-		gpspoints.addOverlay(opoint);
-	}
-	*/
 
   boolean addPointNow(Location loc, double currentTime, float dst) {
     int lat = (int) (loc.getLatitude() * 1E6);
