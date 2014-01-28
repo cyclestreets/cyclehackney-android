@@ -15,10 +15,6 @@ public class CycleHackney extends MainTabbedActivity
   public void onCreate(final Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    // Not first run - set up the list view of saved trips
-    //ListView listSavedTrips = (ListView)findViewById(R.id.ListSavedTrips);
-    //populateList(listSavedTrips);
-
     RecordingService.isAlreadyActive(this);
   } // onCreate
 

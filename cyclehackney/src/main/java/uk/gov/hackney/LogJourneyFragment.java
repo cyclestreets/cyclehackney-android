@@ -4,6 +4,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -11,10 +12,18 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import net.cyclestreets.util.MessageBox;
 
+import java.sql.SQLException;
+
+import uk.gov.hackney.track.DbAdapter;
 import uk.gov.hackney.track.RecordingActivity;
 
 public class LogJourneyFragment extends Fragment implements View.OnClickListener {
@@ -26,6 +35,10 @@ public class LogJourneyFragment extends Fragment implements View.OnClickListener
 
     final Button startButton = (Button)view.findViewById(R.id.ButtonStart);
     startButton.setOnClickListener(this);
+
+    // Not first run - set up the list view of saved trips
+    final ListView listSavedTrips = (ListView)view.findViewById(R.id.ListSavedTrips);
+    populateList(listSavedTrips);
 
     return view;
   } // onCreateView
@@ -56,4 +69,49 @@ public class LogJourneyFragment extends Fragment implements View.OnClickListener
           }
         });
   } // alertNoGps
+
+  /////////////////////////////////////////
+  void populateList(final ListView lv) {
+    // Get list from the real phone database. W00t!
+    final DbAdapter database = new DbAdapter(getActivity());
+    database.open();
+
+    // Clean up any bad trips & coords from crashes
+    final int cleanedTrips = database.cleanTables();
+    if (cleanedTrips > 0) {
+      Toast.makeText(getActivity(), "" + cleanedTrips + " bad trip(s) removed.", Toast.LENGTH_SHORT).show();
+    }
+
+    final Cursor allTrips = database.fetchAllTrips();
+
+    SimpleCursorAdapter sca = new SimpleCursorAdapter(getActivity(),
+        R.layout.twolinelist, allTrips,
+        new String[] { "purp", "fancystart", "fancyinfo"},
+        new int[] {R.id.TextView01, R.id.TextView03, R.id.TextInfo}
+    );
+
+    lv.setAdapter(sca);
+    final TextView counter = (TextView)lv.getRootView().findViewById(R.id.TextViewPreviousTrips);
+
+    final int numtrips = allTrips.getCount();
+    switch (numtrips) {
+      case 0:
+        counter.setText("No saved trips.");
+        break;
+      case 1:
+        counter.setText("1 saved trip:");
+        break;
+      default:
+        counter.setText("" + numtrips + " saved trips:");
+    }
+    database.close();
+
+    lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+      public void onItemClick(AdapterView<?> parent, View v, int pos, long id) {
+        //final Intent i = new Intent(getActivity(), ShowMap.class);
+        //i.putExtra("showtrip", id);
+        //startActivity(i);
+      }
+    });
+  } // populateList
 } // LogJourneyFragment
