@@ -8,7 +8,8 @@
                android:allowBackup="true"
                android:name="CycleHackneyApp">
     <activity android:name=".CycleHackney"
-              android:label="@string/app_name">
+              android:label="@string/app_name"
+              android:screenOrientation="portrait">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
@@ -16,9 +17,14 @@
     </activity>
     <activity android:name=".track.RecordingActivity"
               android:label="@string/app_name"
-              android:launchMode="singleInstance"/>
-    <activity android:name=".track.SaveTrip" android:label="@string/app_name"/>
-    <activity android:name=".track.ShowJourney" android:label="Cycle Hackey : Completed Journey"/>
+              android:launchMode="singleInstance"
+              android:screenOrientation="portrait" />
+    <activity android:name=".track.SaveTrip"
+              android:label="@string/app_name"
+              android:screenOrientation="portrait" />
+    <activity android:name=".track.ShowJourney"
+              android:label="Cycle Hackey : Completed Journey"
+              android:screenOrientation="portrait" />
 
     <service android:name=".track.RecordingService"/>
 

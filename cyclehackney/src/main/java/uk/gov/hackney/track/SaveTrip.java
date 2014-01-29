@@ -140,7 +140,7 @@ public class SaveTrip extends Activity {
 			public void onClick(View v) {
 
 				TripData trip = TripData.fetchTrip(SaveTrip.this, tripid);
-				trip.populateDetails();
+				//trip.populateDetails();
 
 				// Make sure trip purpose has been selected
 				if (purpose.equals("")) {

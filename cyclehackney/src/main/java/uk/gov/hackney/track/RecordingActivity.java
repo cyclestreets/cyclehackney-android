@@ -15,8 +15,11 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import net.cyclestreets.views.CycleMapView;
 
 import uk.gov.hackney.CycleHackney;
 import uk.gov.hackney.R;
@@ -25,15 +28,13 @@ public class RecordingActivity extends Activity
     implements View.OnClickListener, ServiceConnection {
   private IRecordService rs_;
   private TripData trip_;
-  private float curDistance_;
 
   private Button finishButton_;
-  private TextView txtStat;
   private TextView txtDistance;
   private TextView txtDuration;
   private TextView txtCurSpeed;
-  private TextView txtMaxSpeed;
-  private TextView txtAvgSpeed;
+
+  private CycleMapView mapView_;
 
   private final SimpleDateFormat sdf = new SimpleDateFormat("H:mm:ss");
 
@@ -49,14 +50,20 @@ public class RecordingActivity extends Activity
   public void onCreate(final Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    setContentView(R.layout.recording);
+    setContentView(R.layout.journey_in_progress);
 
-    txtStat =     (TextView)findViewById(R.id.TextRecordStats);
-    txtDistance = (TextView)findViewById(R.id.TextDistance);
-    txtDuration = (TextView)findViewById(R.id.TextDuration);
-    txtCurSpeed = (TextView)findViewById(R.id.TextSpeed);
-    txtMaxSpeed = (TextView)findViewById(R.id.TextMaxSpeed);
-    txtAvgSpeed = (TextView)findViewById(R.id.TextAvgSpeed);
+    mapView_ = new CycleMapView(this, getClass().getName());
+    mapView_.hideLocationButton();
+    mapView_.getController().setZoom(16);
+
+    final RelativeLayout v = (RelativeLayout)findViewById(R.id.mapholder);
+    v.addView(mapView_,
+        new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.FILL_PARENT,
+            RelativeLayout.LayoutParams.FILL_PARENT));
+
+    txtDistance = (TextView)findViewById(R.id.journey_distance);
+    txtDuration = (TextView)findViewById(R.id.journey_time);
+    txtCurSpeed = (TextView)findViewById(R.id.journey_speed);
 
     finishButton_ = (Button)findViewById(R.id.ButtonFinished);
 
@@ -70,15 +77,13 @@ public class RecordingActivity extends Activity
     finishButton_.setOnClickListener(this);
   } // onCreate
 
-  public void updateStatus(int points, float distance, float spdCurrent, float spdMax) {
-    curDistance_ = distance;
-
-    txtStat.setText((points>0) ? points + " data points received..." : "Waiting for GPS fix...");
+  public void updateStatus(float distance, float spdCurrent, float spdMax) {
     txtCurSpeed.setText(String.format("%1.1f mph", spdCurrent));
-    txtMaxSpeed.setText(String.format("Max Speed: %1.1f mph", spdMax));
 
     float miles = 0.0006212f * distance;
     txtDistance.setText(String.format("%1.1f miles", miles));
+
+    mapView_.invalidate();
   } // updateStatus
 
   private void cancelRecording() {
@@ -92,6 +97,7 @@ public class RecordingActivity extends Activity
 
     trip_ = rs_.startRecording();
     setTitle("Cycle Hackney - Recording...");
+    mapView_.overlayPushTop(JourneyOverlay.InProgressJourneyOverlay(this, mapView_, trip_));
 
     rs_.setListener(this);
   } // onServiceConnected
@@ -106,7 +112,7 @@ public class RecordingActivity extends Activity
   public void onClick(final View v) {
     Intent fi;
     // If we have points, go to the save-trip activity
-    if (trip_.numpoints > 0) {
+    if (trip_.dataAvailable()) {
       // Save trip so far (points and extent, but no purpose or notes)
       fi = new Intent(this, SaveTrip.class);
       trip_.updateTrip("","","","");
@@ -151,11 +157,9 @@ public class RecordingActivity extends Activity
       return;
 
     double dd = System.currentTimeMillis() - trip_.startTime;
-
     txtDuration.setText(sdf.format(dd));
 
-    double avgSpeed = 3600.0 * 0.6212 * curDistance_ / dd;
-    txtAvgSpeed.setText(String.format("%1.1f mph", avgSpeed));
+    mapView_.enableAndFollowLocation();
   } // updateTimer
 
   private void startTimer() {

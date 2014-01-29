@@ -244,7 +244,7 @@ public class RecordingService extends Service implements LocationListener {
 
   void notifyListeners() {
     if (recordActivity != null) {
-      recordActivity.updateStatus(trip.numpoints, distanceTraveled, curSpeed, maxSpeed);
+      recordActivity.updateStatus(distanceTraveled, curSpeed, maxSpeed);
     }
   } // notifyListeners
 
