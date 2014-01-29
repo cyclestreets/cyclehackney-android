@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 
+import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.util.GeoPoint;
 
 import java.util.ArrayList;
@@ -19,8 +20,8 @@ public class TripData {
   int status;
   float distance;
   String purp, fancystart, info;
-  List<GeoPoint> gpspoints;
-  GeoPoint startpoint, endpoint;
+  private List<GeoPoint> gpspoints;
+  private GeoPoint startpoint, endpoint;
 
   DbAdapter mDb;
 
@@ -41,13 +42,13 @@ public class TripData {
     return t;
   }
 
-  public TripData (Context ctx, long tripid) {
+  public TripData(Context ctx, long tripid) {
     Context context = ctx.getApplicationContext();
     this.tripid = tripid;
     mDb = new DbAdapter(context);
   }
 
-  void initializeData() {
+  private void initializeData() {
     startTime = System.currentTimeMillis();
     endTime = System.currentTimeMillis();
     numpoints = 0;
@@ -65,7 +66,6 @@ public class TripData {
 
   // Get lat/long extremes, etc, from trip record
   void populateDetails() {
-
     mDb.openReadOnly();
 
     Cursor tripdetails = mDb.fetchTrip(tripid);
@@ -106,9 +106,14 @@ public class TripData {
     mDb.close();
   }
 
+  public GeoPoint startLocation() { return startpoint; }
+  public GeoPoint endLocation() { return endpoint; }
+  public BoundingBoxE6 boundingBox() {
+    return new BoundingBoxE6(lathigh, lgtlow, latlow, lgthigh);
+  }
+
 	public Iterable<GeoPoint> journey() {
-		// If already built, don't build again!
-		if (gpspoints != null && gpspoints.size()>0) {
+		if (gpspoints != null) {
 			return gpspoints;
 		}
 
