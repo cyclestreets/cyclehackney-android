@@ -151,12 +151,12 @@ public class SaveTrip extends Activity {
 
 				EditText notes = (EditText) findViewById(R.id.NotesField);
 
-				String fancyStartTime = DateFormat.getInstance().format(trip.startTime);
+				String fancyStartTime = DateFormat.getInstance().format(trip.startTime());
 
 				// "3.5 miles in 26 minutes"
 				SimpleDateFormat sdf = new SimpleDateFormat("m");
 				sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-				String minutes = sdf.format(trip.endTime - trip.startTime);
+				String minutes = sdf.format(trip.elapsed());
 				String fancyEndInfo = String.format("%1.1f miles, %s minutes.  %s",
 						(0.0006212f * trip.distance),
 						minutes,

@@ -211,8 +211,7 @@ public class RecordingService extends Service implements LocationListener {
   public void remindUser() {
     soundpool.play(bikebell, 1.0f, 1.0f, 1, 0, 1.0f);
 
-    long when = System.currentTimeMillis();
-    int minutes = (int) (when - trip.startTime) / 60000;
+    int minutes = (int) (trip.elapsed() / 60000);
     String tickerText = String.format("Still recording (%d min)", minutes);
 
     showNotification(tickerText, Notification.FLAG_ONGOING_EVENT);

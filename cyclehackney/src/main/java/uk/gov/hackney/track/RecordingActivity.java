@@ -156,9 +156,7 @@ public class RecordingActivity extends Activity
     if (trip_ == null)
       return;
 
-    double dd = System.currentTimeMillis() - trip_.startTime;
-    txtDuration.setText(sdf.format(dd));
-
+    txtDuration.setText(sdf.format(trip_.elapsed()));
     mapView_.enableAndFollowLocation();
   } // updateTimer
 

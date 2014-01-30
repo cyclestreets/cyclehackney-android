@@ -13,8 +13,8 @@ import java.util.List;
 
 public class TripData {
   long tripid;
-  double startTime = 0;
-  double endTime = 0;
+  private double startTime = 0;
+  private double endTime = 0;
   int lathigh, lgthigh, latlow, lgtlow, latestlat, latestlgt;
   int status;
   float distance;
@@ -131,6 +131,13 @@ public class TripData {
   public GeoPoint endLocation() { return gpspoints.get(gpspoints.size()-1); }
   public BoundingBoxE6 boundingBox() { return new BoundingBoxE6(lathigh, lgtlow, latlow, lgthigh); }
 	public Iterable<GeoPoint> journey() { return gpspoints;	}
+  public double startTime() { return startTime; }
+  public double elapsed() {
+    if(status == STATUS_INCOMPLETE)
+      return System.currentTimeMillis() - startTime;
+    return endTime - startTime;
+  } // elapsed
+
 
   public boolean addPointNow(Location loc, double currentTime, float dst) {
     int lat = (int) (loc.getLatitude() * 1E6);
