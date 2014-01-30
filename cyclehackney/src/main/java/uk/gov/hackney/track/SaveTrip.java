@@ -167,7 +167,7 @@ public class SaveTrip extends Activity {
 						purpose,
 						fancyStartTime, fancyEndInfo,
 						notes.getEditableText().toString());
-				trip.updateTripStatus(TripData.STATUS_COMPLETE);
+
 				resetService();
 
 				// Force-drop the soft keyboard for performance

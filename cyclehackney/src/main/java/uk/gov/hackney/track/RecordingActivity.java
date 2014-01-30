@@ -85,10 +85,6 @@ public class RecordingActivity extends Activity
     mapView_.invalidate();
   } // updateStatus
 
-  private void cancelRecording() {
-    rs_.cancelRecording();
-  } // cancelRecording
-
   /////////////////////////////////////////////////////////////////////////////
   @Override
   public void onServiceConnected(ComponentName name, IBinder service) {
@@ -112,14 +108,15 @@ public class RecordingActivity extends Activity
     Intent fi;
     // If we have points, go to the save-trip activity
     if (trip_.dataAvailable()) {
+      rs_.finishRecording();
+
       // Save trip so far (points and extent, but no purpose or notes)
       fi = new Intent(this, SaveTrip.class);
-      trip_.updateTrip("","","","");
     } else {
+      rs_.cancelRecording();
+
       // Otherwise, cancel and go back to main screen
       Toast.makeText(getBaseContext(),"No GPS data acquired; nothing to submit.", Toast.LENGTH_SHORT).show();
-
-      cancelRecording();
 
       fi = new Intent(this, CycleHackney.class);
       fi.putExtra("keep", true);

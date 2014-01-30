@@ -2,7 +2,6 @@ package uk.gov.hackney.track;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 
 import org.osmdroid.util.BoundingBoxE6;
@@ -16,16 +15,16 @@ public class TripData {
   private double startTime = 0;
   private double endTime = 0;
   int lathigh, lgthigh, latlow, lgtlow;
-  int status;
+  private int status;
   private float distance;
   String purp, fancystart, info;
   private List<GeoPoint> gpspoints;
 
   private DbAdapter mDb;
 
-  public static int STATUS_INCOMPLETE = 0;
-  public static int STATUS_COMPLETE = 1;
-  public static int STATUS_SENT = 2;
+  public static int STATUS_RECORDING = 0;
+  public static int STATUS_COMPLETE_UNSENT = 1;
+  public static int STATUS_COMPLETE = 2;
 
   public static TripData createTrip(Context c) {
     TripData t = new TripData(c.getApplicationContext(), 0);
@@ -132,7 +131,7 @@ public class TripData {
 	public Iterable<GeoPoint> journey() { return gpspoints;	}
   public double startTime() { return startTime; }
   public double elapsed() {
-    if(status == STATUS_INCOMPLETE)
+    if(status == STATUS_RECORDING)
       return System.currentTimeMillis() - startTime;
     return endTime - startTime;
   } // elapsed
@@ -171,28 +170,22 @@ public class TripData {
     lgthigh = Math.max(lgthigh, lgt);
 
     mDb.open();
-    boolean rtn = mDb.addCoordToTrip(tripid, pt);
-    rtn = rtn && mDb.updateTrip(tripid, "", startTime, "", "", "",
-        lathigh, latlow, lgthigh, lgtlow, distance);
+    mDb.addCoordToTrip(tripid, pt);
+    mDb.updateTrip(tripid, "", startTime, "", "", "", lathigh, latlow, lgthigh, lgtlow, distance);
     mDb.close();
 
     return;
   } // addPointNow
 
-  public boolean updateTripStatus(int tripStatus) {
-    boolean rtn;
-    mDb.open();
-    rtn = mDb.updateTripStatus(tripid, tripStatus);
-    mDb.close();
-    return rtn;
+  public void recordingStopped() {
+    updateTripStatus(STATUS_COMPLETE_UNSENT);
+    updateTrip();
   }
 
-  public boolean getStatus(int tripStatus) {
-    boolean rtn;
+  private void updateTripStatus(int tripStatus) {
     mDb.open();
-    rtn = mDb.updateTripStatus(tripid, tripStatus);
+    mDb.updateTripStatus(tripid, tripStatus);
     mDb.close();
-    return rtn;
   }
 
   public void updateTrip() { updateTrip("","","",""); }

@@ -152,7 +152,7 @@ public class DbAdapter {
     initialValues.put(K_TRIP_START, starttime);
     initialValues.put(K_TRIP_FANCYSTART, fancystart);
     initialValues.put(K_TRIP_NOTE, note);
-    initialValues.put(K_TRIP_STATUS, TripData.STATUS_INCOMPLETE);
+    initialValues.put(K_TRIP_STATUS, TripData.STATUS_RECORDING);
 
     return db_.insert(DATA_TABLE_TRIPS, null, initialValues);
   }
@@ -189,7 +189,7 @@ public class DbAdapter {
 
   public Cursor fetchUnsentTrips() {
     Cursor c = db_.query(DATA_TABLE_TRIPS, new String[] { K_TRIP_ROWID },
-        K_TRIP_STATUS + "=" + TripData.STATUS_COMPLETE,
+        K_TRIP_STATUS + "=" + TripData.STATUS_COMPLETE_UNSENT,
         null, null, null, null);
     if (c != null && c.getCount()>0) {
       c.moveToFirst();
@@ -202,7 +202,7 @@ public class DbAdapter {
 
     Cursor c = db_.query(DATA_TABLE_TRIPS, new String[]
         { K_TRIP_ROWID, K_TRIP_STATUS },
-        K_TRIP_STATUS + "=" + TripData.STATUS_INCOMPLETE,
+        K_TRIP_STATUS + "=" + TripData.STATUS_RECORDING,
         null, null, null, null);
 
     if (c != null && c.getCount()>0) {
@@ -217,7 +217,7 @@ public class DbAdapter {
     }
     c.close();
     if (badTrips>0) {
-      db_.delete(DATA_TABLE_TRIPS, K_TRIP_STATUS + "=" + TripData.STATUS_INCOMPLETE, null);
+      db_.delete(DATA_TABLE_TRIPS, K_TRIP_STATUS + "=" + TripData.STATUS_RECORDING, null);
     }
     return badTrips;
   }

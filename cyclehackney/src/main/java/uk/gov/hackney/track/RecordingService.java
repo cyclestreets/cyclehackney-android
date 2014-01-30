@@ -137,6 +137,8 @@ public class RecordingService extends Service implements LocationListener {
 
     clearUp();
 
+    trip.recordingStopped();
+
     return trip.tripid;
   }
 
