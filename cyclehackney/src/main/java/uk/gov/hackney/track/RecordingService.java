@@ -43,10 +43,6 @@ public class RecordingService extends Service implements LocationListener {
     public void run() { remindUser(); }
   };
 
-  // Aspects of the currently recording trip
-  double latestUpdate;
-  Location lastLocation;
-  float distanceTraveled;
   float curSpeed, maxSpeed;
   TripData trip;
 
@@ -117,8 +113,7 @@ public class RecordingService extends Service implements LocationListener {
     this.state = STATE_RECORDING;
     this.trip = TripData.createTrip(RecordingService.this);
 
-    curSpeed = maxSpeed = distanceTraveled = 0.0f;
-    lastLocation = null;
+    curSpeed = maxSpeed = 0.0f;
 
     // Start listening for GPS updates!
     locationManager_.requestLocationUpdates(LocationManager.GPS_PROVIDER, updateTime, updateDistance, this);
@@ -171,9 +166,23 @@ public class RecordingService extends Service implements LocationListener {
   @Override
   public void onLocationChanged(Location loc) {
     updateTripStats(loc);
-    trip.addPointNow(loc, loc.getTime(), distanceTraveled);
+    trip.addPointNow(loc);
     notifyListeners();
   }
+
+  private void updateTripStats(Location newLocation) {
+    final float spdConvert = 2.2369f;
+
+    // Stats should only be updated if accuracy is decent
+    if (newLocation.getAccuracy() > 20)
+      return;
+
+    // Speed data is sometimes awful, too:
+    curSpeed = newLocation.getSpeed() * spdConvert;
+    if (curSpeed < 60.0f)
+      maxSpeed = Math.max(maxSpeed, curSpeed);
+  } // updateTripStats
+
 
   @Override
   public void onProviderDisabled(String arg0) {
@@ -222,28 +231,9 @@ public class RecordingService extends Service implements LocationListener {
     mNotificationManager.cancel(NOTIFICATION_ID);
   } // clearNotifications
 
-  private void updateTripStats(Location newLocation) {
-    final float spdConvert = 2.2369f;
-
-    // Stats should only be updated if accuracy is decent
-    if (newLocation.getAccuracy()< 20) {
-      // Speed data is sometimes awful, too:
-      curSpeed = newLocation.getSpeed() * spdConvert;
-      if (curSpeed < 60.0f) {
-        maxSpeed = Math.max(maxSpeed, curSpeed);
-      }
-      if (lastLocation != null) {
-        float segmentDistance = lastLocation.distanceTo(newLocation);
-        distanceTraveled = distanceTraveled + segmentDistance;
-      }
-
-      lastLocation = newLocation;
-    }
-  } // updateTripStats
-
   void notifyListeners() {
     if (recordActivity != null) {
-      recordActivity.updateStatus(distanceTraveled, curSpeed, maxSpeed);
+      recordActivity.updateStatus(curSpeed, maxSpeed);
     }
   } // notifyListeners
 

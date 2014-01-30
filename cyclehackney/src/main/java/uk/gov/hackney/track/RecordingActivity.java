@@ -77,11 +77,10 @@ public class RecordingActivity extends Activity
     finishButton_.setOnClickListener(this);
   } // onCreate
 
-  public void updateStatus(float distance, float spdCurrent, float spdMax) {
+  public void updateStatus(float spdCurrent, float spdMax) {
     txtCurSpeed.setText(String.format("%1.1f mph", spdCurrent));
 
-    float miles = 0.0006212f * distance;
-    txtDistance.setText(String.format("%1.1f miles", miles));
+    txtDistance.setText(String.format("%1.1f miles", trip_.distanceTravelled()));
 
     mapView_.invalidate();
   } // updateStatus

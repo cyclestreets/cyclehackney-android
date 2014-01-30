@@ -15,9 +15,9 @@ public class TripData {
   long tripid;
   private double startTime = 0;
   private double endTime = 0;
-  int lathigh, lgthigh, latlow, lgtlow, latestlat, latestlgt;
+  int lathigh, lgthigh, latlow, lgtlow;
   int status;
-  float distance;
+  private float distance;
   String purp, fancystart, info;
   private List<GeoPoint> gpspoints;
 
@@ -49,7 +49,6 @@ public class TripData {
   private void initializeData() {
     startTime = System.currentTimeMillis();
     endTime = System.currentTimeMillis();
-    latestlat = 800; latestlgt = 800;
     distance = 0;
 
     lathigh = (int) (-100 * 1E6);
@@ -137,33 +136,39 @@ public class TripData {
       return System.currentTimeMillis() - startTime;
     return endTime - startTime;
   } // elapsed
+  public float distanceTravelled() {
+    return (0.0006212f * distance);
+  } // distanceTravelled
 
 
-  public boolean addPointNow(Location loc, double currentTime, float dst) {
-    int lat = (int) (loc.getLatitude() * 1E6);
-    int lgt = (int) (loc.getLongitude() * 1E6);
-
-    // Skip duplicates
-    if (latestlat == lat && latestlgt == lgt)
-      return true;
+  public void addPointNow(Location loc) {
+    int lat = (int)(loc.getLatitude() * 1E6);
+    int lgt = (int)(loc.getLongitude() * 1E6);
 
     float accuracy = loc.getAccuracy();
     double altitude = loc.getAltitude();
     float speed = loc.getSpeed();
 
-    CyclePoint pt = new CyclePoint(lat, lgt, currentTime, accuracy, altitude, speed);
+    CyclePoint pt = new CyclePoint(lat, lgt, loc.getTime(), accuracy, altitude, speed);
+
+    if (gpspoints.size() > 1) {
+      GeoPoint gp = gpspoints.get(gpspoints.size()-1);
+
+      float segmentDistance = gp.distanceTo(pt);
+      if (segmentDistance == 0)
+        return; // we haven't gone anywhere
+
+      distance += segmentDistance;
+    } // if ...
+
     gpspoints.add(pt);
 
-    endTime = currentTime;
-    distance = dst;
+    endTime = loc.getTime();
 
     latlow = Math.min(latlow, lat);
     lathigh = Math.max(lathigh, lat);
     lgtlow = Math.min(lgtlow, lgt);
     lgthigh = Math.max(lgthigh, lgt);
-
-    latestlat = lat;
-    latestlgt = lgt;
 
     mDb.open();
     boolean rtn = mDb.addCoordToTrip(tripid, pt);
@@ -171,8 +176,8 @@ public class TripData {
         lathigh, latlow, lgthigh, lgtlow, distance);
     mDb.close();
 
-    return rtn;
-  }
+    return;
+  } // addPointNow
 
   public boolean updateTripStatus(int tripStatus) {
     boolean rtn;

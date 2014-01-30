@@ -158,7 +158,7 @@ public class SaveTrip extends Activity {
 				sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
 				String minutes = sdf.format(trip.elapsed());
 				String fancyEndInfo = String.format("%1.1f miles, %s minutes.  %s",
-						(0.0006212f * trip.distance),
+						trip.distanceTravelled(),
 						minutes,
 						notes.getEditableText().toString());
 
