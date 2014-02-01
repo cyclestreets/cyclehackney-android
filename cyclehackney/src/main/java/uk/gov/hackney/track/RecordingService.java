@@ -247,12 +247,8 @@ public class RecordingService extends Service implements LocationListener {
       public void onServiceConnected(ComponentName name, IBinder service) {
         IRecordService rs = (IRecordService)service;
         int state = rs.getState();
-        if (state != RecordingService.STATE_IDLE) {
-          if (state == RecordingService.STATE_FULL) {
-            activity.startActivity(new Intent(activity, SaveTrip.class));
-          } else {  // RECORDING OR PAUSED:
-            activity.startActivity(new Intent(activity, RecordingActivity.class));
-          }
+        if (state == RecordingService.STATE_RECORDING) {
+          activity.startActivity(new Intent(activity, RecordingActivity.class));
           activity.finish();
         }
         activity.unbindService(this); // race?  this says we no longer care

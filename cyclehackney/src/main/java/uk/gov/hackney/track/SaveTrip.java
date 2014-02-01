@@ -3,6 +3,7 @@ package uk.gov.hackney.track;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TimeZone;
 
@@ -24,207 +25,162 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+
+import uk.gov.hackney.CycleHackney;
 import uk.gov.hackney.R;
 
-public class SaveTrip extends Activity {
-	long tripid;
-	HashMap <Integer, ToggleButton> purpButtons = new HashMap<Integer,ToggleButton>();
-	String purpose = "";
+public class SaveTrip extends Activity implements View.OnClickListener {
+  public static void start(final Context context, final long tripid) {
+    final Intent fi = new Intent(context, SaveTrip.class);
+    fi.putExtra("showtrip", tripid);
+    context.startActivity(fi);
+  } // start
 
-	HashMap <Integer, String> purpDescriptions = new HashMap<Integer, String>();
+  private final Map<Integer, ToggleButton> purpButtons = new HashMap<Integer,ToggleButton>();
+  private String purpose = "";
+  private final Map <Integer, String> purpDescriptions = new HashMap<Integer, String>();
+  private TripData trip_;
 
-	// Set up the purpose buttons to be one-click only
-	void preparePurposeButtons() {
-		purpButtons.put(R.id.ToggleCommute, (ToggleButton)findViewById(R.id.ToggleCommute));
-		purpButtons.put(R.id.ToggleSchool,  (ToggleButton)findViewById(R.id.ToggleSchool));
-		purpButtons.put(R.id.ToggleWorkRel, (ToggleButton)findViewById(R.id.ToggleWorkRel));
-		purpButtons.put(R.id.ToggleExercise,(ToggleButton)findViewById(R.id.ToggleExercise));
-		purpButtons.put(R.id.ToggleSocial,  (ToggleButton)findViewById(R.id.ToggleSocial));
-		purpButtons.put(R.id.ToggleShopping,(ToggleButton)findViewById(R.id.ToggleShopping));
-		purpButtons.put(R.id.ToggleErrand,  (ToggleButton)findViewById(R.id.ToggleErrand));
-		purpButtons.put(R.id.ToggleOther,   (ToggleButton)findViewById(R.id.ToggleOther));
+  // Set up the purpose buttons to be one-click only
+  private void preparePurposeButtons() {
+    purpButtons.put(R.id.ToggleCommute, (ToggleButton)findViewById(R.id.ToggleCommute));
+    purpButtons.put(R.id.ToggleSchool,  (ToggleButton)findViewById(R.id.ToggleSchool));
+    purpButtons.put(R.id.ToggleWorkRel, (ToggleButton)findViewById(R.id.ToggleWorkRel));
+    purpButtons.put(R.id.ToggleExercise,(ToggleButton)findViewById(R.id.ToggleExercise));
+    purpButtons.put(R.id.ToggleSocial,  (ToggleButton)findViewById(R.id.ToggleSocial));
+    purpButtons.put(R.id.ToggleShopping,(ToggleButton)findViewById(R.id.ToggleShopping));
+    purpButtons.put(R.id.ToggleErrand,  (ToggleButton)findViewById(R.id.ToggleErrand));
+    purpButtons.put(R.id.ToggleOther,   (ToggleButton)findViewById(R.id.ToggleOther));
 
-        purpDescriptions.put(R.id.ToggleCommute,
-			"<b>Commute:</b> this bike trip was primarily to get between home and your main workplace.");
-		purpDescriptions.put(R.id.ToggleSchool,
-			"<b>School:</b> this bike trip was primarily to go to or from school or college.");
-		purpDescriptions.put(R.id.ToggleWorkRel,
-			"<b>Work-Related:</b> this bike trip was primarily to go to or from a business related meeting, function, or work-related errand for your job.");
-		purpDescriptions.put(R.id.ToggleExercise,
-			"<b>Exercise:</b> this bike trip was primarily for exercise, or biking for the sake of biking.");
-		purpDescriptions.put(R.id.ToggleSocial,
-			"<b>Social:</b> this bike trip was primarily for going to or from a social activity, e.g. at a friend's house, the park, a restaurant, the movies.");
-		purpDescriptions.put(R.id.ToggleShopping,
-			"<b>Shopping:</b> this bike trip was primarily to purchase or bring home goods or groceries.");
-		purpDescriptions.put(R.id.ToggleErrand,
-			"<b>Errand:</b> this bike trip was primarily to attend to personal business such as banking, a doctor  visit, going to the gym, etc.");
-		purpDescriptions.put(R.id.ToggleOther,
-			"<b>Other:</b> if none of the other reasons applied to this trip, you can enter comments below to tell us more.");
+    purpDescriptions.put(R.id.ToggleCommute,
+        "<b>Commute:</b> this bike trip was primarily to get between home and your main workplace.");
+    purpDescriptions.put(R.id.ToggleSchool,
+        "<b>School:</b> this bike trip was primarily to go to or from school or college.");
+    purpDescriptions.put(R.id.ToggleWorkRel,
+        "<b>Work-Related:</b> this bike trip was primarily to go to or from a business related meeting, function, or work-related errand for your job.");
+    purpDescriptions.put(R.id.ToggleExercise,
+        "<b>Exercise:</b> this bike trip was primarily for exercise, or biking for the sake of biking.");
+    purpDescriptions.put(R.id.ToggleSocial,
+        "<b>Social:</b> this bike trip was primarily for going to or from a social activity, e.g. at a friend's house, the park, a restaurant, the movies.");
+    purpDescriptions.put(R.id.ToggleShopping,
+        "<b>Shopping:</b> this bike trip was primarily to purchase or bring home goods or groceries.");
+    purpDescriptions.put(R.id.ToggleErrand,
+        "<b>Errand:</b> this bike trip was primarily to attend to personal business such as banking, a doctor  visit, going to the gym, etc.");
+    purpDescriptions.put(R.id.ToggleOther,
+        "<b>Other:</b> if none of the other reasons applied to this trip, you can enter comments below to tell us more.");
 
-		CheckListener cl = new CheckListener();
-		for (Entry<Integer, ToggleButton> e: purpButtons.entrySet()) {
-			e.getValue().setOnCheckedChangeListener(cl);
-		}
-	}
+    CheckListener cl = new CheckListener();
+    for (Entry<Integer, ToggleButton> e: purpButtons.entrySet()) {
+      e.getValue().setOnCheckedChangeListener(cl);
+    }
+  }
 
-	// Called every time a purp togglebutton is changed:
-	class CheckListener implements CompoundButton.OnCheckedChangeListener {
-		@Override
-		public void onCheckedChanged(CompoundButton v, boolean isChecked) {
-			// First, uncheck all purp buttons
-			if (isChecked) {
-				for (Entry<Integer, ToggleButton> e: purpButtons.entrySet()) {
-					e.getValue().setChecked(false);
-				}
-				v.setChecked(true);
-				purpose = v.getText().toString();
-				((TextView) findViewById(R.id.TextPurpDescription)).setText(
-				        Html.fromHtml(purpDescriptions.get(v.getId())));
-			}
-		}
-	}
+  // Called every time a purp togglebutton is changed:
+  private class CheckListener implements CompoundButton.OnCheckedChangeListener {
+    @Override
+    public void onCheckedChanged(CompoundButton v, boolean isChecked) {
+      // First, uncheck all purp buttons
+      if (isChecked) {
+        for (Entry<Integer, ToggleButton> e: purpButtons.entrySet()) {
+          e.getValue().setChecked(false);
+        }
+        v.setChecked(true);
+        purpose = v.getText().toString();
+        ((TextView) findViewById(R.id.TextPurpDescription)).setText(
+            Html.fromHtml(purpDescriptions.get(v.getId())));
+      }
+    }
+  }
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.save);
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.save);
 
-		finishRecording();
+    final Bundle cmds = getIntent().getExtras();
+    final long journeyId = cmds.getLong("showtrip");
+    trip_ = TripData.fetchTrip(this, journeyId);
 
-		// Set up trip purpose buttons
-		purpose = "";
-		preparePurposeButtons();
+    // Set up trip purpose buttons
+    purpose = "";
+    preparePurposeButtons();
 
-        // User prefs btn
-        final Button prefsButton = (Button) findViewById(R.id.ButtonPrefs);
-        // TODO user prefs?
-        //final Intent pi = new Intent(this, UserInfoActivity.class);
-        //prefsButton.setOnClickListener(new View.OnClickListener() {
-        //    public void onClick(View v) {
-        //        startActivity(pi);
-        //    }
-        //});
+    // Discard btn
+    final Button btnDiscard = (Button)findViewById(R.id.ButtonDiscard);
+    btnDiscard.setOnClickListener(this);
 
-        SharedPreferences settings = getSharedPreferences("PREFS", 0);
-        if (settings.getAll().size() >= 1) {
-            prefsButton.setVisibility(View.GONE);
+    // Submit btn
+    final Button btnSubmit = (Button)findViewById(R.id.ButtonSubmit);
+    btnSubmit.setEnabled(false);
+
+    // Don't pop up the soft keyboard until user clicks!
+    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+  } // onCreate
+
+  public void onClick(final View v) {
+    if(v.getId() == R.id.ButtonDiscard)
+      discardTrip();
+
+    if(v.getId() == R.id.ButtonSubmit)
+      uploadTrip();
+  } // onClick
+
+  private void discardTrip() {
+    Toast.makeText(getBaseContext(), "Trip discarded.",	Toast.LENGTH_SHORT).show();
+
+    trip_.dropTrip();
+
+    CycleHackney.start(this);
+    finish();
+  } // discardTrip
+
+  private void uploadTrip() {
+
+  } // uploadTrip
+
+  // submit btn is only activated after the service.finishedRecording() is completed.
+  private void activateSubmitButton() {
+    final Button btnSubmit = (Button) findViewById(R.id.ButtonSubmit);
+    //final Intent xi = new Intent(this, ShowMap.class);
+    btnSubmit.setEnabled(true);
+
+    btnSubmit.setOnClickListener(new View.OnClickListener() {
+      public void onClick(View v) {
+
+        //trip.populateDetails();
+
+        // Make sure trip purpose has been selected
+        if (purpose.equals("")) {
+          // Oh no!  No trip purpose!
+          Toast.makeText(getBaseContext(), "You must select a trip purpose before submitting! Choose from the purposes above.", Toast.LENGTH_SHORT).show();
+          return;
         }
 
-		// Discard btn
-		final Button btnDiscard = (Button) findViewById(R.id.ButtonDiscard);
-		btnDiscard.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				Toast.makeText(getBaseContext(), "Trip discarded.",	Toast.LENGTH_SHORT).show();
+        EditText notes = (EditText) findViewById(R.id.NotesField);
 
-				cancelRecording();
+        String fancyStartTime = DateFormat.getInstance().format(trip_.startTime());
 
-				SaveTrip.this.finish();
-			}
-		});
+        // "3.5 miles in 26 minutes"
+        SimpleDateFormat sdf = new SimpleDateFormat("m");
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+        String minutes = sdf.format(trip_.elapsed());
+        String fancyEndInfo = String.format("%1.1f miles, %s minutes.  %s",
+            trip_.distanceTravelled(),
+            minutes,
+            notes.getEditableText().toString());
 
-		// Submit btn
-		final Button btnSubmit = (Button) findViewById(R.id.ButtonSubmit);
-		btnSubmit.setEnabled(false);
+        // Save the trip details to the phone database. W00t!
+        trip_.updateTrip(
+            purpose,
+            fancyStartTime, fancyEndInfo,
+            notes.getEditableText().toString());
 
-		// Don't pop up the soft keyboard until user clicks!
-		this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-	}
+        // Force-drop the soft keyboard for performance
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 
-	// submit btn is only activated after the service.finishedRecording() is completed.
-	void activateSubmitButton() {
-		final Button btnSubmit = (Button) findViewById(R.id.ButtonSubmit);
-		//final Intent xi = new Intent(this, ShowMap.class);
-		btnSubmit.setEnabled(true);
-
-		btnSubmit.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-
-				TripData trip = TripData.fetchTrip(SaveTrip.this, tripid);
-				//trip.populateDetails();
-
-				// Make sure trip purpose has been selected
-				if (purpose.equals("")) {
-					// Oh no!  No trip purpose!
-					Toast.makeText(getBaseContext(), "You must select a trip purpose before submitting! Choose from the purposes above.", Toast.LENGTH_SHORT).show();
-					return;
-				}
-
-				EditText notes = (EditText) findViewById(R.id.NotesField);
-
-				String fancyStartTime = DateFormat.getInstance().format(trip.startTime());
-
-				// "3.5 miles in 26 minutes"
-				SimpleDateFormat sdf = new SimpleDateFormat("m");
-				sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-				String minutes = sdf.format(trip.elapsed());
-				String fancyEndInfo = String.format("%1.1f miles, %s minutes.  %s",
-						trip.distanceTravelled(),
-						minutes,
-						notes.getEditableText().toString());
-
-				// Save the trip details to the phone database. W00t!
-				trip.updateTrip(
-						purpose,
-						fancyStartTime, fancyEndInfo,
-						notes.getEditableText().toString());
-
-				resetService();
-
-				// Force-drop the soft keyboard for performance
-				InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-				imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-
-				// And, show the map!
-        // TODO put the map back
-        //         xi.putExtra("showtrip", trip.tripid);
-        //        xi.putExtra("uploadTrip", true);
-				//startActivity(xi);
-				SaveTrip.this.finish();
-			}
-		});
-
-	}
-
-	void cancelRecording() {
-		Intent rService = new Intent(this, RecordingService.class);
-		ServiceConnection sc = new ServiceConnection() {
-			public void onServiceDisconnected(ComponentName name) {}
-			public void onServiceConnected(ComponentName name, IBinder service) {
-				IRecordService rs = (IRecordService) service;
-				rs.cancelRecording();
-				unbindService(this);
-			}
-		};
-		// This should block until the onServiceConnected (above) completes.
-		bindService(rService, sc, Context.BIND_AUTO_CREATE);
-	}
-
-	void resetService() {
-		Intent rService = new Intent(this, RecordingService.class);
-		ServiceConnection sc = new ServiceConnection() {
-			public void onServiceDisconnected(ComponentName name) {}
-			public void onServiceConnected(ComponentName name, IBinder service) {
-				IRecordService rs = (IRecordService) service;
-				rs.reset();
-				unbindService(this);
-			}
-		};
-		// This should block until the onServiceConnected (above) completes.
-		bindService(rService, sc, Context.BIND_AUTO_CREATE);
-	}
-
-	void finishRecording() {
-		Intent rService = new Intent(this, RecordingService.class);
-		ServiceConnection sc = new ServiceConnection() {
-			public void onServiceDisconnected(ComponentName name) {}
-			public void onServiceConnected(ComponentName name, IBinder service) {
-				IRecordService rs = (IRecordService) service;
-				tripid = rs.finishRecording();
-				SaveTrip.this.activateSubmitButton();
-				unbindService(this);
-			}
-		};
-		// This should block until the onServiceConnected (above) completes.
-		bindService(rService, sc, Context.BIND_AUTO_CREATE);
-	}
+        SaveTrip.this.finish();
+      }
+    });
+  }
 }

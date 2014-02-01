@@ -105,25 +105,20 @@ public class RecordingActivity extends Activity
   /////////////////////////////////////////////////////////////////////////////
   @Override
   public void onClick(final View v) {
-    Intent fi;
     // If we have points, go to the save-trip activity
     if (trip_.dataAvailable()) {
       rs_.finishRecording();
 
-      // Save trip so far (points and extent, but no purpose or notes)
-      fi = new Intent(this, SaveTrip.class);
+      SaveTrip.start(this, trip_.tripid);
     } else {
       rs_.cancelRecording();
 
       // Otherwise, cancel and go back to main screen
       Toast.makeText(getBaseContext(),"No GPS data acquired; nothing to submit.", Toast.LENGTH_SHORT).show();
 
-      fi = new Intent(this, CycleHackney.class);
-      fi.putExtra("keep", true);
+      CycleHackney.start(this);
     } // if ...
 
-    // Either way, activate next task, and then kill this task
-    startActivity(fi);
     finish();
   } // onClick
 
@@ -131,13 +126,14 @@ public class RecordingActivity extends Activity
   @Override
   public void onPause() {
     super.onPause();
+    mapView_.onPause();
     stopTimer();
   } // onPause
 
   @Override
   public void onResume() {
     super.onResume();
-
+    mapView_.onResume();
     startTimer();
   } // onResume
 

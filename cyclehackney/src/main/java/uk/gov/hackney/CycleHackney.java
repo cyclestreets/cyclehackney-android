@@ -1,5 +1,7 @@
 package uk.gov.hackney;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TabHost;
 
@@ -10,8 +12,12 @@ import net.cyclestreets.fragments.R;
 
 import uk.gov.hackney.track.RecordingService;
 
-public class CycleHackney extends MainTabbedActivity
-{
+public class CycleHackney extends MainTabbedActivity {
+  public static void start(final Context context) {
+    final Intent fi = new Intent(context, CycleHackney.class);
+    context.startActivity(fi);
+  } // start
+
   public void onCreate(final Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
