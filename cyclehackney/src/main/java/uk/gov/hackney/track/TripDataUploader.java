@@ -42,11 +42,10 @@ public class TripDataUploader extends AsyncTask<Void, Void, Boolean> {
         throw new RuntimeException("Poop");
 
       final byte[] resultBytes = ApiClient.postApiRaw("/v2/gpstrack.add",
-                     "purpose", tripData_.purp,
+                     "purpose", tripData_.purpose(),
                      "start", tripData_.startTime(),
                      "end", tripData_.endTime(),
-                     "notes", tripData_.notes(),
-                     "device", deviceId());
+                     "notes", tripData_.notes());
       final JSONObject result = parse(resultBytes);
 
 

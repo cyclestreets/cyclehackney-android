@@ -109,7 +109,7 @@ public class RecordingActivity extends Activity
     if (trip_.dataAvailable()) {
       rs_.finishRecording();
 
-      SaveTrip.start(this, trip_.tripid);
+      SaveTrip.start(this, trip_.id());
     } else {
       rs_.cancelRecording();
 

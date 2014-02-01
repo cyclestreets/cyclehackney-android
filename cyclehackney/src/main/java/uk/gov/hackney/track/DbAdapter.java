@@ -71,6 +71,22 @@ public class DbAdapter {
     }
   } // DatabaseHelper
 
+  public static boolean availableForUpload(final Context context) {
+    final DbAdapter db = new DbAdapter(context.getApplicationContext());
+    db.openReadOnly();
+
+    final Cursor c = db.db_.query(DATA_TABLE_TRIPS,
+        new String[]{K_TRIP_ROWID, K_TRIP_STATUS},
+        K_TRIP_STATUS + "=" + TripData.STATUS_COMPLETE_UNSENT,
+        null, null, null, null);
+
+    boolean available = c.getCount() != 0;
+    c.close();
+    db.close();
+
+    return available;
+  } // availableForUpload
+
   public DbAdapter(final Context ctx) {
     context_ = ctx;
   }
@@ -145,7 +161,7 @@ public class DbAdapter {
    * created return the new rowId for that trip, otherwise return a -1 to
    * indicate failure.
    */
-  public long createTrip(String purp, double starttime, String fancystart,
+  private long createTrip(String purp, double starttime, String fancystart,
                          String note) {
     ContentValues initialValues = new ContentValues();
     initialValues.put(K_TRIP_PURP, purp);
@@ -220,7 +236,8 @@ public class DbAdapter {
   }
 
   public boolean updateTrip(long tripid, String purp, double starttime,
-                            String fancystart, String fancyinfo, String note, int lathigh, int latlow,
+                            String fancystart, String fancyinfo, String note,
+                            int lathigh, int latlow,
                             int lgthigh, int lgtlow, float distance) {
     ContentValues initialValues = new ContentValues();
     initialValues.put(K_TRIP_PURP, purp);

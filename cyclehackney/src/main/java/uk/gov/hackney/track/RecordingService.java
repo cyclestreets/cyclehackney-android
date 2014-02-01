@@ -139,7 +139,7 @@ public class RecordingService extends Service implements LocationListener {
 
     trip.recordingStopped();
 
-    return trip.tripid;
+    return trip.id();
   }
 
   public void cancelRecording() {

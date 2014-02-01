@@ -28,9 +28,9 @@ public class ShowJourney extends Activity {
     final long journeyId = cmds.getLong("showtrip");
     final TripData trip = TripData.fetchTrip(this, journeyId);
 
-    setText(R.id.journey_info, trip.info);
-    setText(R.id.journey_purpose, trip.purp);
-    setText(R.id.journey_start, trip.fancystart);
+    setText(R.id.journey_info, trip.info());
+    setText(R.id.journey_purpose, trip.purpose());
+    setText(R.id.journey_start, trip.fancyStart());
 
     // zoomToBoundingBox works better if setZoom first
     mapView_.getController().setZoom(14);

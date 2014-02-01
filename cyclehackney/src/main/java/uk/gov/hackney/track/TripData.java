@@ -11,13 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TripData {
-  long tripid;
+  private long tripid;
   private double startTime_ = 0;
   private double endTime_ = 0;
-  int lathigh, lgthigh, latlow, lgtlow;
+  private int lathigh, lgthigh, latlow, lgtlow;
   private int status;
   private float distance;
-  String purp, fancystart, info;
+  private String purp_;
+  private String info_;
+  private String fancystart_;
   private List<GeoPoint> gpspoints;
   private String note_;
 
@@ -55,7 +57,7 @@ public class TripData {
     latlow = (int) (100 * 1E6);
     lgtlow = (int) (180 * 1E6);
     lgthigh = (int) (-180 * 1E6);
-    purp = fancystart = info = "";
+    purp_ = fancystart_ = info_ = "";
 
     gpspoints = new ArrayList<GeoPoint>();
 
@@ -76,9 +78,9 @@ public class TripData {
     endTime_ = tripdetails.getDouble(tripdetails.getColumnIndex("endtime"));
     distance = tripdetails.getFloat(tripdetails.getColumnIndex("distance"));
 
-    purp = tripdetails.getString(tripdetails.getColumnIndex("purp"));
-    fancystart = tripdetails.getString(tripdetails.getColumnIndex("fancystart"));
-    info = tripdetails.getString(tripdetails.getColumnIndex("fancyinfo"));
+    purp_ = tripdetails.getString(tripdetails.getColumnIndex("purp"));
+    fancystart_ = tripdetails.getString(tripdetails.getColumnIndex("fancystart"));
+    info_ = tripdetails.getString(tripdetails.getColumnIndex("fancyinfo"));
     note_ = tripdetails.getString(tripdetails.getColumnIndex("note"));
 
     tripdetails.close();
@@ -126,6 +128,7 @@ public class TripData {
     mDb.close();
   }
 
+  public long id() { return tripid; }
   public boolean dataAvailable() { return gpspoints.size() != 0; }
   public GeoPoint startLocation() { return gpspoints.get(0); }
   public GeoPoint endLocation() { return gpspoints.get(gpspoints.size()-1); }
@@ -142,6 +145,9 @@ public class TripData {
     return (0.0006212f * distance);
   } // distanceTravelled
   public String notes() { return note_; }
+  public String purpose() { return purp_; }
+  public String info() { return info_; }
+  public String fancyStart() { return fancystart_; }
 
   public void addPointNow(Location loc) {
     int lat = (int)(loc.getLatitude() * 1E6);
