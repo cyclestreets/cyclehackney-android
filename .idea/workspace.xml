@@ -15,11 +15,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="14f8d852-f31b-49ca-9150-c782d0f177bc" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/DbAdapter.java" afterPath="$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/DbAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/RecordingActivity.java" afterPath="$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/RecordingActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/RecordingService.java" afterPath="$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/RecordingService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/SaveTrip.java" afterPath="$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/SaveTrip.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/TripData.java" afterPath="$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/TripData.java" />
+      <change type="DELETED" beforePath="C:\work\CycleStreets\hackney\cyclestreets-fragments\src\main\res\values\strings.xml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cyclehackney/src/main/assets/credits.html" afterPath="$PROJECT_DIR$/cyclehackney/src/main/assets/credits.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cyclehackney/src/main/assets/whatsnew.html" afterPath="$PROJECT_DIR$/cyclehackney/src/main/assets/whatsnew.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="hackney.iws" />
@@ -125,10 +123,28 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RecordingActivity.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="RecordingActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/RecordingActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="82" column="0" selection-start="2455" selection-end="2455" vertical-scroll-proportion="0.39869282" vertical-offset="657" max-vertical-offset="2250">
+            <state line="123" column="0" selection-start="3815" selection-end="3815" vertical-scroll-proportion="0.0" vertical-offset="1230" max-vertical-offset="2250">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="whatsnew.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/assets/whatsnew.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="23" column="0" selection-start="70" selection-end="961" vertical-scroll-proportion="-14.375" vertical-offset="0" max-vertical-offset="450">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="credits.html" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/assets/credits.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="26" column="20" selection-start="1058" selection-end="1058" vertical-scroll-proportion="0.9701493" vertical-offset="0" max-vertical-offset="540">
               <folding />
             </state>
           </provider>
@@ -137,7 +153,7 @@
       <file leaf-file-name="IRecordService.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/IRecordService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="14" selection-start="138" selection-end="138" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="270">
+            <state line="6" column="14" selection-start="138" selection-end="138" vertical-scroll-proportion="0.0" vertical-offset="90" max-vertical-offset="270">
               <folding />
             </state>
           </provider>
@@ -146,7 +162,7 @@
       <file leaf-file-name="SaveTrip.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/SaveTrip.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="169" column="0" selection-start="6659" selection-end="6659" vertical-scroll-proportion="-6.6538463" vertical-offset="1957" max-vertical-offset="3120">
+            <state line="169" column="0" selection-start="6659" selection-end="6659" vertical-scroll-proportion="0.0" vertical-offset="2535" max-vertical-offset="3540">
               <folding />
             </state>
           </provider>
@@ -155,7 +171,7 @@
       <file leaf-file-name="RecordingService.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/RecordingService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="137" column="14" selection-start="4021" selection-end="4021" vertical-scroll-proportion="0.0" vertical-offset="1459" max-vertical-offset="3645">
+            <state line="137" column="14" selection-start="4021" selection-end="4021" vertical-scroll-proportion="0.0" vertical-offset="2055" max-vertical-offset="4065">
               <folding />
             </state>
           </provider>
@@ -164,10 +180,8 @@
       <file leaf-file-name="JourneyOverlay.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/JourneyOverlay.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="97" column="11" selection-start="3255" selection-end="3255" vertical-scroll-proportion="0.0" vertical-offset="1050" max-vertical-offset="2415">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state line="97" column="11" selection-start="3255" selection-end="3255" vertical-scroll-proportion="0.0" vertical-offset="1455" max-vertical-offset="2415">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -175,7 +189,7 @@
       <file leaf-file-name="TripData.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/TripData.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="181" column="17" selection-start="5446" selection-end="5446" vertical-scroll-proportion="-7.5" vertical-offset="2400" max-vertical-offset="2955">
+            <state line="181" column="17" selection-start="5446" selection-end="5446" vertical-scroll-proportion="0.0" vertical-offset="2715" max-vertical-offset="3075">
               <folding />
             </state>
           </provider>
@@ -1692,7 +1706,6 @@
         <option value="$PROJECT_DIR$/libraries/cyclestreets-fragments/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/libraries/cyclestreets-fragments/src/main/java/net/cyclestreets/CycleStreetsAppSupport.java" />
         <option value="$PROJECT_DIR$/libraries/cyclestreets-fragments/src/main/java/net/cyclestreets/MainTabbedActivity.java" />
-        <option value="$PROJECT_DIR$/cyclehackney/src/main/assets/whatsnew.html" />
         <option value="$PROJECT_DIR$/cyclehackney/src/main/res/layout/fragment_log_journey.xml" />
         <option value="$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/RecordingService.java" />
         <option value="$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/RecordingActivity.java" />
@@ -1722,14 +1735,16 @@
         <option value="$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/TripData.java" />
         <option value="$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/RecordingActivity.java" />
         <option value="$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/SaveTrip.java" />
+        <option value="$PROJECT_DIR$/cyclehackney/src/main/assets/whatsnew.html" />
+        <option value="$PROJECT_DIR$/cyclehackney/src/main/assets/credits.html" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1296" />
-    <option name="height" value="1000" />
+    <option name="width" value="1382" />
+    <option name="height" value="744" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -1757,7 +1772,7 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -1837,6 +1852,40 @@
               <option name="myItemId" value="res" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="values" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hackney" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hackney" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cyclehackney" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="raw" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -1890,11 +1939,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="hackney" />
+              <option name="myItemId" value="res" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1923,18 +1968,36 @@
               <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hackney" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="hackney" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="track" />
+              <option name="myItemId" value="cyclehackney" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -2157,7 +2220,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1296" height="1000" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -2165,7 +2228,6 @@
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.37190083" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.42739078" sideWeight="0.76888216" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3282572" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
@@ -2180,13 +2242,14 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.28836834" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23612751" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28776434" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23519458" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16868381" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.37190083" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -2237,16 +2300,9 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/libraries/cyclestreets-fragments/src/main/java/net/cyclestreets/MoreFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="60" selection-start="670" selection-end="670" vertical-scroll-proportion="-0.31542057" vertical-offset="300" max-vertical-offset="795" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/CycleHackneyApp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="33" selection-start="252" selection-end="252" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="270">
-          <folding />
-        </state>
+        <state line="10" column="33" selection-start="252" selection-end="252" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="270" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/libraries/cyclestreets-fragments/src/main/java/net/cyclestreets/CycleStreetsAppSupport.java">
@@ -2259,11 +2315,6 @@
         <state line="88" column="0" selection-start="2798" selection-end="2798" vertical-scroll-proportion="0.0" vertical-offset="607" max-vertical-offset="4440" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/assets/whatsnew.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="39" selection-start="109" selection-end="109" vertical-scroll-proportion="-3.125" vertical-offset="0" max-vertical-offset="195" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/libraries/cyclestreets-fragments/src/main/java/net/cyclestreets/AboutFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="17" column="0" selection-start="520" selection-end="520" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="510" />
@@ -2271,16 +2322,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/CyclePoint.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="36" selection-start="103" selection-end="103" vertical-scroll-proportion="0.0" vertical-offset="37" max-vertical-offset="525">
-          <folding />
-        </state>
+        <state line="4" column="36" selection-start="103" selection-end="103" vertical-scroll-proportion="0.0" vertical-offset="37" max-vertical-offset="525" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="0" selection-start="259" selection-end="259" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210">
-          <folding />
-        </state>
+        <state line="7" column="0" selection-start="259" selection-end="259" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210" />
       </provider>
     </entry>
     <entry file="jar://$PROJECT_DIR$/../../android-sdk/platforms/android-8/android.jar!/android/content/Intent.class">
@@ -2310,18 +2357,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/CycleHackney.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="0" selection-start="721" selection-end="721" vertical-scroll-proportion="0.64028776" vertical-offset="78" max-vertical-offset="495">
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
+        <state line="23" column="0" selection-start="721" selection-end="721" vertical-scroll-proportion="0.64028776" vertical-offset="78" max-vertical-offset="495" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/res/layout/fragment_log_journey.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="35" selection-start="772" selection-end="772" vertical-scroll-proportion="0.3877551" vertical-offset="118" max-vertical-offset="510">
-          <folding />
-        </state>
+        <state line="18" column="35" selection-start="772" selection-end="772" vertical-scroll-proportion="0.3877551" vertical-offset="118" max-vertical-offset="510" />
       </provider>
       <provider editor-type-id="android-designer">
         <state />
@@ -2329,9 +2370,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/DbAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="211" column="0" selection-start="7046" selection-end="7046" vertical-scroll-proportion="0.24220623" vertical-offset="2989" max-vertical-offset="4110">
-          <folding />
-        </state>
+        <state line="211" column="0" selection-start="7046" selection-end="7046" vertical-scroll-proportion="0.24220623" vertical-offset="2989" max-vertical-offset="4110" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/libraries/cyclestreets-fragments/src/main/java/net/cyclestreets/RouteMapFragment.java">
@@ -2371,9 +2410,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/libraries/cyclestreets-view/src/main/res/layout/addphotolocation.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="0" selection-start="180" selection-end="547" vertical-scroll-proportion="-9.6" vertical-offset="0" max-vertical-offset="360">
-          <folding />
-        </state>
+        <state line="16" column="0" selection-start="180" selection-end="547" vertical-scroll-proportion="-9.6" vertical-offset="0" max-vertical-offset="360" />
       </provider>
       <provider editor-type-id="android-designer">
         <state />
@@ -2468,9 +2505,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/res/layout/recording.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="0" selection-start="595" selection-end="1367" vertical-scroll-proportion="-12.0" vertical-offset="0" max-vertical-offset="930">
-          <folding />
-        </state>
+        <state line="20" column="0" selection-start="595" selection-end="1367" vertical-scroll-proportion="-12.0" vertical-offset="0" max-vertical-offset="930" />
       </provider>
       <provider editor-type-id="android-designer">
         <state />
@@ -2478,9 +2513,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/res/layout/completed_journey.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="23" selection-start="1568" selection-end="1579" vertical-scroll-proportion="-13.2" vertical-offset="60" max-vertical-offset="645">
-          <folding />
-        </state>
+        <state line="26" column="23" selection-start="1568" selection-end="1579" vertical-scroll-proportion="-13.2" vertical-offset="60" max-vertical-offset="645" />
       </provider>
       <provider editor-type-id="android-designer">
         <state />
@@ -2488,11 +2521,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/res/layout/journey_in_progress.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="71" column="0" selection-start="3333" selection-end="3333" vertical-scroll-proportion="-13.0" vertical-offset="740" max-vertical-offset="1200">
-          <folding>
-            <element signature="e#3210#3239#0" expanded="false" />
-          </folding>
-        </state>
+        <state line="71" column="0" selection-start="3333" selection-end="3333" vertical-scroll-proportion="-13.0" vertical-offset="740" max-vertical-offset="1200" />
       </provider>
       <provider editor-type-id="android-designer">
         <state />
@@ -2515,9 +2544,7 @@
     <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/JourneyOverlay.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="97" column="11" selection-start="3255" selection-end="3255" vertical-scroll-proportion="0.0" vertical-offset="1050" max-vertical-offset="2415">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2530,7 +2557,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/TripData.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="181" column="17" selection-start="5446" selection-end="5446" vertical-scroll-proportion="-7.5" vertical-offset="2400" max-vertical-offset="2955">
+        <state line="181" column="17" selection-start="5446" selection-end="5446" vertical-scroll-proportion="0.0" vertical-offset="2715" max-vertical-offset="3075">
           <folding />
         </state>
       </provider>
@@ -2544,14 +2571,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/SaveTrip.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="169" column="0" selection-start="6659" selection-end="6659" vertical-scroll-proportion="-6.6538463" vertical-offset="1957" max-vertical-offset="3120">
+        <state line="169" column="0" selection-start="6659" selection-end="6659" vertical-scroll-proportion="0.0" vertical-offset="2535" max-vertical-offset="3540">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/RecordingActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="82" column="0" selection-start="2455" selection-end="2455" vertical-scroll-proportion="0.39869282" vertical-offset="657" max-vertical-offset="2250">
+        <state line="123" column="0" selection-start="3815" selection-end="3815" vertical-scroll-proportion="0.0" vertical-offset="1230" max-vertical-offset="2250">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/assets/whatsnew.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="0" selection-start="70" selection-end="961" vertical-scroll-proportion="-14.375" vertical-offset="0" max-vertical-offset="450">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/assets/credits.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="20" selection-start="1058" selection-end="1058" vertical-scroll-proportion="0.9701493" vertical-offset="0" max-vertical-offset="540">
           <folding />
         </state>
       </provider>
