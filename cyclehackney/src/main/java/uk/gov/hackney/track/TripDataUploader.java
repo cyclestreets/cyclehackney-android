@@ -45,6 +45,7 @@ public class TripDataUploader extends AsyncTask<Void, Void, Boolean> {
                      "purpose", tripData_.purp,
                      "start", tripData_.startTime(),
                      "end", tripData_.endTime(),
+                     "notes", tripData_.notes(),
                      "device", deviceId());
       final JSONObject result = parse(resultBytes);
 

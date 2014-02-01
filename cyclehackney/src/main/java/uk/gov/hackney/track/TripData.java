@@ -12,13 +12,14 @@ import java.util.List;
 
 public class TripData {
   long tripid;
-  private double startTime = 0;
-  private double endTime = 0;
+  private double startTime_ = 0;
+  private double endTime_ = 0;
   int lathigh, lgthigh, latlow, lgtlow;
   private int status;
   private float distance;
   String purp, fancystart, info;
   private List<GeoPoint> gpspoints;
+  private String note_;
 
   private DbAdapter mDb;
 
@@ -46,8 +47,8 @@ public class TripData {
   }
 
   private void initializeData() {
-    startTime = System.currentTimeMillis();
-    endTime = System.currentTimeMillis();
+    startTime_ = System.currentTimeMillis();
+    endTime_ = System.currentTimeMillis();
     distance = 0;
 
     lathigh = (int) (-100 * 1E6);
@@ -66,18 +67,19 @@ public class TripData {
     mDb.openReadOnly();
 
     Cursor tripdetails = mDb.fetchTrip(tripid);
-    startTime = tripdetails.getDouble(tripdetails.getColumnIndex("start"));
+    startTime_ = tripdetails.getDouble(tripdetails.getColumnIndex("start"));
     lathigh = tripdetails.getInt(tripdetails.getColumnIndex("lathi"));
     latlow =  tripdetails.getInt(tripdetails.getColumnIndex("latlo"));
     lgthigh = tripdetails.getInt(tripdetails.getColumnIndex("lgthi"));
     lgtlow =  tripdetails.getInt(tripdetails.getColumnIndex("lgtlo"));
     status =  tripdetails.getInt(tripdetails.getColumnIndex("status"));
-    endTime = tripdetails.getDouble(tripdetails.getColumnIndex("endtime"));
+    endTime_ = tripdetails.getDouble(tripdetails.getColumnIndex("endtime"));
     distance = tripdetails.getFloat(tripdetails.getColumnIndex("distance"));
 
     purp = tripdetails.getString(tripdetails.getColumnIndex("purp"));
     fancystart = tripdetails.getString(tripdetails.getColumnIndex("fancystart"));
     info = tripdetails.getString(tripdetails.getColumnIndex("fancyinfo"));
+    note_ = tripdetails.getString(tripdetails.getColumnIndex("note"));
 
     tripdetails.close();
     mDb.close();
@@ -129,17 +131,17 @@ public class TripData {
   public GeoPoint endLocation() { return gpspoints.get(gpspoints.size()-1); }
   public BoundingBoxE6 boundingBox() { return new BoundingBoxE6(lathigh, lgtlow, latlow, lgthigh); }
 	public Iterable<GeoPoint> journey() { return gpspoints;	}
-  public double startTime() { return startTime; }
-  public double endTime() { return endTime; }
+  public double startTime() { return startTime_; }
+  public double endTime() { return endTime_; }
   public double elapsed() {
     if(status == STATUS_RECORDING)
-      return System.currentTimeMillis() - startTime;
-    return endTime - startTime;
+      return System.currentTimeMillis() - startTime_;
+    return endTime_ - startTime_;
   } // elapsed
   public float distanceTravelled() {
     return (0.0006212f * distance);
   } // distanceTravelled
-
+  public String notes() { return note_; }
 
   public void addPointNow(Location loc) {
     int lat = (int)(loc.getLatitude() * 1E6);
@@ -163,7 +165,7 @@ public class TripData {
 
     gpspoints.add(pt);
 
-    endTime = loc.getTime();
+    endTime_ = loc.getTime();
 
     latlow = Math.min(latlow, lat);
     lathigh = Math.max(lathigh, lat);
@@ -172,7 +174,7 @@ public class TripData {
 
     mDb.open();
     mDb.addCoordToTrip(tripid, pt);
-    mDb.updateTrip(tripid, "", startTime, "", "", "", lathigh, latlow, lgthigh, lgtlow, distance);
+    mDb.updateTrip(tripid, "", startTime_, "", "", "", lathigh, latlow, lgthigh, lgtlow, distance);
     mDb.close();
 
     return;
@@ -197,7 +199,7 @@ public class TripData {
   public void updateTrip(String purpose, String fancyStart, String fancyInfo, String notes) {
     // Save the trip details to the phone database. W00t!
     mDb.open();
-    mDb.updateTrip(tripid, purpose,	startTime, fancyStart, fancyInfo, notes,
+    mDb.updateTrip(tripid, purpose, startTime_, fancyStart, fancyInfo, notes,
         lathigh, latlow, lgthigh, lgtlow, distance);
     mDb.close();
   }
