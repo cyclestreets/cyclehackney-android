@@ -72,16 +72,10 @@ public class LogJourneyFragment extends Fragment implements View.OnClickListener
   } // alertNoGps
 
   /////////////////////////////////////////
-  void populateList(final ListView lv) {
+  private void populateList(final ListView lv) {
     // Get list from the real phone database. W00t!
     final DbAdapter database = new DbAdapter(getActivity());
     database.open();
-
-    // Clean up any bad trips & coords from crashes
-    final int cleanedTrips = database.cleanTables();
-    if (cleanedTrips > 0) {
-      Toast.makeText(getActivity(), "" + cleanedTrips + " bad trip(s) removed.", Toast.LENGTH_SHORT).show();
-    }
 
     final Cursor allTrips = database.fetchAllTrips();
 

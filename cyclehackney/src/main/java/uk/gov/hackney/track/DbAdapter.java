@@ -197,31 +197,6 @@ public class DbAdapter {
     return c;
   }
 
-  public int cleanTables() {
-    int badTrips = 0;
-
-    Cursor c = db_.query(DATA_TABLE_TRIPS, new String[]
-        { K_TRIP_ROWID, K_TRIP_STATUS },
-        K_TRIP_STATUS + "=" + TripData.STATUS_RECORDING,
-        null, null, null, null);
-
-    if (c != null && c.getCount()>0) {
-      c.moveToFirst();
-      badTrips = c.getCount();
-
-      while (!c.isAfterLast()) {
-        long tripid = c.getInt(0);
-        deleteAllCoordsForTrip(tripid);
-        c.moveToNext();
-      }
-    }
-    c.close();
-    if (badTrips>0) {
-      db_.delete(DATA_TABLE_TRIPS, K_TRIP_STATUS + "=" + TripData.STATUS_RECORDING, null);
-    }
-    return badTrips;
-  }
-
   /**
    * Return a Cursor positioned at the trip that matches the given rowId
    *

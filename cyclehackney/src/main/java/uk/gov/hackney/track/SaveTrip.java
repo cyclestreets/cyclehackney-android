@@ -8,13 +8,9 @@ import java.util.Map.Entry;
 import java.util.TimeZone;
 
 import android.app.Activity;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.text.Html;
 import android.view.View;
 import android.view.WindowManager;
@@ -29,7 +25,8 @@ import android.widget.ToggleButton;
 import uk.gov.hackney.CycleHackney;
 import uk.gov.hackney.R;
 
-public class SaveTrip extends Activity implements View.OnClickListener {
+public class SaveTrip extends Activity
+    implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
   public static void start(final Context context, final long tripid) {
     final Intent fi = new Intent(context, SaveTrip.class);
     fi.putExtra("showtrip", tripid);
@@ -37,9 +34,9 @@ public class SaveTrip extends Activity implements View.OnClickListener {
   } // start
 
   private final Map<Integer, ToggleButton> purpButtons = new HashMap<Integer,ToggleButton>();
-  private String purpose = "";
   private final Map <Integer, String> purpDescriptions = new HashMap<Integer, String>();
   private TripData trip_;
+  private String purpose_;
 
   // Set up the purpose buttons to be one-click only
   private void preparePurposeButtons() {
@@ -69,28 +66,9 @@ public class SaveTrip extends Activity implements View.OnClickListener {
     purpDescriptions.put(R.id.ToggleOther,
         "<b>Other:</b> if none of the other reasons applied to this trip, you can enter comments below to tell us more.");
 
-    CheckListener cl = new CheckListener();
-    for (Entry<Integer, ToggleButton> e: purpButtons.entrySet()) {
-      e.getValue().setOnCheckedChangeListener(cl);
-    }
-  }
-
-  // Called every time a purp togglebutton is changed:
-  private class CheckListener implements CompoundButton.OnCheckedChangeListener {
-    @Override
-    public void onCheckedChanged(CompoundButton v, boolean isChecked) {
-      // First, uncheck all purp buttons
-      if (isChecked) {
-        for (Entry<Integer, ToggleButton> e: purpButtons.entrySet()) {
-          e.getValue().setChecked(false);
-        }
-        v.setChecked(true);
-        purpose = v.getText().toString();
-        ((TextView) findViewById(R.id.TextPurpDescription)).setText(
-            Html.fromHtml(purpDescriptions.get(v.getId())));
-      }
-    }
-  }
+    for (Entry<Integer, ToggleButton> e: purpButtons.entrySet())
+      e.getValue().setOnCheckedChangeListener(this);
+  } // preparePurposeButtons
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -102,7 +80,7 @@ public class SaveTrip extends Activity implements View.OnClickListener {
     trip_ = TripData.fetchTrip(this, journeyId);
 
     // Set up trip purpose buttons
-    purpose = "";
+    purpose_ = "";
     preparePurposeButtons();
 
     // Discard btn
@@ -111,6 +89,7 @@ public class SaveTrip extends Activity implements View.OnClickListener {
 
     // Submit btn
     final Button btnSubmit = (Button)findViewById(R.id.ButtonSubmit);
+    btnSubmit.setOnClickListener(this);
     btnSubmit.setEnabled(false);
 
     // Don't pop up the soft keyboard until user clicks!
@@ -135,52 +114,51 @@ public class SaveTrip extends Activity implements View.OnClickListener {
   } // discardTrip
 
   private void uploadTrip() {
+    if (purpose_.equals("")) {
+      // Oh no!  No trip purpose!
+      Toast.makeText(getBaseContext(), "You must select a trip purpose before submitting! Choose from the purposes above.", Toast.LENGTH_SHORT).show();
+      return;
+    }
 
+    EditText notes = (EditText)findViewById(R.id.NotesField);
+
+    String fancyStartTime = DateFormat.getInstance().format(trip_.startTime());
+
+    // "3.5 miles in 26 minutes"
+    SimpleDateFormat sdf = new SimpleDateFormat("m");
+    sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+    String minutes = sdf.format(trip_.elapsed());
+    String fancyEndInfo = String.format("%1.1f miles, %s minutes.  %s",
+        trip_.distanceTravelled(),
+        minutes,
+        notes.getEditableText().toString());
+
+    // Save the trip details to the phone database. W00t!
+    trip_.updateTrip(purpose_,
+        fancyStartTime,
+        fancyEndInfo,
+        notes.getEditableText().toString());
+
+    trip_.upload();
+
+    CycleHackney.start(this);
+    finish();
   } // uploadTrip
 
-  // submit btn is only activated after the service.finishedRecording() is completed.
-  private void activateSubmitButton() {
+  @Override
+  public void onCheckedChanged(CompoundButton v, boolean isChecked) {
+    if (!isChecked)
+      return;
+
+    for (Entry<Integer, ToggleButton> e: purpButtons.entrySet())
+      e.getValue().setChecked(false);
+
+    v.setChecked(true);
+    purpose_ = v.getText().toString();
+    ((TextView)findViewById(R.id.TextPurpDescription)).setText(
+       Html.fromHtml(purpDescriptions.get(v.getId())));
+
     final Button btnSubmit = (Button) findViewById(R.id.ButtonSubmit);
-    //final Intent xi = new Intent(this, ShowMap.class);
     btnSubmit.setEnabled(true);
-
-    btnSubmit.setOnClickListener(new View.OnClickListener() {
-      public void onClick(View v) {
-
-        //trip.populateDetails();
-
-        // Make sure trip purpose has been selected
-        if (purpose.equals("")) {
-          // Oh no!  No trip purpose!
-          Toast.makeText(getBaseContext(), "You must select a trip purpose before submitting! Choose from the purposes above.", Toast.LENGTH_SHORT).show();
-          return;
-        }
-
-        EditText notes = (EditText) findViewById(R.id.NotesField);
-
-        String fancyStartTime = DateFormat.getInstance().format(trip_.startTime());
-
-        // "3.5 miles in 26 minutes"
-        SimpleDateFormat sdf = new SimpleDateFormat("m");
-        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-        String minutes = sdf.format(trip_.elapsed());
-        String fancyEndInfo = String.format("%1.1f miles, %s minutes.  %s",
-            trip_.distanceTravelled(),
-            minutes,
-            notes.getEditableText().toString());
-
-        // Save the trip details to the phone database. W00t!
-        trip_.updateTrip(
-            purpose,
-            fancyStartTime, fancyEndInfo,
-            notes.getEditableText().toString());
-
-        // Force-drop the soft keyboard for performance
-        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-
-        SaveTrip.this.finish();
-      }
-    });
-  }
-}
+  } // onCheckedChanged
+} // SaveTrip

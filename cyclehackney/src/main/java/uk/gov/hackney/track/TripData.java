@@ -196,4 +196,8 @@ public class TripData {
         lathigh, latlow, lgthigh, lgtlow, distance);
     mDb.close();
   }
-}
+
+  public void upload() {
+    updateTripStatus(STATUS_COMPLETE);
+  } // upload
+} // TripData
