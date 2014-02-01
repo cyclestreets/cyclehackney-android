@@ -238,24 +238,4 @@ public class RecordingService extends Service implements LocationListener {
       recordActivity.updateStatus(curSpeed, maxSpeed);
     }
   } // notifyListeners
-
-  public static void isAlreadyActive(final Activity activity) {
-    // check to see if already recording here
-    Intent rService = new Intent(activity, RecordingService.class);
-    ServiceConnection sc = new ServiceConnection() {
-      public void onServiceDisconnected(ComponentName name) {}
-      public void onServiceConnected(ComponentName name, IBinder service) {
-        IRecordService rs = (IRecordService)service;
-        int state = rs.getState();
-        if (state == RecordingService.STATE_RECORDING) {
-          activity.startActivity(new Intent(activity, RecordingActivity.class));
-          activity.finish();
-        }
-        activity.unbindService(this); // race?  this says we no longer care
-      }
-    };
-    // This needs to block until the onServiceConnected (above) completes.
-    // Thus, we can check the recording status before continuing on.
-    activity.bindService(rService, sc, Context.BIND_AUTO_CREATE);
-  } // isAlreadyActive
 } // RecordingService
