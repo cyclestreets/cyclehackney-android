@@ -6,10 +6,12 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.provider.Settings.System;
 
 import net.cyclestreets.api.ApiClient;
 
-import java.util.List;
+import org.json.JSONObject;
+
 import java.util.Random;
 
 import uk.gov.hackney.R;
@@ -39,10 +41,13 @@ public class TripDataUploader extends AsyncTask<Void, Void, Boolean> {
       if (new Random().nextFloat() < 0.5)
         throw new RuntimeException("Poop");
 
-      final byte[] resultBytes = ApiClient.postApiRaw("/v2/gpstrack.add");
-      final String result = new String(resultBytes, "UTF-8");
+      final byte[] resultBytes = ApiClient.postApiRaw("/v2/gpstrack.add",
+                     "purpose", tripData_.purp,
+                     "start", tripData_.startTime(),
+                     "end", tripData_.endTime(),
+                     "device", deviceId());
+      final JSONObject result = parse(resultBytes);
 
-      notification(result);
 
       tripData_.successfullyUploaded();
       cancelNotification();
@@ -50,7 +55,24 @@ public class TripDataUploader extends AsyncTask<Void, Void, Boolean> {
       warning("Upload failed.");
     }
     return true;
-  }
+  } // doInBackground
+
+  private String deviceId() {
+    String androidId = System.getString(context_.getContentResolver(), System.ANDROID_ID);
+    String androidBase = "androidDeviceId-";
+
+    if (androidId == null) { // This happens when running in the Emulator
+      final String emulatorId = "android-RunningAsTestingDeleteMe";
+      return emulatorId;
+    }
+    String deviceId = androidBase.concat(androidId);
+    return deviceId;
+  } // deviceId
+
+  private JSONObject parse(final byte[] result) throws Exception {
+    final String s = new String(result, "UTF-8");
+    return new JSONObject(s);
+  } // parse
 
   private void notification(final String text) {
     showNotification(text, Notification.FLAG_NO_CLEAR | Notification.FLAG_ONGOING_EVENT);
@@ -67,7 +89,7 @@ public class TripDataUploader extends AsyncTask<Void, Void, Boolean> {
   }
 
   private Notification createNotification(final String text, final int flags) {
-    final Notification notification = new Notification(R.drawable.icon25, text, System.currentTimeMillis());
+    final Notification notification = new Notification(R.drawable.icon25, text, java.lang.System.currentTimeMillis());
     notification.flags = flags;
     final Intent notificationIntent = new Intent(context_, CycleHackney.class);
     final PendingIntent contentIntent = PendingIntent.getActivity(context_, 0, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);

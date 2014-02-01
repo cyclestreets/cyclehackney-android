@@ -130,6 +130,7 @@ public class TripData {
   public BoundingBoxE6 boundingBox() { return new BoundingBoxE6(lathigh, lgtlow, latlow, lgthigh); }
 	public Iterable<GeoPoint> journey() { return gpspoints;	}
   public double startTime() { return startTime; }
+  public double endTime() { return endTime; }
   public double elapsed() {
     if(status == STATUS_RECORDING)
       return System.currentTimeMillis() - startTime;
