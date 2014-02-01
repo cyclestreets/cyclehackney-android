@@ -182,6 +182,10 @@ public class TripData {
     updateTrip();
   }
 
+  public void successfullyUploaded() {
+    updateTripStatus(STATUS_COMPLETE);
+  } // successfullyUploaded
+
   private void updateTripStatus(int tripStatus) {
     mDb.open();
     mDb.updateTripStatus(tripid, tripStatus);
@@ -197,7 +201,4 @@ public class TripData {
     mDb.close();
   }
 
-  public void upload() {
-    updateTripStatus(STATUS_COMPLETE);
-  } // upload
 } // TripData

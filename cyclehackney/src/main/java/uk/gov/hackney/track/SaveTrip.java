@@ -139,7 +139,7 @@ public class SaveTrip extends Activity
         fancyEndInfo,
         notes.getEditableText().toString());
 
-    trip_.upload();
+    TripDataUploader.upload(this, trip_);
 
     CycleHackney.start(this);
     finish();

@@ -15,10 +15,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="14f8d852-f31b-49ca-9150-c782d0f177bc" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/DbAdapter.java" afterPath="$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/DbAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/LogJourneyFragment.java" afterPath="$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/LogJourneyFragment.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/TripDataUploader.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/SaveTrip.java" afterPath="$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/SaveTrip.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/TripData.java" afterPath="$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/TripData.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="hackney.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -129,68 +129,30 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="RecordingActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/RecordingActivity.java">
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="111" column="0" selection-start="3378" selection-end="3378" vertical-scroll-proportion="0.0" vertical-offset="1171" max-vertical-offset="2190">
+            <state line="30" column="80" selection-start="1332" selection-end="1348" vertical-scroll-proportion="0.0" vertical-offset="227" max-vertical-offset="585">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SaveTrip.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/SaveTrip.java">
+      <file leaf-file-name="ApiClient.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libraries/cyclestreets-core/src/main/java/net/cyclestreets/api/ApiClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="129" column="49" selection-start="5389" selection-end="5389" vertical-scroll-proportion="0.2265861" vertical-offset="1860" max-vertical-offset="2550">
+            <state line="415" column="42" selection-start="15032" selection-end="15032" vertical-scroll-proportion="0.0" vertical-offset="6070" max-vertical-offset="6840">
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1113#1135#0" expanded="true" />
-                <element signature="e#1207#1224#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CycleHackney.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/CycleHackney.java">
+      <file leaf-file-name="TripDataUploader.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/TripDataUploader.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="39" selection-start="668" selection-end="668" vertical-scroll-proportion="0.0" vertical-offset="91" max-vertical-offset="435">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LogJourneyFragment.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/LogJourneyFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="76" column="36" selection-start="2926" selection-end="2926" vertical-scroll-proportion="0.0" vertical-offset="582" max-vertical-offset="1335">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DbAdapter.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/DbAdapter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="195" column="0" selection-start="6692" selection-end="6692" vertical-scroll-proportion="0.0" vertical-offset="2835" max-vertical-offset="3735">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RecordingService.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/RecordingService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="260" column="0" selection-start="7926" selection-end="7926" vertical-scroll-proportion="0.0" vertical-offset="3033" max-vertical-offset="3585">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TripData.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/TripData.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="199" column="24" selection-start="5986" selection-end="5986" vertical-scroll-proportion="0.0" vertical-offset="2789" max-vertical-offset="3135">
+            <state line="41" column="72" selection-start="1161" selection-end="1161" vertical-scroll-proportion="0.76086956" vertical-offset="300" max-vertical-offset="1380">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -1729,8 +1691,10 @@
         <option value="$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/RecordingService.java" />
         <option value="$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/DbAdapter.java" />
         <option value="$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/LogJourneyFragment.java" />
-        <option value="$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/SaveTrip.java" />
         <option value="$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/TripData.java" />
+        <option value="$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/SaveTrip.java" />
+        <option value="$PROJECT_DIR$/libraries/cyclestreets-core/src/main/java/net/cyclestreets/api/ApiClient.java" />
+        <option value="$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/TripDataUploader.java" />
       </list>
     </option>
   </component>
@@ -1984,6 +1948,122 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="overlay" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hackney" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hackney" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cyclestreets-core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hackney" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hackney" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cyclestreets-core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hackney" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hackney" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cyclestreets-core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cyclestreets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hackney" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hackney" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cyclestreets-core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cyclestreets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="api" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -2328,7 +2408,7 @@
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3282572" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32467532" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.37394246" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23350254" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32930514" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3293718" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -2392,11 +2472,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/libraries/cyclestreets-fragments/src/main/java/net/cyclestreets/CycleStreetsAppSupport.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="0" selection-start="492" selection-end="492" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/libraries/cyclestreets-fragments/src/main/java/net/cyclestreets/MainTabbedActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="88" column="0" selection-start="2798" selection-end="2798" vertical-scroll-proportion="0.0" vertical-offset="607" max-vertical-offset="4440" />
@@ -2500,11 +2575,6 @@
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="446" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/libraries/cyclestreets-core/src/main/java/net/cyclestreets/api/ApiClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="437" column="0" selection-start="15740" selection-end="15740" vertical-scroll-proportion="0.53636366" vertical-offset="6260" max-vertical-offset="6810" />
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.osmdroid/osmdroid-android/3.0.8/4992d81fdbbb2065483d2c9ea063f4a539e7309d/osmdroid-android-3.0.8.jar!/org/osmdroid/util/BoundingBoxE6.class">
       <provider selected="true" editor-type-id="text-editor">
         <state line="54" column="13" selection-start="2546" selection-end="2546" vertical-scroll-proportion="0.6857143" vertical-offset="450" max-vertical-offset="975" />
@@ -2584,13 +2654,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="51" selection-start="1209" selection-end="1209" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="585">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/JourneyOverlay.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="97" column="11" selection-start="3255" selection-end="3255" vertical-scroll-proportion="0.0" vertical-offset="1050" max-vertical-offset="2415">
@@ -2647,13 +2710,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/CycleHackney.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="39" selection-start="668" selection-end="668" vertical-scroll-proportion="0.0" vertical-offset="91" max-vertical-offset="435">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/DbAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="195" column="0" selection-start="6692" selection-end="6692" vertical-scroll-proportion="0.0" vertical-offset="2835" max-vertical-offset="3735">
@@ -2677,14 +2733,23 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/RecordingService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="260" column="0" selection-start="7926" selection-end="7926" vertical-scroll-proportion="0.0" vertical-offset="3033" max-vertical-offset="3585">
+        <state line="25" column="0" selection-start="682" selection-end="707" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3915">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/CycleHackney.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="39" selection-start="668" selection-end="668" vertical-scroll-proportion="0.0" vertical-offset="91" max-vertical-offset="435">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/TripData.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="199" column="24" selection-start="5986" selection-end="5986" vertical-scroll-proportion="0.0" vertical-offset="2789" max-vertical-offset="3135">
+        <state line="186" column="27" selection-start="5557" selection-end="5557" vertical-scroll-proportion="0.0" vertical-offset="2608" max-vertical-offset="3150">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -2693,11 +2758,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/SaveTrip.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="129" column="49" selection-start="5389" selection-end="5389" vertical-scroll-proportion="0.2265861" vertical-offset="1860" max-vertical-offset="2550">
+        <state line="129" column="49" selection-start="5389" selection-end="5389" vertical-scroll-proportion="0.0" vertical-offset="1860" max-vertical-offset="2550">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1113#1135#0" expanded="true" />
             <element signature="e#1207#1224#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="80" selection-start="1332" selection-end="1348" vertical-scroll-proportion="0.0" vertical-offset="227" max-vertical-offset="585">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libraries/cyclestreets-core/src/main/java/net/cyclestreets/api/ApiClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="415" column="42" selection-start="15032" selection-end="15032" vertical-scroll-proportion="0.0" vertical-offset="6070" max-vertical-offset="6840">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cyclehackney/src/main/java/uk/gov/hackney/track/TripDataUploader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="72" selection-start="1161" selection-end="1161" vertical-scroll-proportion="0.76086956" vertical-offset="300" max-vertical-offset="1380">
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
