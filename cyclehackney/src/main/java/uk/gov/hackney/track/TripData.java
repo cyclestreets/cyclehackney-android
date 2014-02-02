@@ -159,6 +159,8 @@ public class TripData {
   public String purpose() { return purp_; }
   public String info() { return info_; }
   public String fancyStart() { return fancystart_; }
+  public String age() { return age_; }
+  public String gender() { return gender_; }
 
   public void addPointNow(Location loc) {
     int lat = (int)(loc.getLatitude() * 1E6);
@@ -214,6 +216,11 @@ public class TripData {
     mDb.open();
     mDb.updateTrip(tripid, purpose, startTime_, fancyStart, fancyInfo, notes, age, gender, distance);
     mDb.close();
+
+    purp_ = purpose;
+    note_ = notes;
+    age_ = age;
+    gender_ = gender;
   } // updateTrip
 
 } // TripData
