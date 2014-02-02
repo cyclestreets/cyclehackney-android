@@ -129,6 +129,7 @@ public class SaveTrip extends Activity
                      notes.getEditableText().toString(),
                      age_.getSelectedItem().toString(),
                      gender_.getSelectedItem().toString());
+    trip_.metaDataComplete();
 
     SharedPreferences.Editor e = prefs_.edit();
     e.putInt("age", age_.getSelectedItemPosition());

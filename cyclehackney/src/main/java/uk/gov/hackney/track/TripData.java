@@ -27,8 +27,10 @@ public class TripData {
   private DbAdapter mDb;
 
   public static int STATUS_RECORDING = 0;
+  public static int STATUS_RECORDING_COMPLETE = 5;
   public static int STATUS_COMPLETE_UNSENT = 1;
   public static int STATUS_COMPLETE = 2;
+  public static int STATUS_COMPLETE_FAILED = 3;
 
   public static TripData createTrip(Context c) {
     TripData t = new TripData(c.getApplicationContext(), 0);
@@ -190,13 +192,10 @@ public class TripData {
     return;
   } // addPointNow
 
-  public void recordingStopped() {
-    updateTripStatus(STATUS_COMPLETE_UNSENT);
-  }
-
-  public void successfullyUploaded() {
-    updateTripStatus(STATUS_COMPLETE);
-  } // successfullyUploaded
+  public void recordingStopped() { updateTripStatus(STATUS_RECORDING_COMPLETE); }
+  public void metaDataComplete() { updateTripStatus(STATUS_COMPLETE_UNSENT);}
+  public void successfullyUploaded() { updateTripStatus(STATUS_COMPLETE); }
+  public void uploadFailed() { updateTripStatus(STATUS_COMPLETE_FAILED); }
 
   private void updateTripStatus(int tripStatus) {
     mDb.open();

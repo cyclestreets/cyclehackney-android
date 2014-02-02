@@ -52,6 +52,7 @@ public class TripDataUploader extends AsyncTask<Void, Void, Boolean> {
       tripData_.successfullyUploaded();
       cancelNotification();
     } catch (final Exception e) {
+      tripData_.uploadFailed();
       warning("Upload failed.");
     }
     return true;
