@@ -9,9 +9,11 @@ import android.os.AsyncTask;
 import android.provider.Settings.System;
 
 import net.cyclestreets.api.ApiClient;
+import net.cyclestreets.util.ListFactory;
 
 import org.json.JSONObject;
 
+import java.util.List;
 import java.util.Random;
 
 import uk.gov.hackney.R;
@@ -22,39 +24,44 @@ public class TripDataUploader extends AsyncTask<Void, Void, Boolean> {
   private int NOTIFICATION_ID = 1;
 
   public static void upload(final Context context, final TripData tripData) {
+    upload(context, ListFactory.list(tripData));
+  }
+
+  public static void upload(final Context context, final List<TripData> tripData) {
     final TripDataUploader tdu = new TripDataUploader(context, tripData);
     tdu.execute();
   }
 
   private Context context_;
-  private TripData tripData_;
+  private List<TripData> tripData_;
 
-  private TripDataUploader(final Context context, final TripData tripData) {
+  private TripDataUploader(final Context context, final List<TripData> tripData) {
     context_ = context;
     tripData_ = tripData;
   } // UploadDataTask
 
   protected Boolean doInBackground(Void... p) {
-    try  {
-      notification("Uploading trip ...");
-      Thread.sleep(1000);
-      if (new Random().nextFloat() < 0.5)
-        throw new RuntimeException("Poop");
+    for (final TripData td : tripData_) {
+      try  {
+        notification("Uploading trip ...");
 
-      final byte[] resultBytes = ApiClient.postApiRaw("/v2/gpstrack.add",
-                     "purpose", tripData_.purpose(),
-                     "start", tripData_.startTime(),
-                     "end", tripData_.endTime(),
-                     "notes", tripData_.notes());
-      final JSONObject result = parse(resultBytes);
+        final byte[] resultBytes = ApiClient.postApiRaw("/v2/gpstracks.add",
+                       "purpose", td.purpose(),
+                       "start", td.startTime(),
+                       "end", td.endTime(),
+                       "notes", td.notes());
+        final JSONObject result = parse(resultBytes);
 
+        if (result.has("error") && result.getString("error").length() != 0)
+          throw new RuntimeException("Poop");
 
-      tripData_.successfullyUploaded();
-      cancelNotification();
-    } catch (final Exception e) {
-      tripData_.uploadFailed();
-      warning("Upload failed.");
-    }
+        td.successfullyUploaded();
+        cancelNotification();
+      } catch (final Exception e) {
+        td.uploadFailed();
+        warning("Upload failed.");
+      }
+    } // for ...
     return true;
   } // doInBackground
 

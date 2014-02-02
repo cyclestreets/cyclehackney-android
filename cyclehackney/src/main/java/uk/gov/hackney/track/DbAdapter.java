@@ -7,6 +7,9 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DbAdapter {
   private static final int DATABASE_VERSION = 21;
 
@@ -90,6 +93,31 @@ public class DbAdapter {
 
     return -1;
   } // availableForUpload
+
+  public static List<Integer> unUploadedTrips(final Context context) {
+    final List<Integer> result = new ArrayList<Integer>();
+    final DbAdapter db = new DbAdapter(context.getApplicationContext());
+    db.openReadOnly();
+
+    Cursor c = null;
+    try {
+      c = db.db_.query(DATA_TABLE_TRIPS,
+          new String[]{ K_TRIP_ROWID },
+          K_TRIP_STATUS + "=" + TripData.STATUS_COMPLETE_UNSENT + " or " + K_TRIP_STATUS + "=" + TripData.STATUS_COMPLETE_FAILED,
+          null, null, null, null);
+      c.moveToFirst();
+      while(!c.isAfterLast()) {
+        int id = c.getInt(c.getColumnIndex(K_TRIP_ROWID));
+        result.add(id);
+        c.moveToNext();
+      } // while
+    } finally {
+      c.close();
+      db.close();
+    }
+
+    return result;
+  } // unUploadedTrips
 
   public DbAdapter(final Context ctx) {
     context_ = ctx;

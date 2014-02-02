@@ -14,12 +14,16 @@ import net.cyclestreets.PhotoMapFragment;
 import net.cyclestreets.AboutFragment;
 import net.cyclestreets.fragments.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import uk.gov.hackney.track.DbAdapter;
 import uk.gov.hackney.track.IRecordService;
 import uk.gov.hackney.track.RecordingActivity;
 import uk.gov.hackney.track.RecordingService;
 import uk.gov.hackney.track.SaveTrip;
 import uk.gov.hackney.track.TripData;
+import uk.gov.hackney.track.TripDataUploader;
 
 public class CycleHackney extends MainTabbedActivity {
   public static void start(final Context context) {
@@ -31,9 +35,11 @@ public class CycleHackney extends MainTabbedActivity {
     super.onCreate(savedInstanceState);
 
     isAlreadyActive(this);
+
+    uploadLeftOverTrips();
   } // onCreate
 
-  void isAlreadyActive(final Activity activity) {
+  private void isAlreadyActive(final Activity activity) {
     // check to see if already recording here
     Intent rService = new Intent(activity, RecordingService.class);
     ServiceConnection sc = new ServiceConnection() {
@@ -59,6 +65,18 @@ public class CycleHackney extends MainTabbedActivity {
     // Thus, we can check the recording status before continuing on.
     activity.bindService(rService, sc, Context.BIND_AUTO_CREATE);
   } // isAlreadyActive
+
+  private void uploadLeftOverTrips() {
+    final List<Integer> trips = DbAdapter.unUploadedTrips(this);
+    if (trips.size() == 0)
+      return;
+
+    final List<TripData> tripData = new ArrayList<TripData>();
+    for (int id : trips)
+      tripData.add(TripData.fetchTrip(this, id));
+
+    TripDataUploader.upload(this, tripData);
+  } // uploadLeftOverTrips
 
   protected void addTabs(final TabHost tabHost) {
     addTab("Journey Log", R.drawable.ic_menu_live_ride, LogJourneyFragment.class);
