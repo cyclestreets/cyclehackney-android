@@ -9,16 +9,20 @@ import java.util.Map.Entry;
 import java.util.TimeZone;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,11 +47,14 @@ public class SaveTrip extends Activity
   private String purpose_;
   private Spinner age_;
   private Spinner gender_;
+  private SharedPreferences prefs_;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.save);
+
+    prefs_ = getSharedPreferences("PersonalInfo", Application.MODE_PRIVATE);
 
     final Bundle cmds = getIntent().getExtras();
     final long journeyId = cmds.getLong("showtrip");
@@ -70,6 +77,7 @@ public class SaveTrip extends Activity
     setupAge(age_);
 
     gender_ = viewById(R.id.gender);
+    setupGender(gender_);
 
     // Don't pop up the soft keyboard until user clicks!
     getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -119,8 +127,13 @@ public class SaveTrip extends Activity
                      fancyStartTime,
                      fancyEndInfo,
                      notes.getEditableText().toString(),
-                     "", /*age*/
-                     "" /*gender*/);
+                     age_.getSelectedItem().toString(),
+                     gender_.getSelectedItem().toString());
+
+    SharedPreferences.Editor e = prefs_.edit();
+    e.putInt("age", age_.getSelectedItemPosition());
+    e.putInt("gender", gender_.getSelectedItemPosition());
+    e.commit();
 
     TripDataUploader.upload(this, trip_);
 
@@ -136,7 +149,20 @@ public class SaveTrip extends Activity
                                                "45-64",
                                                "75-84",
                                                "85+");
-    //age.setAdapter(new ListAdapter(ages));
+    age.setPrompt("Please select age");
+    age.setAdapter(new SpinnerList(this, ages));
+    int index = prefs_.getInt("age", -1);
+    age.setSelection(index);
+  }
+
+  private void setupGender(final Spinner gender) {
+    final List<String> genders = ListFactory.list("male",
+                                                  "female",
+                                                  "prefer not to say");
+    gender.setPrompt("Please select gender");
+    gender.setAdapter(new SpinnerList(this, genders));
+    int index = prefs_.getInt("gender", -1);
+    gender.setSelection(index);
   }
 
   private void setupPurposeButtons() {
@@ -186,4 +212,32 @@ public class SaveTrip extends Activity
     final Button btnSubmit = (Button) findViewById(R.id.ButtonSubmit);
     btnSubmit.setEnabled(true);
   } // onCheckedChanged
+
+  ///////////////////////
+  static private class SpinnerList extends BaseAdapter {
+    private final LayoutInflater inflater_;
+    private final List<String> list_;
+
+    public SpinnerList(final Context context, final List<String> list) {
+      inflater_ = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+      list_ = list;
+    } // CategoryAdapter
+
+    @Override
+    public int getCount() { return list_.size(); }
+    @Override
+    public String getItem(final int position) { return list_.get(position); } // getItem
+    @Override
+    public long getItemId(final int position) { return position; } // getItemId
+
+    @Override
+    public View getView(final int position, final View convertView, final ViewGroup parent)
+    {
+      final int id = (parent instanceof Spinner) ? android.R.layout.simple_spinner_item : android.R.layout.simple_spinner_dropdown_item;
+      final TextView tv = (TextView)inflater_.inflate(id, parent, false);
+      tv.setText(getItem(position));
+      return tv;
+    } // getView
+  } // SpinnerList
+
 } // SaveTrip

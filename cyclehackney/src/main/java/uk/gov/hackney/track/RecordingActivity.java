@@ -111,12 +111,15 @@ public class RecordingActivity extends Activity
 
       SaveTrip.start(this, trip_.id());
     } else {
-      rs_.cancelRecording();
+      rs_.finishRecording();
+
+      SaveTrip.start(this, trip_.id());
+      //rs_.cancelRecording();
 
       // Otherwise, cancel and go back to main screen
-      Toast.makeText(getBaseContext(),"No GPS data acquired; nothing to submit.", Toast.LENGTH_SHORT).show();
+      //Toast.makeText(getBaseContext(),"No GPS data acquired; nothing to submit.", Toast.LENGTH_SHORT).show();
 
-      CycleHackney.start(this);
+      //CycleHackney.start(this);
     } // if ...
 
     finish();
