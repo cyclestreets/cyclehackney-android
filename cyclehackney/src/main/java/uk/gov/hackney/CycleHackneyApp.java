@@ -14,16 +14,5 @@ public class CycleHackneyApp extends Application {
     super.onCreate();
 
     CycleStreetsAppSupport.initialise(this);
-
-    /*if (DbAdapter.availableForUpload(this)) {
-      MessageBox.YesNo(this,
-          "You have trips that need to be uploaded.  Do you want to upload them now?",
-          new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface arg0, int arg1) {
-
-            }
-          }
-      );
-    } */
   } // onCreate
 } // CycleStreetsApp

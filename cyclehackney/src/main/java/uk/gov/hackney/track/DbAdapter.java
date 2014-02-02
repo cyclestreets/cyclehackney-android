@@ -69,20 +69,26 @@ public class DbAdapter {
     }
   } // DatabaseHelper
 
-  public static boolean availableForUpload(final Context context) {
+  public static int unfinishedTrip(final Context context) {
     final DbAdapter db = new DbAdapter(context.getApplicationContext());
     db.openReadOnly();
 
-    final Cursor c = db.db_.query(DATA_TABLE_TRIPS,
-        new String[]{K_TRIP_ROWID, K_TRIP_STATUS},
-        K_TRIP_STATUS + "=" + TripData.STATUS_COMPLETE_UNSENT,
-        null, null, null, null);
+    Cursor c = null;
+    try {
+      c = db.db_.query(DATA_TABLE_TRIPS,
+                new String[]{ K_TRIP_ROWID },
+                K_TRIP_STATUS + "=" + TripData.STATUS_RECORDING_COMPLETE,
+                null, null, null, null);
+      if (c.getCount() != 0) {
+        c.moveToFirst();
+        return c.getInt(c.getColumnIndex(K_TRIP_ROWID));
+      } // if ...
+    } finally {
+      c.close();
+      db.close();
+    }
 
-    boolean available = c.getCount() != 0;
-    c.close();
-    db.close();
-
-    return available;
+    return -1;
   } // availableForUpload
 
   public DbAdapter(final Context ctx) {

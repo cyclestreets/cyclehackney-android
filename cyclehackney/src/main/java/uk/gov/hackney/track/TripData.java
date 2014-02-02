@@ -214,6 +214,6 @@ public class TripData {
     mDb.open();
     mDb.updateTrip(tripid, purpose, startTime_, fancyStart, fancyInfo, notes, age, gender, distance);
     mDb.close();
-  }
+  } // updateTrip
 
 } // TripData

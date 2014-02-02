@@ -14,9 +14,12 @@ import net.cyclestreets.PhotoMapFragment;
 import net.cyclestreets.AboutFragment;
 import net.cyclestreets.fragments.R;
 
+import uk.gov.hackney.track.DbAdapter;
 import uk.gov.hackney.track.IRecordService;
 import uk.gov.hackney.track.RecordingActivity;
 import uk.gov.hackney.track.RecordingService;
+import uk.gov.hackney.track.SaveTrip;
+import uk.gov.hackney.track.TripData;
 
 public class CycleHackney extends MainTabbedActivity {
   public static void start(final Context context) {
@@ -41,7 +44,13 @@ public class CycleHackney extends MainTabbedActivity {
         if (state == RecordingService.STATE_RECORDING) {
           activity.startActivity(new Intent(activity, RecordingActivity.class));
           activity.finish();
-        } // if ...
+        } else {
+          int unfinishedTrip = DbAdapter.unfinishedTrip(activity);
+          if (unfinishedTrip != -1) {
+            SaveTrip.start(activity, unfinishedTrip);
+            activity.finish();
+          }
+        }
 
         activity.unbindService(this); // race?  this says we no longer care
       }
