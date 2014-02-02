@@ -11,9 +11,13 @@ import android.provider.Settings.System;
 import net.cyclestreets.api.ApiClient;
 import net.cyclestreets.util.ListFactory;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import uk.gov.hackney.R;
@@ -46,10 +50,19 @@ public class TripDataUploader extends AsyncTask<Void, Void, Boolean> {
         notification("Uploading trip ...");
 
         final byte[] resultBytes = ApiClient.postApiRaw("/v2/gpstracks.add",
+                       "username", "",
+                       "password", "",
+                       "version", 1,
+                       "notes", td.notes(),
                        "purpose", td.purpose(),
                        "start", td.startTime(),
                        "end", td.endTime(),
-                       "notes", td.notes());
+                       "userAge", td.age(),
+                       "userGender", td.gender(),
+                       "coords", coordsAsJSON(td),
+                       "device", deviceId(),
+                       "format", "atlanta"
+            );
         final JSONObject result = parse(resultBytes);
 
         if (result.has("error") && result.getString("error").length() != 0)
@@ -82,6 +95,36 @@ public class TripDataUploader extends AsyncTask<Void, Void, Boolean> {
     return new JSONObject(s);
   } // parse
 
+  private static final String TRIP_COORDS_TIME = "rec";
+  private static final String TRIP_COORDS_LAT = "lat";
+  private static final String TRIP_COORDS_LON = "lon";
+  private static final String TRIP_COORDS_ALT = "alt";
+  private static final String TRIP_COORDS_SPEED = "spd";
+  private static final String TRIP_COORDS_HACCURACY = "hac";
+  private static final String TRIP_COORDS_VACCURACY = "vac";
+
+  private String coordsAsJSON(final TripData tripData) throws JSONException {
+    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+    JSONObject tripCoords = new JSONObject();
+
+    for(CyclePoint cp : tripData.journey()) {
+      JSONObject coord = new JSONObject();
+
+      coord.put(TRIP_COORDS_TIME, cp.time);
+      coord.put(TRIP_COORDS_LAT, cp.getLatitudeE6()/1e6);
+      coord.put(TRIP_COORDS_LON, cp.getLongitudeE6()/1e6);
+      coord.put(TRIP_COORDS_ALT, cp.getAltitude());
+      coord.put(TRIP_COORDS_SPEED, cp.speed);
+      coord.put(TRIP_COORDS_HACCURACY, cp.accuracy);
+      coord.put(TRIP_COORDS_VACCURACY, cp.accuracy);
+
+      tripCoords.put(coord.getString("rec"), coord);
+    }
+
+    return tripCoords.toString();
+  } // coordsAsJSON
+
   private void notification(final String text) {
     showNotification(text, Notification.FLAG_NO_CLEAR | Notification.FLAG_ONGOING_EVENT);
   } // notification
@@ -104,7 +147,6 @@ public class TripDataUploader extends AsyncTask<Void, Void, Boolean> {
     notification.setLatestEventInfo(context_.getApplicationContext(), "Cycle Hackney", text, contentIntent);
     return notification;
   }
-
 
   private void cancelNotification() {
     nm().cancel(NOTIFICATION_ID);
