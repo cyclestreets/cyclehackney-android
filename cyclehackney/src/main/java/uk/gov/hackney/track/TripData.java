@@ -12,8 +12,8 @@ import java.util.List;
 
 public class TripData {
   private long tripid;
-  private double startTime_ = 0;
-  private double endTime_ = 0;
+  private long startTime_ = 0;
+  private long endTime_ = 0;
   private int status;
   private float distance;
   private String purp_;
@@ -52,15 +52,17 @@ public class TripData {
   }
 
   private void initializeData() {
-    startTime_ = System.currentTimeMillis();
-    endTime_ = System.currentTimeMillis();
+    startTime_ = now();
+    endTime_ = now();
     distance = 0;
 
     purp_ = fancystart_ = info_ = "";
 
     gpspoints = new ArrayList<GeoPoint>();
 
-    updateTrip();
+    mDb.open();
+    mDb.setStartTime(tripid, startTime_);
+    mDb.close();
   }
 
   // Get lat/long extremes, etc, from trip record
@@ -68,9 +70,9 @@ public class TripData {
     mDb.openReadOnly();
 
     Cursor tripdetails = mDb.fetchTrip(tripid);
-    startTime_ = tripdetails.getDouble(tripdetails.getColumnIndex("start"));
+    startTime_ = tripdetails.getInt(tripdetails.getColumnIndex("start"));
     status =  tripdetails.getInt(tripdetails.getColumnIndex("status"));
-    endTime_ = tripdetails.getDouble(tripdetails.getColumnIndex("endtime"));
+    endTime_ = tripdetails.getInt(tripdetails.getColumnIndex("endtime"));
     distance = tripdetails.getFloat(tripdetails.getColumnIndex("distance"));
 
     purp_ = tripdetails.getString(tripdetails.getColumnIndex("purp"));
@@ -101,8 +103,8 @@ public class TripData {
     while (!points.isAfterLast()) {
       int lat = points.getInt(COL_LAT);
       int lgt = points.getInt(COL_LGT);
-      double time = points.getDouble(COL_TIME);
-      float acc = (float) points.getDouble(COL_ACC);
+      long time = points.getInt(COL_TIME);
+      float acc = (float)points.getDouble(COL_ACC);
 
       gpspoints.add(new CyclePoint(lat, lgt, time));
 
@@ -145,13 +147,14 @@ public class TripData {
     return new BoundingBoxE6(lathigh, lgtlow, latlow, lgthigh);
   }
 	public Iterable<GeoPoint> journey() { return gpspoints;	}
-  public double startTime() { return startTime_; }
-  public double endTime() { return endTime_; }
-  public double elapsed() {
+  public long startTime() { return startTime_; }
+  public long endTime() { return endTime_; }
+  public long elapsed() {
     if(status == STATUS_RECORDING)
-      return System.currentTimeMillis() - startTime_;
+      return now() - startTime_;
     return endTime_ - startTime_;
   } // elapsed
+  public long elapsedMS() { return elapsed() * 1000; }
   public float distanceTravelled() {
     return (0.0006212f * distance);
   } // distanceTravelled
@@ -161,6 +164,8 @@ public class TripData {
   public String fancyStart() { return fancystart_; }
   public String age() { return age_; }
   public String gender() { return gender_; }
+
+  private long now() { return System.currentTimeMillis()/1000; }
 
   public void addPointNow(Location loc) {
     int lat = (int)(loc.getLatitude() * 1E6);
@@ -184,17 +189,23 @@ public class TripData {
 
     gpspoints.add(pt);
 
-    endTime_ = loc.getTime();
+    endTime_ = (loc.getTime()/1000);
 
     mDb.open();
     mDb.addCoordToTrip(tripid, pt);
-    mDb.updateTrip(tripid, "", startTime_, "", "", "", "", "", distance);
+    mDb.setDistance(tripid, distance);
     mDb.close();
 
     return;
   } // addPointNow
 
-  public void recordingStopped() { updateTripStatus(STATUS_RECORDING_COMPLETE); }
+  public void recordingStopped() {
+    endTime_ = now();
+    mDb.open();
+    mDb.updateTripStatus(tripid, STATUS_RECORDING_COMPLETE);
+    mDb.setEndTime(tripid, endTime_);
+    mDb.close();
+  }
   public void metaDataComplete() { updateTripStatus(STATUS_COMPLETE_UNSENT);}
   public void successfullyUploaded() { updateTripStatus(STATUS_COMPLETE); }
   public void uploadFailed() { updateTripStatus(STATUS_COMPLETE_FAILED); }
@@ -214,7 +225,7 @@ public class TripData {
                          String gender) {
     // Save the trip details to the phone database. W00t!
     mDb.open();
-    mDb.updateTrip(tripid, purpose, startTime_, fancyStart, fancyInfo, notes, age, gender, distance);
+    mDb.updateNotes(tripid, purpose, fancyStart, fancyInfo, notes, age, gender);
     mDb.close();
 
     purp_ = purpose;

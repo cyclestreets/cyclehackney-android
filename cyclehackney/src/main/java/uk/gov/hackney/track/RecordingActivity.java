@@ -151,7 +151,7 @@ public class RecordingActivity extends Activity
     if (trip_ == null)
       return;
 
-    txtDuration.setText(sdf.format(trip_.elapsed()));
+    txtDuration.setText(sdf.format(trip_.elapsedMS()));
     mapView_.enableAndFollowLocation();
   } // updateTimer
 

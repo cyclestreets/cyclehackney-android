@@ -117,7 +117,7 @@ public class SaveTrip extends Activity
     // "3.5 miles in 26 minutes"
     SimpleDateFormat sdf = new SimpleDateFormat("m");
     sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-    String minutes = sdf.format(trip_.elapsed());
+    String minutes = sdf.format(trip_.elapsedMS());
     String fancyEndInfo = String.format("%1.1f miles, %s minutes.  %s",
         trip_.distanceTravelled(),
         minutes,

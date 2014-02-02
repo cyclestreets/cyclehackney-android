@@ -36,7 +36,7 @@ public class DbAdapter {
 
   private static final String TAG = "DbAdapter";
   private static final String TABLE_CREATE_TRIPS = "create table trips "
-    + "(_id integer primary key autoincrement, purp text, start double, endtime double, "
+    + "(_id integer primary key autoincrement, purp text, start integer, endtime integer, "
     + "fancystart text, fancyinfo text, distance float, note text, age text, gender text, "
       + "status integer);";
 
@@ -193,8 +193,10 @@ public class DbAdapter {
    * created return the new rowId for that trip, otherwise return a -1 to
    * indicate failure.
    */
-  private long createTrip(String purp, double starttime, String fancystart,
-                         String note) {
+  private long createTrip(String purp,
+                          long starttime,
+                          String fancystart,
+                          String note) {
     ContentValues initialValues = new ContentValues();
     initialValues.put(K_TRIP_PURP, purp);
     initialValues.put(K_TRIP_START, starttime);
@@ -206,7 +208,7 @@ public class DbAdapter {
   }
 
   public long createTrip() {
-    return createTrip("", System.currentTimeMillis(), "", "");
+    return createTrip("", System.currentTimeMillis()/1000, "", "");
   }
 
   /**
@@ -266,35 +268,51 @@ public class DbAdapter {
     return mCursor;
   }
 
-  public boolean updateTrip(long tripid,
-                            String purp,
-                            double starttime,
-                            String fancystart,
-                            String fancyinfo,
-                            String note,
-                            String age,
-                            String gender,
-                            float distance) {
+  public boolean updateNotes(long tripid,
+                             String purp,
+                             String fancystart,
+                             String fancyinfo,
+                             String note,
+                             String age,
+                             String gender) {
     ContentValues initialValues = new ContentValues();
     initialValues.put(K_TRIP_PURP, purp);
-    initialValues.put(K_TRIP_START, starttime);
     initialValues.put(K_TRIP_FANCYSTART, fancystart);
     initialValues.put(K_TRIP_NOTE, note);
     initialValues.put(K_TRIP_AGE, age);
     initialValues.put(K_TRIP_GENDER, gender);
     initialValues.put(K_TRIP_FANCYINFO, fancyinfo);
-    initialValues.put(K_TRIP_DISTANCE, distance);
 
     return db_.update(DATA_TABLE_TRIPS,
                       initialValues,
                       K_TRIP_ROWID + "=" + tripid, null) > 0;
   }
 
+  public boolean setDistance(long tripid, float distance) {
+    ContentValues initialValues = new ContentValues();
+    initialValues.put(K_TRIP_DISTANCE, distance);
+
+    return db_.update(DATA_TABLE_TRIPS, initialValues, K_TRIP_ROWID + "=" + tripid, null) > 0;
+  }
+
+  public boolean setStartTime(long tripid, long starttime) {
+    ContentValues initialValues = new ContentValues();
+    initialValues.put(K_TRIP_START, starttime);
+
+    return db_.update(DATA_TABLE_TRIPS, initialValues, K_TRIP_ROWID + "=" + tripid, null) > 0;
+  }
+
+  public boolean setEndTime(long tripid, long endTime) {
+    ContentValues initialValues = new ContentValues();
+    initialValues.put(K_TRIP_END, endTime);
+
+    return db_.update(DATA_TABLE_TRIPS, initialValues, K_TRIP_ROWID + "=" + tripid, null) > 0;
+  }
+
   public boolean updateTripStatus(long tripid, int tripStatus) {
     ContentValues initialValues = new ContentValues();
     initialValues.put(K_TRIP_STATUS, tripStatus);
 
-    return db_.update(DATA_TABLE_TRIPS, initialValues, K_TRIP_ROWID + "="
-        + tripid, null) > 0;
+    return db_.update(DATA_TABLE_TRIPS, initialValues, K_TRIP_ROWID + "=" + tripid, null) > 0;
   }
 }
