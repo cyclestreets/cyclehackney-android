@@ -112,7 +112,7 @@ public class SaveTrip extends Activity
 
     EditText notes = (EditText)findViewById(R.id.NotesField);
 
-    String fancyStartTime = DateFormat.getInstance().format(trip_.startTime());
+    String fancyStartTime = DateFormat.getInstance().format(trip_.startTime()*1000);
 
     // "3.5 miles in 26 minutes"
     SimpleDateFormat sdf = new SimpleDateFormat("m");

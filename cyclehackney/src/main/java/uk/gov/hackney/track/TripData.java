@@ -216,7 +216,6 @@ public class TripData {
     mDb.close();
   }
 
-  private void updateTrip() { updateTrip("","","","","",""); }
   public void updateTrip(String purpose,
                          String fancyStart,
                          String fancyInfo,
