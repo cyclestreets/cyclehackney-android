@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -34,7 +35,7 @@ import uk.gov.hackney.CycleHackney;
 import uk.gov.hackney.R;
 
 public class SaveTrip extends Activity
-    implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+    implements View.OnClickListener, AdapterView.OnItemSelectedListener, CompoundButton.OnCheckedChangeListener {
   public static void start(final Context context, final long tripid) {
     final Intent fi = new Intent(context, SaveTrip.class);
     fi.putExtra("showtrip", tripid);
@@ -143,28 +144,31 @@ public class SaveTrip extends Activity
   } // uploadTrip
 
   private void setupAge(final Spinner age) {
-    final List<String> ages = ListFactory.list("0-10",
+    final List<String> ages = ListFactory.list("Please select",
+                                               "0-10",
                                                "11-16",
                                                "17-24",
                                                "25-44",
                                                "45-64",
                                                "75-84",
                                                "85+");
-    age.setPrompt("Please select age");
     age.setAdapter(new SpinnerList(this, ages));
-    int index = prefs_.getInt("age", -1);
+    int index = prefs_.getInt("age", 0);
     age.setSelection(index);
-  }
+    age.setOnItemSelectedListener(this);
+  } // setupAge
 
   private void setupGender(final Spinner gender) {
-    final List<String> genders = ListFactory.list("male",
+    final List<String> genders = ListFactory.list("Please select",
+                                                  "male",
                                                   "female",
                                                   "prefer not to say");
     gender.setPrompt("Please select gender");
     gender.setAdapter(new SpinnerList(this, genders));
-    int index = prefs_.getInt("gender", -1);
+    int index = prefs_.getInt("gender", 0);
     gender.setSelection(index);
-  }
+    gender.setOnItemSelectedListener(this);
+  } // setupGender
 
   private void setupPurposeButtons() {
     purpButtons.put(R.id.ToggleCommute, (ToggleButton)findViewById(R.id.ToggleCommute));
@@ -210,9 +214,29 @@ public class SaveTrip extends Activity
     ((TextView)findViewById(R.id.TextPurpDescription)).setText(
        Html.fromHtml(purpDescriptions.get(v.getId())));
 
-    final Button btnSubmit = (Button) findViewById(R.id.ButtonSubmit);
-    btnSubmit.setEnabled(true);
+    enableSubmit();
   } // onCheckedChanged
+
+  @Override
+  public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+    enableSubmit();
+  } // onItemClick
+  @Override
+  public void onNothingSelected(AdapterView<?> adapterView) {
+    enableSubmit();
+  } // onItemClick
+
+  private void enableSubmit() {
+    boolean enabled = false;
+    for (Entry<Integer, ToggleButton> e: purpButtons.entrySet())
+      enabled |= e.getValue().isChecked();
+
+    if (!enabled)
+      return;
+
+    final Button btnSubmit = (Button)findViewById(R.id.ButtonSubmit);
+    btnSubmit.setEnabled((age_.getSelectedItemPosition() != 0 && gender_.getSelectedItemPosition() != 0));
+  } // enabledSubmit
 
   ///////////////////////
   static private class SpinnerList extends BaseAdapter {
@@ -232,8 +256,7 @@ public class SaveTrip extends Activity
     public long getItemId(final int position) { return position; } // getItemId
 
     @Override
-    public View getView(final int position, final View convertView, final ViewGroup parent)
-    {
+    public View getView(final int position, final View convertView, final ViewGroup parent) {
       final int id = (parent instanceof Spinner) ? android.R.layout.simple_spinner_item : android.R.layout.simple_spinner_dropdown_item;
       final TextView tv = (TextView)inflater_.inflate(id, parent, false);
       tv.setText(getItem(position));

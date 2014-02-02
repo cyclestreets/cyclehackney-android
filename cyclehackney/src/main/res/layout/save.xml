@@ -78,15 +78,37 @@
 		android:nextFocusDown="@+id/ButtonSubmit" android:nextFocusRight="@+id/ButtonSubmit"
 		android:nextFocusUp="@+id/ToggleSocial" android:imeOptions="actionDone"></EditText>
 
-      <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/age"/>
 
-      <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/gender"/>
+    <TableLayout android:layout_height="wrap_content" android:layout_width="fill_parent">
+      <TableRow android:layout_height="wrap_content" android:layout_width="fill_parent"
+                android:layout_marginLeft="2sp" android:layout_marginRight="4sp">
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:gravity="center"
+          android:textSize="16sp"
+          android:text="Age:"/>
+        <Spinner
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:id="@+id/age"/>
+      </TableRow>
+      <TableRow android:layout_height="wrap_content" android:layout_width="fill_parent"
+                android:layout_marginLeft="2sp" android:layout_marginRight="4sp">
+        <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:gravity="center"
+          android:textSize="16sp"
+          android:text="Gender:"/>
+        <Spinner
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:id="@+id/gender"/>
+      </TableRow>
+    </TableLayout>
 
       <LinearLayout android:id="@+id/LinearLayout01"
 		    android:layout_height="wrap_content" android:layout_width="fill_parent"
