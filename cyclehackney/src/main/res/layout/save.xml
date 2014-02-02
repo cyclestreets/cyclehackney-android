@@ -77,11 +77,17 @@
 		android:layout_marginRight="2sp" android:layout_marginLeft="2sp"
 		android:nextFocusDown="@+id/ButtonSubmit" android:nextFocusRight="@+id/ButtonSubmit"
 		android:nextFocusUp="@+id/ToggleSocial" android:imeOptions="actionDone"></EditText>
-      <Button android:layout_height="wrap_content"
-	      android:layout_marginTop="5sp" android:layout_width="fill_parent"
-	      android:textStyle="bold" android:textSize="18sp"
-	      android:text="Please enter your user info..." android:drawableLeft="@android:drawable/ic_menu_info_details"
-	      android:id="@+id/ButtonPrefs"></Button>
+
+      <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/age"/>
+
+      <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/gender"/>
+
       <LinearLayout android:id="@+id/LinearLayout01"
 		    android:layout_height="wrap_content" android:layout_width="fill_parent"
 		    android:paddingTop="10sp">
