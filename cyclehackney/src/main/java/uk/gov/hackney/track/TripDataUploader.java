@@ -57,8 +57,7 @@ public class TripDataUploader extends AsyncTask<Void, Void, Boolean> {
                        "purpose", td.purpose(),
                        "start", td.startTime(),
                        "end", td.endTime(),
-                       "userAge", td.age(),
-                       "userGender", td.gender(),
+                       "user", userAsJSON(td),
                        "coords", coordsAsJSON(td),
                        "device", deviceId(),
                        "format", "atlanta"
@@ -124,6 +123,13 @@ public class TripDataUploader extends AsyncTask<Void, Void, Boolean> {
 
     return tripCoords.toString();
   } // coordsAsJSON
+
+  private String userAsJSON(final TripData tripData) throws JSONException {
+    JSONObject user = new JSONObject();
+    user.put("userAge", tripData.age());
+    user.put("userGender", tripData.gender());
+    return user.toString();
+  }
 
   private void notification(final String text) {
     showNotification(text, Notification.FLAG_NO_CLEAR | Notification.FLAG_ONGOING_EVENT);
