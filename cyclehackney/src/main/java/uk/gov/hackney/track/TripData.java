@@ -19,7 +19,7 @@ public class TripData {
   private String purp_;
   private String info_;
   private String fancystart_;
-  private List<GeoPoint> gpspoints;
+  private List<CyclePoint> gpspoints;
   private String note_;
   private String age_;
   private String gender_;
@@ -58,7 +58,7 @@ public class TripData {
 
     purp_ = fancystart_ = info_ = "";
 
-    gpspoints = new ArrayList<GeoPoint>();
+    gpspoints = new ArrayList<CyclePoint>();
 
     mDb.open();
     mDb.setStartTime(tripid, startTime_);
@@ -90,7 +90,7 @@ public class TripData {
 
   private void loadJourney() {
     // Otherwise, we need to query DB and build points from scratch.
-    gpspoints = new ArrayList<GeoPoint>();
+    gpspoints = new ArrayList<CyclePoint>();
 
     mDb.openReadOnly();
 
@@ -99,14 +99,18 @@ public class TripData {
     int COL_LGT = points.getColumnIndex("lgt");
     int COL_TIME = points.getColumnIndex("time");
     int COL_ACC  = points.getColumnIndex(DbAdapter.K_POINT_ACC);
+    int COL_SPEED = points.getColumnIndex(DbAdapter.K_POINT_SPEED);
+    int COL_ALT = points.getColumnIndex(DbAdapter.K_POINT_ALT);
 
     while (!points.isAfterLast()) {
       int lat = points.getInt(COL_LAT);
       int lgt = points.getInt(COL_LGT);
       long time = points.getInt(COL_TIME);
+      double altitude = points.getDouble(COL_ALT);
+      float speed = (float)points.getDouble(COL_SPEED);
       float acc = (float)points.getDouble(COL_ACC);
 
-      gpspoints.add(new CyclePoint(lat, lgt, time));
+      gpspoints.add(new CyclePoint(lat, lgt, time, acc, altitude, speed));
 
       points.moveToNext();
     } // while
@@ -146,7 +150,7 @@ public class TripData {
 
     return new BoundingBoxE6(lathigh, lgtlow, latlow, lgthigh);
   }
-	public Iterable<GeoPoint> journey() { return gpspoints;	}
+	public Iterable<CyclePoint> journey() { return gpspoints;	}
   public long startTime() { return startTime_; }
   public long endTime() { return endTime_; }
   public long elapsed() {
@@ -175,10 +179,11 @@ public class TripData {
     double altitude = loc.getAltitude();
     float speed = loc.getSpeed();
 
-    CyclePoint pt = new CyclePoint(lat, lgt, loc.getTime(), accuracy, altitude, speed);
+    endTime_ = (loc.getTime()/1000);
+    CyclePoint pt = new CyclePoint(lat, lgt, endTime_, accuracy, altitude, speed);
 
     if (gpspoints.size() > 1) {
-      GeoPoint gp = gpspoints.get(gpspoints.size()-1);
+      CyclePoint gp = gpspoints.get(gpspoints.size()-1);
 
       float segmentDistance = gp.distanceTo(pt);
       if (segmentDistance == 0)
@@ -189,7 +194,6 @@ public class TripData {
 
     gpspoints.add(pt);
 
-    endTime_ = (loc.getTime()/1000);
 
     mDb.open();
     mDb.addCoordToTrip(tripid, pt);
