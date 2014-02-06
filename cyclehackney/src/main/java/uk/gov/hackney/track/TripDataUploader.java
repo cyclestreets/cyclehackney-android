@@ -58,6 +58,8 @@ public class TripDataUploader extends AsyncTask<Void, Void, Boolean> {
                        "start", td.startTime(),
                        "end", td.endTime(),
                        "user", userAsJSON(td),
+                       "userAge", td.age(),
+                       "userGender", td.gender(),
                        "coords", coordsAsJSON(td),
                        "device", deviceId(),
                        "format", "atlanta"
@@ -118,7 +120,7 @@ public class TripDataUploader extends AsyncTask<Void, Void, Boolean> {
       coord.put(TRIP_COORDS_HACCURACY, cp.accuracy);
       coord.put(TRIP_COORDS_VACCURACY, cp.accuracy);
 
-      tripCoords.put(coord.getString("rec"), coord);
+      tripCoords.put(coord.getString(TRIP_COORDS_TIME), coord);
     }
 
     return tripCoords.toString();
