@@ -58,8 +58,6 @@ public class TripDataUploader extends AsyncTask<Void, Void, Boolean> {
                        "start", td.startTime(),
                        "end", td.endTime(),
                        "user", userAsJSON(td),
-                       "userAge", td.age(),
-                       "userGender", td.gender(),
                        "coords", coordsAsJSON(td),
                        "device", deviceId(),
                        "format", "atlanta"
@@ -133,8 +131,8 @@ public class TripDataUploader extends AsyncTask<Void, Void, Boolean> {
 
   private String userAsJSON(final TripData tripData) throws JSONException {
     JSONObject user = new JSONObject();
-    user.put("userAge", tripData.age());
-    user.put("userGender", tripData.gender());
+    user.put("age", tripData.age());
+    user.put("gender", tripData.gender());
     return user.toString();
   }
 
