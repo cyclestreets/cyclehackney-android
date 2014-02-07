@@ -96,20 +96,20 @@ public class TripDataUploader extends AsyncTask<Void, Void, Boolean> {
     return new JSONObject(s);
   } // parse
 
-  private static final String TRIP_COORDS_TIME = "rec";
-  private static final String TRIP_COORDS_LAT = "lat";
-  private static final String TRIP_COORDS_LON = "lon";
-  private static final String TRIP_COORDS_ALT = "alt";
-  private static final String TRIP_COORDS_SPEED = "spd";
-  private static final String TRIP_COORDS_HACCURACY = "hac";
-  private static final String TRIP_COORDS_VACCURACY = "vac";
+  private static final String TRIP_COORDS_TIME = "r"; // "rec";
+  private static final String TRIP_COORDS_LAT = "l"; // "lat";
+  private static final String TRIP_COORDS_LON = "n"; // "lon";
+  private static final String TRIP_COORDS_ALT = "a"; // "alt";
+  private static final String TRIP_COORDS_SPEED = "s"; // "spd";
+  private static final String TRIP_COORDS_HACCURACY = "h"; //"hac";
+  private static final String TRIP_COORDS_VACCURACY = "v"; // vac";
 
   private String coordsAsJSON(final TripData tripData) throws JSONException {
-    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-    JSONObject tripCoords = new JSONObject();
+    final StringBuilder tripCoords = new StringBuilder();
 
     for(CyclePoint cp : tripData.journey()) {
+      tripCoords.append(tripCoords.length() == 0 ? "{" : ",");
+
       JSONObject coord = new JSONObject();
 
       coord.put(TRIP_COORDS_TIME, cp.time);
@@ -120,8 +120,13 @@ public class TripDataUploader extends AsyncTask<Void, Void, Boolean> {
       coord.put(TRIP_COORDS_HACCURACY, cp.accuracy);
       coord.put(TRIP_COORDS_VACCURACY, cp.accuracy);
 
-      tripCoords.put(coord.getString(TRIP_COORDS_TIME), coord);
+      tripCoords.append("\"")
+                .append(coord.getString(TRIP_COORDS_TIME))
+                .append("\":")
+                .append(coord);
     }
+
+    tripCoords.append("}");
 
     return tripCoords.toString();
   } // coordsAsJSON
