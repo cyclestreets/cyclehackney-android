@@ -106,6 +106,10 @@ public class RecordingActivity extends Activity
   /////////////////////////////////////////////////////////////////////////////
   @Override
   public void onClick(final View v) {
+    finishTrip();
+  } // onClick
+
+  private void finishTrip() {
     // If we have points, go to the save-trip activity
     if (trip_.dataAvailable()) {
       rs_.finishRecording();
@@ -121,7 +125,7 @@ public class RecordingActivity extends Activity
     } // if ...
 
     finish();
-  } // onClick
+  } // finishedTrip
 
   /////////////////////////////////////////////////////////////////////////////
   @Override
@@ -150,6 +154,8 @@ public class RecordingActivity extends Activity
       return;
 
     txtDuration.setText(sdf.format(trip_.elapsedMS()));
+    if (rs_.hasRiderStopped())
+      finishTrip();
   } // updateTimer
 
   private void startTimer() {

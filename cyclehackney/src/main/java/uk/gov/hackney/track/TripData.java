@@ -150,7 +150,7 @@ public class TripData {
 
     return new BoundingBoxE6(lathigh, lgtlow, latlow, lgthigh);
   }
-	public Iterable<CyclePoint> journey() { return gpspoints;	}
+	public List<CyclePoint> journey() { return gpspoints;	}
   public long startTime() { return startTime_; }
   public long endTime() { return endTime_; }
   public long elapsed() {
@@ -158,6 +158,11 @@ public class TripData {
       return now() - startTime_;
     return endTime_ - startTime_;
   } // elapsed
+  public long lastPointElapsed() {
+    if (!dataAvailable())
+      return elapsed();
+    return now() - endTime_;
+  } // lastPointElapsed
   public long elapsedMS() { return elapsed() * 1000; }
   public float distanceTravelled() {
     return (0.0006212f * distance);

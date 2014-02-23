@@ -1,5 +1,6 @@
 package uk.gov.hackney.track;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -35,13 +36,14 @@ public class RecordingService extends Service implements LocationListener {
   private Timer timer;
   private SoundPool soundpool;
   private int bikebell;
-  final Handler mHandler = new Handler();
-  final Runnable mRemindUser = new Runnable() {
+  private final Handler mHandler = new Handler();
+  private final Runnable mRemindUser = new Runnable() {
     public void run() { remindUser(); }
   };
 
-  float curSpeed, maxSpeed;
-  TripData trip;
+  private float curSpeed;
+  private float maxSpeed;
+  private TripData trip;
 
   public final static int STATE_IDLE = 0;
   public final static int STATE_RECORDING = 1;
@@ -81,6 +83,9 @@ public class RecordingService extends Service implements LocationListener {
     public int getState() {
       return state;
     }
+    public boolean hasRiderStopped() {
+      return RecordingService.this.hasRiderStopped();
+    }
     public TripData startRecording() {
       return RecordingService.this.startRecording();
     }
@@ -95,7 +100,7 @@ public class RecordingService extends Service implements LocationListener {
     }
     public void setListener(RecordingActivity ra) {
       RecordingService.this.recordActivity = ra;
-      notifyListeners();
+      notifyStatusUpdate();
     }
   } // class MyServiceBinder
 
@@ -166,8 +171,8 @@ public class RecordingService extends Service implements LocationListener {
   public void onLocationChanged(Location loc) {
     updateTripStats(loc);
     trip.addPointNow(loc);
-    notifyListeners();
-  }
+    notifyStatusUpdate();
+  } // onLocationChanged
 
   private void updateTripStats(Location newLocation) {
     final float spdConvert = 2.2369f;
@@ -181,7 +186,6 @@ public class RecordingService extends Service implements LocationListener {
     if (curSpeed < 60.0f)
       maxSpeed = Math.max(maxSpeed, curSpeed);
   } // updateTripStats
-
 
   @Override
   public void onProviderDisabled(String arg0) {
@@ -230,9 +234,32 @@ public class RecordingService extends Service implements LocationListener {
     mNotificationManager.cancel(NOTIFICATION_ID);
   } // clearNotifications
 
-  void notifyListeners() {
-    if (recordActivity != null) {
+  public boolean hasRiderStopped() {
+    long BAIL_TIME = 300;
+    if (trip.elapsed() < BAIL_TIME)
+      return false;
+    if (trip.lastPointElapsed() > BAIL_TIME) // no GPS received in five minutes
+      return true;
+    if (!trip.dataAvailable())
+      return false;
+
+    final List<CyclePoint> points = trip.journey();
+    final CyclePoint end = points.get(points.size()-1);
+    for(int i = points.size()-1; i != 0; --i) {
+      final CyclePoint cur = points.get(i);
+
+      if (end.distanceTo(cur) > 100)
+        return false;
+
+      if ((end.time - cur.time) > BAIL_TIME)
+        return false;
+    } // for ...
+
+    return true;
+  } // checkForAutoStop
+
+  private void notifyStatusUpdate() {
+    if (recordActivity != null)
       recordActivity.updateStatus(curSpeed, maxSpeed);
-    }
-  } // notifyListeners
+  } // notifyStatusUpdate
 } // RecordingService
