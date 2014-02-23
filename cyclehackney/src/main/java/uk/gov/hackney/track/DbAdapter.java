@@ -103,7 +103,7 @@ public class DbAdapter {
     try {
       c = db.db_.query(DATA_TABLE_TRIPS,
           new String[]{ K_TRIP_ROWID },
-          K_TRIP_STATUS + "=" + TripData.STATUS_COMPLETE_UNSENT + " or " + K_TRIP_STATUS + "=" + TripData.STATUS_COMPLETE_FAILED,
+          K_TRIP_STATUS + "=" + TripData.STATUS_COMPLETE_FAILED,
           null, null, null, null);
       c.moveToFirst();
       while(!c.isAfterLast()) {
