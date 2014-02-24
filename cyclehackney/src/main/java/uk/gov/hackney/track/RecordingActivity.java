@@ -38,14 +38,6 @@ public class RecordingActivity extends Activity
 
   private final SimpleDateFormat sdf = new SimpleDateFormat("H:mm:ss");
 
-  private Timer timer_;
-  private final Handler handler_ = new Handler();
-  private final Runnable updateTimer_ = new Runnable() {
-    public void run() {
-      updateTimer();
-    }
-  };
-
   @Override
   public void onCreate(final Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -85,6 +77,11 @@ public class RecordingActivity extends Activity
 
     mapView_.invalidate();
   } // updateStatus
+
+  public void updateTimer(long elapsedMS) {
+    txtDuration.setText(sdf.format(elapsedMS));
+  } // updateTimer
+
 
   /////////////////////////////////////////////////////////////////////////////
   @Override
@@ -132,14 +129,12 @@ public class RecordingActivity extends Activity
   public void onPause() {
     super.onPause();
     mapView_.onPause();
-    stopTimer();
   } // onPause
 
   @Override
   public void onResume() {
     super.onResume();
     mapView_.onResume();
-    startTimer();
   } // onResume
 
   @Override
@@ -147,29 +142,4 @@ public class RecordingActivity extends Activity
     unbindService(this);
     super.onDestroy();
   }
-
-  /////////////////////////////////////////////////////////////////////////////
-  private void updateTimer() {
-    if (trip_ == null)
-      return;
-
-    txtDuration.setText(sdf.format(trip_.elapsedMS()));
-    if (rs_.hasRiderStopped())
-      finishTrip();
-  } // updateTimer
-
-  private void startTimer() {
-    timer_ = new Timer();
-    timer_.scheduleAtFixedRate(new TimerTask() {
-      @Override
-      public void run() {
-        handler_.post(updateTimer_);
-      }
-    }, 0, 1000);  // every second
-  } // startTimer
-
-  private void stopTimer() {
-    if (timer_ != null)
-      timer_.cancel();
-  } // stopTimer
 } // class RecordingActivity

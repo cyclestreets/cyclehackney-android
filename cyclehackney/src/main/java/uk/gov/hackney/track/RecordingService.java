@@ -33,12 +33,18 @@ public class RecordingService extends Service implements LocationListener {
   // Bike bell variables
   private static int BELL_FIRST_INTERVAL = 20;
   private static int BELL_NEXT_INTERVAL = 5;
-  private Timer timer;
+  private Timer tickTimer_;
+  private Timer bellTimer_;
   private SoundPool soundpool;
   private int bikebell;
-  private final Handler mHandler = new Handler();
-  private final Runnable mRemindUser = new Runnable() {
+  private final Handler handler_ = new Handler();
+  private final Runnable ringBell_ = new Runnable() {
     public void run() { remindUser(); }
+  };
+  private final Runnable tick_ = new Runnable() {
+    public void run() {
+      notifyTick();
+    }
   };
 
   private float curSpeed;
@@ -64,11 +70,8 @@ public class RecordingService extends Service implements LocationListener {
   @Override
   public void onDestroy() {
     super.onDestroy();
-    if (timer!=null) {
-      timer.cancel();
-      timer.purge();
-    }
-  }
+    stopTimers();
+  } // onDestroy
 
   @Override
   public IBinder onBind(final Intent intent) {
@@ -120,16 +123,7 @@ public class RecordingService extends Service implements LocationListener {
     // Start listening for GPS updates!
     locationManager_.requestLocationUpdates(LocationManager.GPS_PROVIDER, updateTime, updateDistance, this);
 
-    // Set up timer for bike bell
-    if (timer != null) {
-      timer.cancel(); timer.purge();
-    }
-    timer = new Timer();
-    timer.schedule (new TimerTask() {
-      @Override public void run() {
-        mHandler.post(mRemindUser);
-      }
-    }, BELL_FIRST_INTERVAL*60000, BELL_NEXT_INTERVAL*60000);
+    startTimers();
 
     return trip;
   }
@@ -158,13 +152,41 @@ public class RecordingService extends Service implements LocationListener {
 
     clearNotifications();
 
-    if (timer != null) {
-      timer.cancel();
-      timer.purge();
-    }
+    stopTimers();
 
     stopForeground(true);
   } // clearUp
+
+  private void startTimers() {
+    bellTimer_ = new Timer();
+    bellTimer_.schedule(new TimerTask() {
+      @Override
+      public void run() {
+        handler_.post(ringBell_);
+      }
+    }, BELL_FIRST_INTERVAL * 60000, BELL_NEXT_INTERVAL * 60000);
+
+    tickTimer_ = new Timer();
+    tickTimer_.scheduleAtFixedRate(new TimerTask() {
+      @Override
+      public void run() {
+        handler_.post(tick_);
+      }
+    }, 0, 1000);  // every second
+  } // startTimers
+
+  private void stopTimers() {
+    if (bellTimer_ != null) {
+      bellTimer_.cancel();
+      bellTimer_.purge();
+      bellTimer_ = null;
+    }
+    if (tickTimer_ != null) {
+      tickTimer_.cancel();
+      tickTimer_.purge();
+      tickTimer_ = null;
+    }
+  } // stopTimers
 
   // LocationListener implementation:
   @Override
@@ -220,7 +242,7 @@ public class RecordingService extends Service implements LocationListener {
     nm().notify(NOTIFICATION_ID, notification);
   } // showNotification
 
-  public void remindUser() {
+  private void remindUser() {
     soundpool.play(bikebell, 1.0f, 1.0f, 1, 0, 1.0f);
 
     int minutes = (int) (trip.elapsed() / 60);
@@ -261,5 +283,10 @@ public class RecordingService extends Service implements LocationListener {
   private void notifyStatusUpdate() {
     if (recordActivity != null)
       recordActivity.updateStatus(curSpeed, maxSpeed);
+  } // notifyStatusUpdate
+
+  private void notifyTick() {
+    if (recordActivity != null)
+      recordActivity.updateTimer(trip.elapsedMS());
   } // notifyStatusUpdate
 } // RecordingService
