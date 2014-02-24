@@ -54,7 +54,7 @@ public class RecordingActivity extends Activity
 
     mapView_ = new CycleMapView(this, getClass().getName());
     mapView_.hideLocationButton();
-    mapView_.enableAndFollowLocation();
+    mapView_.lockOnLocation();
     mapView_.getController().setZoom(16);
 
     final RelativeLayout v = (RelativeLayout)findViewById(R.id.mapholder);
