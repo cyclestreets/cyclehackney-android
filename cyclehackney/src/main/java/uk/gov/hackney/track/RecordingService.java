@@ -256,7 +256,7 @@ public class RecordingService extends Service implements LocationListener {
     mNotificationManager.cancel(NOTIFICATION_ID);
   } // clearNotifications
 
-  public boolean hasRiderStopped() {
+  private boolean hasRiderStopped() {
     long BAIL_TIME = 300;
     if (trip.elapsed() < BAIL_TIME)
       return false;
@@ -286,7 +286,10 @@ public class RecordingService extends Service implements LocationListener {
   } // notifyStatusUpdate
 
   private void notifyTick() {
-    if (recordActivity != null)
+    if (recordActivity != null) {
       recordActivity.updateTimer(trip.elapsedMS());
+      if (hasRiderStopped())
+        recordActivity.riderHasStopped();
+    }
   } // notifyStatusUpdate
 } // RecordingService

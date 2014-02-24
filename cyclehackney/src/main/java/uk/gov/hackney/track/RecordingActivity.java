@@ -82,6 +82,10 @@ public class RecordingActivity extends Activity
     txtDuration.setText(sdf.format(elapsedMS));
   } // updateTimer
 
+  public void riderHasStopped() {
+    finishTrip();
+  } // riderHasStopped
+
 
   /////////////////////////////////////////////////////////////////////////////
   @Override

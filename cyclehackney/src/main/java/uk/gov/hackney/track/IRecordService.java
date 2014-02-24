@@ -2,7 +2,6 @@ package uk.gov.hackney.track;
 
 public interface IRecordService {
 	public int getState();
-  public boolean hasRiderStopped();
 
 	public TripData startRecording();
 	public void cancelRecording();
