@@ -252,7 +252,7 @@ public class RecordingService extends Service implements LocationListener {
         return false;
 
       if ((end.time - cur.time) > BAIL_TIME)
-        return false;
+        break;
     } // for ...
 
     return true;
