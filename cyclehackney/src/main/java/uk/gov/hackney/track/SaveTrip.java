@@ -1,12 +1,10 @@
 package uk.gov.hackney.track;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.TimeZone;
 
 import android.app.Activity;
 import android.app.Application;
@@ -115,10 +113,8 @@ public class SaveTrip extends Activity
     String fancyStartTime = DateFormat.getInstance().format(trip_.startTime()*1000);
 
     // "3.5 miles in 26 minutes"
-    SimpleDateFormat sdf = new SimpleDateFormat("m");
-    sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-    String minutes = sdf.format(trip_.elapsedMS());
-    String fancyEndInfo = String.format("%1.1f miles, %s minutes.  %s",
+    final long minutes = trip_.elapsed() / 60;
+    String fancyEndInfo = String.format("%1.1f miles, %d minutes.  %s",
         trip_.distanceTravelled(),
         minutes,
         notes.getEditableText().toString());
