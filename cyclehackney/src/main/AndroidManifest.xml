@@ -29,5 +29,6 @@
     <service android:name=".track.RecordingService"/>
 
     <meta-data android:name="CycleStreetsAPIKey" android:value="5463c8bd1ba5206d" />
+    <meta-data android:name="CycleStreetsPhotoUpload" android:value="ByKey" />
   </application>
 </manifest>
