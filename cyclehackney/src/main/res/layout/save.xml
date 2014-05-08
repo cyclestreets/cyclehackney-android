@@ -109,6 +109,37 @@
           android:layout_weight="1"
           android:id="@+id/gender"/>
       </TableRow>
+      <TableRow android:layout_height="wrap_content" android:layout_width="fill_parent"
+                android:layout_marginLeft="2sp" android:layout_marginRight="4sp">
+        <LinearLayout android:layout_width="wrap_content"
+                      android:layout_height="match_parent"
+                      android:orientation="vertical"
+                      android:gravity="center">
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:text="Level of"/>
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:text="cycling"/>
+          <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:text="experience:"/>
+        </LinearLayout>
+        <Spinner
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:layout_weight="1"
+          android:id="@+id/experience"/>
+      </TableRow>
     </TableLayout>
 
       <LinearLayout android:id="@+id/LinearLayout01"

@@ -23,6 +23,7 @@ public class TripData {
   private String note_;
   private String age_;
   private String gender_;
+  private String experience_;
 
   private DbAdapter mDb;
 
@@ -81,6 +82,7 @@ public class TripData {
     note_ = tripdetails.getString(tripdetails.getColumnIndex("note"));
     age_ = tripdetails.getString(tripdetails.getColumnIndex("age"));
     gender_ = tripdetails.getString(tripdetails.getColumnIndex("gender"));
+    experience_ = tripdetails.getString(tripdetails.getColumnIndex("experience"));
 
     tripdetails.close();
     mDb.close();
@@ -173,6 +175,7 @@ public class TripData {
   public String fancyStart() { return fancystart_; }
   public String age() { return age_; }
   public String gender() { return gender_; }
+  public String experience() { return experience_; }
 
   private long now() { return System.currentTimeMillis()/1000; }
 
@@ -230,16 +233,18 @@ public class TripData {
                          String fancyInfo,
                          String notes,
                          String age,
-                         String gender) {
+                         String gender,
+                         String experience) {
     // Save the trip details to the phone database. W00t!
     mDb.open();
-    mDb.updateNotes(tripid, purpose, fancyStart, fancyInfo, notes, age, gender);
+    mDb.updateNotes(tripid, purpose, fancyStart, fancyInfo, notes, age, gender, experience);
     mDb.close();
 
     purp_ = purpose;
     note_ = notes;
     age_ = age;
     gender_ = gender;
+    experience_ = experience;
   } // updateTrip
 
 } // TripData

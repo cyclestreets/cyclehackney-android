@@ -46,6 +46,7 @@ public class SaveTrip extends Activity
   private String purpose_;
   private Spinner age_;
   private Spinner gender_;
+  private Spinner experience_;
   private SharedPreferences prefs_;
 
   @Override
@@ -77,6 +78,9 @@ public class SaveTrip extends Activity
 
     gender_ = viewById(R.id.gender);
     setupGender(gender_);
+
+    experience_ = viewById(R.id.experience);
+    setupExperience(experience_);
 
     // Don't pop up the soft keyboard until user clicks!
     getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -125,12 +129,14 @@ public class SaveTrip extends Activity
                      fancyEndInfo,
                      notes.getEditableText().toString(),
                      age_.getSelectedItem().toString(),
-                     gender_.getSelectedItem().toString());
+                     gender_.getSelectedItem().toString(),
+                     experience_.getSelectedItem().toString());
     trip_.metaDataComplete();
 
     SharedPreferences.Editor e = prefs_.edit();
     e.putInt("age", age_.getSelectedItemPosition());
     e.putInt("gender", gender_.getSelectedItemPosition());
+    e.putInt("experience", experience_.getSelectedItemPosition());
     e.commit();
 
     TripDataUploader.upload(this, trip_);
@@ -165,6 +171,18 @@ public class SaveTrip extends Activity
     gender.setSelection(index);
     gender.setOnItemSelectedListener(this);
   } // setupGender
+
+  private void setupExperience(final Spinner experience) {
+    final List<String> experienceLevels = ListFactory.list("Please select",
+                                                           "experienced",
+                                                           "infrequent",
+                                                           "beginner");
+    experience.setPrompt("Please select experience level");
+    experience.setAdapter(new SpinnerList(this, experienceLevels));
+    int index = prefs_.getInt("experience", 0);
+    experience.setSelection(index);
+    experience.setOnItemSelectedListener(this);
+  } // setupExperience
 
   private void setupPurposeButtons() {
     purpButtons.put(R.id.ToggleCommute, (ToggleButton)findViewById(R.id.ToggleCommute));
@@ -231,7 +249,9 @@ public class SaveTrip extends Activity
       return;
 
     final Button btnSubmit = (Button)findViewById(R.id.ButtonSubmit);
-    btnSubmit.setEnabled((age_.getSelectedItemPosition() != 0 && gender_.getSelectedItemPosition() != 0));
+    btnSubmit.setEnabled((age_.getSelectedItemPosition() != 0 &&
+                          gender_.getSelectedItemPosition() != 0 &&
+                          experience_.getSelectedItemPosition() != 0));
   } // enabledSubmit
 
   ///////////////////////

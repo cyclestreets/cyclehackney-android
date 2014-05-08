@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DbAdapter {
-  private static final int DATABASE_VERSION = 21;
+  private static final int DATABASE_VERSION = 22;
 
   public static final String K_TRIP_ROWID = "_id";
   public static final String K_TRIP_PURP = "purp";
@@ -24,6 +24,7 @@ public class DbAdapter {
   public static final String K_TRIP_GENDER = "gender";
   public static final String K_TRIP_DISTANCE = "distance";
   public static final String K_TRIP_STATUS = "status";
+  public static final String K_TRIP_EXPERIENCE = "experience";
 
   public static final String K_POINT_ROWID = "_id";
   public static final String K_POINT_TRIP  = "trip";
@@ -37,7 +38,7 @@ public class DbAdapter {
   private static final String TAG = "DbAdapter";
   private static final String TABLE_CREATE_TRIPS = "create table trips "
     + "(_id integer primary key autoincrement, purp text, start integer, endtime integer, "
-    + "fancystart text, fancyinfo text, distance float, note text, age text, gender text, "
+    + "fancystart text, fancyinfo text, distance float, note text, age text, gender text, experience text, "
       + "status integer);";
 
   private static final String TABLE_CREATE_COORDS = "create table coords "
@@ -66,10 +67,9 @@ public class DbAdapter {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-      db.execSQL("DROP TABLE IF EXISTS " + DATA_TABLE_TRIPS);
-      db.execSQL("DROP TABLE IF EXISTS " + DATA_TABLE_COORDS);
-      onCreate(db);
-    }
+      if (oldVersion < 22)
+        db.execSQL("alter table " + DATA_TABLE_TRIPS + " add column experience text");
+    } // onUpgrade
   } // DatabaseHelper
 
   public static int unfinishedTrip(final Context context) {
@@ -257,7 +257,7 @@ public class DbAdapter {
   public Cursor fetchTrip(long rowId) throws SQLException {
     Cursor mCursor = db_.query(true, DATA_TABLE_TRIPS, new String[] {
         K_TRIP_ROWID, K_TRIP_PURP, K_TRIP_START, K_TRIP_FANCYSTART,
-        K_TRIP_NOTE, K_TRIP_AGE, K_TRIP_GENDER, K_TRIP_STATUS, K_TRIP_END,
+        K_TRIP_NOTE, K_TRIP_AGE, K_TRIP_GENDER, K_TRIP_EXPERIENCE, K_TRIP_STATUS, K_TRIP_END,
         K_TRIP_FANCYINFO, K_TRIP_DISTANCE },
         K_TRIP_ROWID + "=" + rowId,
 
@@ -274,13 +274,15 @@ public class DbAdapter {
                              String fancyinfo,
                              String note,
                              String age,
-                             String gender) {
+                             String gender,
+                             String experience) {
     ContentValues initialValues = new ContentValues();
     initialValues.put(K_TRIP_PURP, purp);
     initialValues.put(K_TRIP_FANCYSTART, fancystart);
     initialValues.put(K_TRIP_NOTE, note);
     initialValues.put(K_TRIP_AGE, age);
     initialValues.put(K_TRIP_GENDER, gender);
+    initialValues.put(K_TRIP_EXPERIENCE, experience);
     initialValues.put(K_TRIP_FANCYINFO, fancyinfo);
 
     return db_.update(DATA_TABLE_TRIPS,

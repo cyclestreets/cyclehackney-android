@@ -9,6 +9,7 @@
                android:name="CycleHackneyApp">
     <activity android:name=".CycleHackney"
               android:label="@string/app_name"
+              android:theme="@android:style/Theme.Black.NoTitleBar"
               android:screenOrientation="portrait">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
@@ -18,12 +19,15 @@
     <activity android:name=".track.RecordingActivity"
               android:label="@string/app_name"
               android:launchMode="singleInstance"
+              android:theme="@android:style/Theme.Black.NoTitleBar"
               android:screenOrientation="portrait" />
     <activity android:name=".track.SaveTrip"
               android:label="@string/app_name"
+              android:theme="@android:style/Theme.Black.NoTitleBar"
               android:screenOrientation="portrait" />
     <activity android:name=".track.ShowJourney"
               android:label="Cycle Hackey : Completed Journey"
+              android:theme="@android:style/Theme.Black.NoTitleBar"
               android:screenOrientation="portrait" />
 
     <service android:name=".track.RecordingService"/>

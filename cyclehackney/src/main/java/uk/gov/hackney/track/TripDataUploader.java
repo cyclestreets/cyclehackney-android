@@ -133,6 +133,7 @@ public class TripDataUploader extends AsyncTask<Void, Void, Boolean> {
     JSONObject user = new JSONObject();
     user.put("age", tripData.age());
     user.put("gender", tripData.gender());
+    user.put("experience", tripData.experience());
     return user.toString();
   }
 
