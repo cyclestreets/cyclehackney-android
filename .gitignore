@@ -5,7 +5,7 @@ gen
 local.properties
 lint.xml
 .gradle
-.idea/libraries
+.idea/*
 *~
 libraries
 *.iml
