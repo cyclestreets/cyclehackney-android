@@ -6,6 +6,7 @@ import java.util.TimeZone;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import net.cyclestreets.util.MessageBox;
 import net.cyclestreets.views.CycleMapView;
 import net.cyclestreets.views.overlay.PhotoUploadButtonOverlay;
 
@@ -107,8 +109,17 @@ public class RecordingActivity extends Activity
   /////////////////////////////////////////////////////////////////////////////
   @Override
   public void onClick(final View v) {
-    finishTrip();
+    confirmFinishTrip();
   } // onClick
+
+  private void confirmFinishTrip () {
+    MessageBox.YesNo(this,
+                     "Are you sure you want to stop recording?",
+                     new DialogInterface.OnClickListener() {
+                       @Override
+                       public void onClick(DialogInterface dialogInterface, int i) { finishTrip(); }
+                     });
+  } // confirmFinishTrip
 
   private void finishTrip() {
     // If we have points, go to the save-trip activity
