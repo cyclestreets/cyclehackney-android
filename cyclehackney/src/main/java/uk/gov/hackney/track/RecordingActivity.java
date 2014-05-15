@@ -2,8 +2,6 @@ package uk.gov.hackney.track;
 
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -11,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
 import android.view.View;
 import android.widget.Button;
@@ -31,9 +28,9 @@ public class RecordingActivity extends Activity
   private TripData trip_;
 
   private Button finishButton_;
-  private TextView txtDistance;
-  private TextView txtDuration;
-  private TextView txtCurSpeed;
+  private TextView txtDistance_;
+  private TextView txtDuration_;
+  private TextView txtCurSpeed_;
 
   private CycleMapView mapView_;
 
@@ -57,9 +54,9 @@ public class RecordingActivity extends Activity
         new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.FILL_PARENT,
             RelativeLayout.LayoutParams.FILL_PARENT));
 
-    txtDistance = (TextView)findViewById(R.id.journey_distance);
-    txtDuration = (TextView)findViewById(R.id.journey_time);
-    txtCurSpeed = (TextView)findViewById(R.id.journey_speed);
+    txtDistance_ = (TextView)findViewById(R.id.journey_distance);
+    txtDuration_ = (TextView)findViewById(R.id.journey_time);
+    txtCurSpeed_ = (TextView)findViewById(R.id.journey_speed);
 
     finishButton_ = (Button)findViewById(R.id.ButtonFinished);
 
@@ -74,15 +71,15 @@ public class RecordingActivity extends Activity
   } // onCreate
 
   public void updateStatus(float spdCurrent, float spdMax) {
-    txtCurSpeed.setText(String.format("%1.1f mph", spdCurrent));
+    txtCurSpeed_.setText(String.format("%1.1f mph", spdCurrent));
 
-    txtDistance.setText(String.format("%1.1f miles", trip_.distanceTravelled()));
+    txtDistance_.setText(String.format("%1.1f miles", trip_.distanceTravelled()));
 
     mapView_.invalidate();
   } // updateStatus
 
   public void updateTimer(long elapsedMS) {
-    txtDuration.setText(sdf.format(elapsedMS));
+    txtDuration_.setText(sdf.format(elapsedMS));
   } // updateTimer
 
   public void riderHasStopped() {
