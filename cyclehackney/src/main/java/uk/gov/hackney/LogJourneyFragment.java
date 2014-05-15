@@ -90,7 +90,9 @@ public class LogJourneyFragment extends Fragment implements View.OnClickListener
     final TextView counter = (TextView)lv.getRootView().findViewById(R.id.TextViewPreviousTrips);
     final TextView total = (TextView)lv.getRootView().findViewById(R.id.TextViewTotalDistance);
 
-    total.setText(distance != 0 ? String.format("Total distance: %1.1f miles", distance * 0.0006212f) : "");
+    final double distanceMiles = distance * 0.0006212f;
+    final int calories = (int)((distanceMiles * 49) - 1.69);
+    total.setText(distance != 0 ? String.format("Total distance: %1.1f miles\nCalories burnt: %d kcal", distanceMiles, calories) : "");
 
     final int numtrips = allTrips.getCount();
     switch (numtrips) {
