@@ -5,24 +5,39 @@
     android:orientation="vertical"
     tools:context="uk.gov.hackney.LogJourneyFragment">
 
-  <Button android:layout_height="wrap_content"
-          android:id="@+id/ButtonStart"
-          android:text="@string/startNewTrip"
-          android:textStyle="bold"
-          android:layout_width="match_parent"
-          android:drawableLeft="@drawable/bike"
-          android:layout_margin="8sp"
-          android:hapticFeedbackEnabled="true"
-          android:textSize="24sp"></Button>
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:orientation="vertical"
+    android:gravity="top"
+    android:layout_weight="5.0">
+    <Button android:layout_height="wrap_content"
+            android:id="@+id/ButtonStart"
+            android:text="@string/startNewTrip"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:drawableLeft="@drawable/bike"
+            android:layout_margin="8sp"
+            android:hapticFeedbackEnabled="true"
+            android:textSize="24sp"></Button>
+
+    <TextView android:layout_height="wrap_content"
+              android:id="@+id/TextViewPreviousTrips"
+              android:text="@string/previous_trips"
+              android:layout_width="match_parent"
+              android:gravity="center"></TextView>
+
+    <ListView android:layout_height="wrap_content"
+              android:id="@+id/ListSavedTrips"
+              android:layout_width="match_parent"
+              android:layout_weight="0"></ListView>
+
+  </LinearLayout>
 
   <TextView android:layout_height="wrap_content"
-            android:id="@+id/TextViewPreviousTrips"
-            android:text="@string/previous_trips"
-            android:layout_width="match_parent"
-            android:gravity="center"></TextView>
-
-  <ListView android:layout_height="wrap_content"
-            android:id="@+id/ListSavedTrips"
-            android:layout_width="match_parent"></ListView>
-
+              android:id="@+id/TextViewTotalDistance"
+              android:text="@string/previous_trips"
+              android:layout_width="match_parent"
+              android:gravity="bottom|center"
+    ></TextView>
 </LinearLayout>

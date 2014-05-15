@@ -222,6 +222,28 @@ public class DbAdapter {
     return db_.delete(DATA_TABLE_TRIPS, K_TRIP_ROWID + "=" + rowId, null) > 0;
   }
 
+  public float totalDistance() {
+    try {
+      float distance = 0;
+
+      Cursor c = db_.query(DATA_TABLE_TRIPS, new String[] { K_TRIP_DISTANCE }, null, null, null, null, null);
+      c.moveToFirst();
+
+      while (!c.isAfterLast()) {
+        distance += c.getFloat(c.getColumnIndex("distance"));
+        c.moveToNext();
+      }
+
+      c.close();
+
+      return distance;
+    }
+    catch(RuntimeException e) {
+      String s = e.getMessage();
+      throw new RuntimeException(e);
+    }
+  } // totalDistance
+
   /**
    * Return a Cursor over the list of all notes in the database
    *

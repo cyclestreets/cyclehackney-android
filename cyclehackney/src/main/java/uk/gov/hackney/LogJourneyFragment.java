@@ -77,6 +77,7 @@ public class LogJourneyFragment extends Fragment implements View.OnClickListener
     final DbAdapter database = new DbAdapter(getActivity());
     database.open();
 
+    final float distance = database.totalDistance();
     final Cursor allTrips = database.fetchAllTrips();
 
     SimpleCursorAdapter sca = new SimpleCursorAdapter(getActivity(),
@@ -87,6 +88,9 @@ public class LogJourneyFragment extends Fragment implements View.OnClickListener
 
     lv.setAdapter(sca);
     final TextView counter = (TextView)lv.getRootView().findViewById(R.id.TextViewPreviousTrips);
+    final TextView total = (TextView)lv.getRootView().findViewById(R.id.TextViewTotalDistance);
+
+    total.setText(distance != 0 ? String.format("Total distance: %1.1f miles", distance * 0.0006212f) : "");
 
     final int numtrips = allTrips.getCount();
     switch (numtrips) {
