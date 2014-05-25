@@ -2,6 +2,7 @@ package uk.gov.hackney;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.widget.TabHost;
 
 import net.cyclestreets.MainTabbedActivity;
@@ -24,4 +25,13 @@ public class HackneyRecordingActivity extends MainTabbedActivity {
     addTab("Photomap", R.drawable.ic_tab_photomap, PhotoMapFragment.class);
     addTab("About", R.drawable.ic_tab_more, AboutFragment.class);
   } // addTabs
+
+  @Override
+  protected void onDestroy() {
+    final SharedPreferences.Editor edit = prefs().edit();
+    edit.putString("TAB", "Recorder");
+    edit.commit();
+
+    super.onDestroy();
+  }
 } // class CycleHackney
