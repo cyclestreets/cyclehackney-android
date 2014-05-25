@@ -17,14 +17,10 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import net.cyclestreets.util.MessageBox;
 
-import java.sql.SQLException;
-
 import uk.gov.hackney.track.DbAdapter;
-import uk.gov.hackney.track.RecordingActivity;
 import uk.gov.hackney.track.ShowJourney;
 
 public class LogJourneyFragment extends Fragment implements View.OnClickListener {
@@ -52,7 +48,7 @@ public class LogJourneyFragment extends Fragment implements View.OnClickListener
       return;
     }
 
-    startActivity(new Intent(getActivity(), RecordingActivity.class));
+    HackneyRecordingActivity.start(getActivity());
     getActivity().finish();
   } // onClick
 

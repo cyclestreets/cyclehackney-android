@@ -20,7 +20,7 @@ import java.util.List;
 
 import uk.gov.hackney.track.DbAdapter;
 import uk.gov.hackney.track.IRecordService;
-import uk.gov.hackney.track.RecordingActivity;
+import uk.gov.hackney.track.RecordingFragment;
 import uk.gov.hackney.track.RecordingService;
 import uk.gov.hackney.track.SaveTrip;
 import uk.gov.hackney.track.TripData;
@@ -49,7 +49,7 @@ public class CycleHackney extends MainTabbedActivity {
         IRecordService rs = (IRecordService)service;
         int state = rs.getState();
         if (state == RecordingService.STATE_RECORDING) {
-          activity.startActivity(new Intent(activity, RecordingActivity.class));
+          HackneyRecordingActivity.start(activity);
           activity.finish();
         } else {
           int unfinishedTrip = DbAdapter.unfinishedTrip(activity);

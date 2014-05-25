@@ -20,14 +20,21 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 
+import uk.gov.hackney.HackneyRecordingActivity;
 import uk.gov.hackney.R;
 
 public class RecordingService extends Service implements LocationListener {
+  public interface RecordingListener {
+    void updateStatus(float spdCurrent, float spdMax);
+    void updateTimer(long elapsedMS);
+    void riderHasStopped();
+  }
+
   private static int updateDistance = 5;  // metres
   private static int updateTime = 5000;    // milliseconds
   private static final int NOTIFICATION_ID = 1;
 
-  private RecordingActivity recordActivity;
+  private RecordingListener recordActivity;
   private LocationManager locationManager_ = null;
 
   // Bike bell variables
@@ -101,7 +108,7 @@ public class RecordingService extends Service implements LocationListener {
     public void reset() {
       RecordingService.this.state = STATE_IDLE;
     }
-    public void setListener(RecordingActivity ra) {
+    public void setListener(RecordingListener ra) {
       RecordingService.this.recordActivity = ra;
       notifyStatusUpdate();
     }
@@ -230,7 +237,7 @@ public class RecordingService extends Service implements LocationListener {
                                           final int flags) {
     final Notification notification = new Notification(R.drawable.icon25, tickerText, System.currentTimeMillis());
     notification.flags = flags;
-    final Intent notificationIntent = new Intent(this, RecordingActivity.class);
+    final Intent notificationIntent = new Intent(this, HackneyRecordingActivity.class);
     final PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
     notification.setLatestEventInfo(this, "Cycle Hackney - Recording", "Tap to see your ongoing trip", contentIntent);
     return notification;

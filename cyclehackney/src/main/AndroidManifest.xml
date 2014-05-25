@@ -16,7 +16,7 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
-    <activity android:name=".track.RecordingActivity"
+    <activity android:name=".HackneyRecordingActivity"
               android:label="@string/app_name"
               android:launchMode="singleInstance"
               android:theme="@android:style/Theme.Black.NoTitleBar"
