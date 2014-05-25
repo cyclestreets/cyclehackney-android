@@ -20,7 +20,6 @@ import java.util.List;
 
 import uk.gov.hackney.track.DbAdapter;
 import uk.gov.hackney.track.IRecordService;
-import uk.gov.hackney.track.RecordingFragment;
 import uk.gov.hackney.track.RecordingService;
 import uk.gov.hackney.track.SaveTrip;
 import uk.gov.hackney.track.TripData;
@@ -80,7 +79,7 @@ public class CycleHackney extends MainTabbedActivity {
   } // uploadLeftOverTrips
 
   protected void addTabs(final TabHost tabHost) {
-    addTab("Journey Log", R.drawable.ic_menu_live_ride, LogJourneyFragment.class);
+    addTab("Journey Log", R.drawable.ic_tab_navigate, LogJourneyFragment.class);
     //addTab("Route Map", R.drawable.ic_tab_planroute, RouteMapFragment.class);
     addTab("Upload", R.drawable.ic_tab_photoupload, PhotoUploadFragment.class);
     addTab("Photomap", R.drawable.ic_tab_photomap, PhotoMapFragment.class);

@@ -20,18 +20,18 @@ public class HackneyRecordingActivity extends MainTabbedActivity {
   } // start
 
   protected void addTabs(final TabHost tabHost) {
-    addTab("Recorder", R.drawable.ic_menu_live_ride, RecordingFragment.class);
+    addTab("Recorder", R.drawable.ic_tab_navigate, RecordingFragment.class);
     addTab("Upload", R.drawable.ic_tab_photoupload, PhotoUploadFragment.class);
     addTab("Photomap", R.drawable.ic_tab_photomap, PhotoMapFragment.class);
     addTab("About", R.drawable.ic_tab_more, AboutFragment.class);
   } // addTabs
 
   @Override
-  protected void onDestroy() {
+  public void onPause() {
+    super.onPause();
+    
     final SharedPreferences.Editor edit = prefs().edit();
     edit.putString("TAB", "Recorder");
     edit.commit();
-
-    super.onDestroy();
-  }
+  } // onResume
 } // class CycleHackney
