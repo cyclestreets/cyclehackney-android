@@ -19,7 +19,6 @@ import android.widget.Toast;
 
 import net.cyclestreets.util.MessageBox;
 import net.cyclestreets.views.CycleMapView;
-import net.cyclestreets.views.overlay.PhotoUploadButtonOverlay;
 
 import uk.gov.hackney.CycleHackney;
 import uk.gov.hackney.R;
@@ -48,8 +47,6 @@ public class RecordingActivity extends Activity
     mapView_.hideLocationButton();
     mapView_.lockOnLocation();
     mapView_.getController().setZoom(16);
-
-    mapView_.overlayPushTop(new PhotoUploadButtonOverlay(this));
 
     final RelativeLayout v = (RelativeLayout)findViewById(R.id.mapholder);
     v.addView(mapView_,
