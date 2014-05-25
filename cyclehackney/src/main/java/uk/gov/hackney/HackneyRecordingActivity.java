@@ -29,7 +29,7 @@ public class HackneyRecordingActivity extends MainTabbedActivity {
   @Override
   public void onPause() {
     super.onPause();
-    
+
     final SharedPreferences.Editor edit = prefs().edit();
     edit.putString("TAB", "Recorder");
     edit.commit();

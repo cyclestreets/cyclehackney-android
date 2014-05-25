@@ -120,7 +120,7 @@ public class RecordingFragment extends Fragment
 
   private void confirmFinishTrip () {
     MessageBox.YesNo(getActivity(),
-        "Are you sure you want to stop recording?",
+        "Finish trip?",
         new DialogInterface.OnClickListener() {
           @Override
           public void onClick(DialogInterface dialogInterface, int i) {
