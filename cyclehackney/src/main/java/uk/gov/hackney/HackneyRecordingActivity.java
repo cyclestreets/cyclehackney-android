@@ -3,6 +3,7 @@ package uk.gov.hackney;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.widget.TabHost;
 
 import net.cyclestreets.MainTabbedActivity;
@@ -19,6 +20,21 @@ public class HackneyRecordingActivity extends MainTabbedActivity {
     context.startActivity(fi);
   } // start
 
+  @Override
+  public void onCreate(final Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+
+    resetFirstTab();
+  } // onCreate
+
+  @Override
+  public void onNewIntent(final Intent intent) {
+    super.onNewIntent(intent);
+
+    resetFirstTab();
+  } // onNewIntent
+
+  @Override
   protected void addTabs(final TabHost tabHost) {
     addTab("Recorder", R.drawable.ic_tab_navigate, RecordingFragment.class);
     addTab("Upload", R.drawable.ic_tab_photoupload, PhotoUploadFragment.class);
@@ -26,12 +42,9 @@ public class HackneyRecordingActivity extends MainTabbedActivity {
     addTab("About", R.drawable.ic_tab_more, AboutFragment.class);
   } // addTabs
 
-  @Override
-  public void onPause() {
-    super.onPause();
-
+  private void resetFirstTab() {
     final SharedPreferences.Editor edit = prefs().edit();
     edit.putString("TAB", "Recorder");
     edit.commit();
-  } // onResume
+  } // resetFirstTab
 } // class CycleHackney
