@@ -29,6 +29,7 @@ public class RecordingFragment extends Fragment
     implements View.OnClickListener, ServiceConnection, RecordingService.RecordingListener {
   private IRecordService rs_;
   private TripData trip_;
+  private float spdCurrent_;
 
   private Button finishButton_;
   private TextView txtDistance_;
@@ -77,9 +78,9 @@ public class RecordingFragment extends Fragment
 
   @Override
   public void updateStatus(float spdCurrent, float spdMax) {
-    txtCurSpeed_.setText(String.format("%1.1f mph", spdCurrent));
+    spdCurrent_ = spdCurrent;
 
-    txtDistance_.setText(String.format("%1.1f miles", trip_.distanceTravelled()));
+    displaySpeedAndDistance();
 
     mapView_.invalidate();
   } // updateStatus
@@ -87,7 +88,14 @@ public class RecordingFragment extends Fragment
   @Override
   public void updateTimer(long elapsedMS) {
     txtDuration_.setText(sdf.format(elapsedMS));
+
+    displaySpeedAndDistance();
   } // updateTimer
+
+  private void displaySpeedAndDistance() {
+    txtCurSpeed_.setText(String.format("%1.1f mph", spdCurrent_));
+    txtDistance_.setText(String.format("%1.1f miles", trip_.distanceTravelled()));
+  } // displaySpeedAndDistance
 
   @Override
   public void riderHasStopped() {
