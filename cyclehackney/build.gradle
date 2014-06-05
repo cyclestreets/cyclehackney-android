@@ -16,12 +16,11 @@ repositories {
 dependencies {
     compile 'com.android.support:support-v4:+'
     compile project(':libraries:cyclestreets-view'),
-          project(':libraries:cyclestreets-fragments')
+            project(':libraries:cyclestreets-fragments')
 }
 
 android {
-  Properties appConfig = new Properties()
-  appConfig.load(new FileInputStream(file("../config.properties")))
+  Properties appConfig = loadProperties("../config.properties")
 
   compileSdkVersion appConfig['sdkVersion'].toInteger()
   buildToolsVersion "19.0.3"
@@ -35,8 +34,7 @@ android {
 
   signingConfigs {
     release {
-      Properties props = new Properties()
-      props.load(new FileInputStream(file("../local.properties")))
+      Properties props = loadProperties("../local.properties")
 
       storeFile file(props['key.store'])
       storePassword props['key.password']
@@ -58,4 +56,36 @@ android {
     exclude 'META-INF/NOTICE'
     exclude 'META-INF/NOTICE.txt'
   }
+}
+
+android.applicationVariants.all { variant ->
+  // modify AndroidManifest.xml
+  variant.processManifest.doLast {
+    copy {
+      from "${buildDir}/manifests/${variant.dirName}"
+      into "${buildDir}/manifests/${variant.dirName}"
+      include "AndroidManifest.xml"
+      rename '(.+)', '$1.original'
+    }
+    copy {
+      from "${buildDir}/manifests/${variant.dirName}"
+      into "${buildDir}/manifests/${variant.dirName}"
+      include "AndroidManifest.xml.original"
+      rename '(.+)(\\.original)', '$1'
+
+      def apiKey = loadProperties("cyclestreets.properties")["cyclestreets.api.key"]
+
+      filter {
+        String line ->
+          line.replaceAll("<meta-data android:name=\"CycleStreetsAPIKey\" android:value=\".*\"/>",
+                          "<meta-data android:name=\"CycleStreetsAPIKey\" android:value=\"${apiKey}\"/>")
+      }
+    } // copy
+  }
+}
+
+def loadProperties(fileName) {
+  Properties props = new Properties()
+  props.load(new FileInputStream(file(fileName)))
+  return props;
 }
