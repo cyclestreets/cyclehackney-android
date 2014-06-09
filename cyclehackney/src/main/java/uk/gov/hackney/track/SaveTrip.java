@@ -152,6 +152,7 @@ public class SaveTrip extends Activity
                                                "17-24",
                                                "25-44",
                                                "45-64",
+                                               "65-74",
                                                "75-84",
                                                "85+");
     age.setAdapter(new SpinnerList(this, ages));
