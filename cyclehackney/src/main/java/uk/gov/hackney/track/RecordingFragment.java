@@ -66,9 +66,12 @@ public class RecordingFragment extends Fragment
 
     sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
 
-    final Intent rService = new Intent(getActivity(), RecordingService.class);
-    getActivity().startService(rService);
-    getActivity().bindService(rService, this, Context.BIND_AUTO_CREATE);
+    if (trip_ == null) {
+      final Intent rService = new Intent(getActivity(), RecordingService.class);
+      getActivity().startService(rService);
+      getActivity().bindService(rService, this, Context.BIND_AUTO_CREATE);
+    } else
+      addJourneyOverlay();
 
     // Finish button
     finishButton_.setOnClickListener(this);
@@ -102,18 +105,21 @@ public class RecordingFragment extends Fragment
     finishTrip();
   } // riderHasStopped
 
-
   /////////////////////////////////////////////////////////////////////////////
   @Override
   public void onServiceConnected(ComponentName name, IBinder service) {
     rs_ = (IRecordService)service;
 
     trip_ = rs_.startRecording();
-    getActivity().setTitle("Cycle Hackney - Recording...");
-    mapView_.overlayPushTop(JourneyOverlay.InProgressJourneyOverlay(getActivity(), mapView_, trip_));
+    addJourneyOverlay();
 
     rs_.setListener(this);
   } // onServiceConnected
+
+  private void addJourneyOverlay() {
+    getActivity().setTitle("Cycle Hackney - Recording...");
+    mapView_.overlayPushTop(JourneyOverlay.InProgressJourneyOverlay(getActivity(), mapView_, trip_));
+  } // addJourneyOverlay
 
   @Override
   public void onServiceDisconnected(ComponentName name) {
