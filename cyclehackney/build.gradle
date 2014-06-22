@@ -3,7 +3,7 @@ buildscript {
     mavenCentral()
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:0.9.+'
+    classpath 'com.android.tools.build:gradle:0.11.+'
   }
 }
 
@@ -23,7 +23,7 @@ android {
   Properties appConfig = loadProperties("../config.properties")
 
   compileSdkVersion appConfig['sdkVersion'].toInteger()
-  buildToolsVersion "19.0.3"
+  buildToolsVersion appConfig['toolsVersion']
 
   defaultConfig {
     minSdkVersion appConfig['sdkVersion'].toInteger()
