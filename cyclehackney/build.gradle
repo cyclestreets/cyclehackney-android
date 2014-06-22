@@ -62,23 +62,22 @@ android.applicationVariants.all { variant ->
   // modify AndroidManifest.xml
   variant.processManifest.doLast {
     copy {
-      from "${buildDir}/manifests/${variant.dirName}"
-      into "${buildDir}/manifests/${variant.dirName}"
+      from "${buildDir}/intermediates/manifests/${variant.dirName}"
+      into "${buildDir}/intermediates/manifests/${variant.dirName}"
       include "AndroidManifest.xml"
       rename '(.+)', '$1.original'
     }
     copy {
-      from "${buildDir}/manifests/${variant.dirName}"
-      into "${buildDir}/manifests/${variant.dirName}"
+      from "${buildDir}/intermediates/manifests/${variant.dirName}"
+      into "${buildDir}/intermediates/manifests/${variant.dirName}"
       include "AndroidManifest.xml.original"
       rename '(.+)(\\.original)', '$1'
 
       def apiKey = loadProperties("cyclestreets.properties")["cyclestreets.api.key"]
-
       filter {
         String line ->
-          line.replaceAll("<meta-data android:name=\"CycleStreetsAPIKey\" android:value=\".*\"/>",
-                          "<meta-data android:name=\"CycleStreetsAPIKey\" android:value=\"${apiKey}\"/>")
+          line.replaceAll("android:value=\"\\[cyclestreetsKey\\]\"",
+                          "android:value=\"${apiKey}\"")
       }
     } // copy
   }
