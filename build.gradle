@@ -1,51 +1,12 @@
 evaluationDependsOn(':libraries:cyclestreets-fragments')
 
-apply plugin: 'com.android.application'
-
 dependencies {
     compile project(':libraries:cyclestreets-view'),
             project(':libraries:cyclestreets-fragments')
 }
 
 android {
-  Properties appConfig = loadProperties("${rootDir}/config.properties")
-
-  compileSdkVersion appConfig['sdkVersion'].toInteger()
-  buildToolsVersion appConfig['toolsVersion']
-
   defaultConfig {
-    minSdkVersion appConfig['sdkVersion'].toInteger()
-    targetSdkVersion appConfig['sdkVersion'].toInteger()
-    versionCode appConfig['versionCode'].toInteger()
-    versionName appConfig['versionName']
-  }
-
-  signingConfigs {
-    release {
-      Properties props = loadProperties("${projectDir}/hackneylicense.properties")
-
-      storeFile file(props['key.store'])
-      storePassword props['key.password']
-      keyAlias props['key.alias']
-      keyPassword props['key.password']
-    }
-  }
-
-  buildTypes {
-    debug {
-      manifestPlaceholders = loadProperties("${projectDir}/cyclestreets.properties")
-    }
-    release {
-      signingConfig signingConfigs.release
-      manifestPlaceholders = loadProperties("${projectDir}/cyclestreets.properties")
-    }
-  }
-
-  packagingOptions {
-    exclude 'META-INF/LICENSE'
-    exclude 'META-INF/LICENSE.txt'
-    exclude 'META-INF/DEPENDENCIES'
-    exclude 'META-INF/NOTICE'
-    exclude 'META-INF/NOTICE.txt'
+    applicationId 'uk.gov.hackney'
   }
 }
