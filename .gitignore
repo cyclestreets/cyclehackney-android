@@ -9,5 +9,6 @@ lint.xml
 *~
 libraries
 *.iml
-cyclehackney/cyclestreets.properties
-cyclehackney/hackneylicense.properties
+cyclestreets.properties
+keystore
+license.properties

@@ -20,8 +20,8 @@ import android.widget.TextView;
 
 import net.cyclestreets.util.MessageBox;
 
-import uk.gov.hackney.track.DbAdapter;
-import uk.gov.hackney.track.ShowJourney;
+import net.cyclestreets.track.DbAdapter;
+import net.cyclestreets.track.ShowJourney;
 
 public class LogJourneyFragment extends Fragment implements View.OnClickListener {
   @Override

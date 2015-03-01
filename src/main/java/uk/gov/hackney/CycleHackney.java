@@ -1,12 +1,9 @@
 package uk.gov.hackney;
 
 import android.app.Activity;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.widget.TabHost;
 
 import net.cyclestreets.MainTabbedActivity;
@@ -18,12 +15,12 @@ import net.cyclestreets.fragments.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import uk.gov.hackney.track.DbAdapter;
-import uk.gov.hackney.track.IRecordService;
-import uk.gov.hackney.track.RecordingService;
-import uk.gov.hackney.track.SaveTrip;
-import uk.gov.hackney.track.TripData;
-import uk.gov.hackney.track.TripDataUploader;
+import net.cyclestreets.track.DbAdapter;
+import net.cyclestreets.track.SaveTrip;
+import net.cyclestreets.track.Tracker;
+import net.cyclestreets.track.TrackerStatusListener;
+import net.cyclestreets.track.TripData;
+import net.cyclestreets.track.TripDataUploader;
 
 public class CycleHackney extends MainTabbedActivity {
   public static void start(final Context context) {
@@ -40,30 +37,16 @@ public class CycleHackney extends MainTabbedActivity {
   } // onCreate
 
   private void isAlreadyActive(final Activity activity) {
-    // check to see if already recording here
-    Intent rService = new Intent(activity, RecordingService.class);
-    ServiceConnection sc = new ServiceConnection() {
-      public void onServiceDisconnected(ComponentName name) {}
-      public void onServiceConnected(ComponentName name, IBinder service) {
-        IRecordService rs = (IRecordService)service;
-        int state = rs.getState();
-        if (state == RecordingService.STATE_RECORDING) {
-          HackneyRecordingActivity.start(activity);
-          activity.finish();
-        } else {
-          int unfinishedTrip = DbAdapter.unfinishedTrip(activity);
-          if (unfinishedTrip != -1) {
-            SaveTrip.start(activity, unfinishedTrip);
-            activity.finish();
-          }
-        }
-
-        activity.unbindService(this); // race?  this says we no longer care
-      }
-    };
-    // This needs to block until the onServiceConnected (above) completes.
-    // Thus, we can check the recording status before continuing on.
-    activity.bindService(rService, sc, Context.BIND_AUTO_CREATE);
+    Tracker.checkStatus(this, new TrackerStatusListener() {
+      public void recordingActive() {
+        HackneyRecordingActivity.start(activity);
+        activity.finish();
+      } // recordingActive
+      public void unsavedTrip() {
+        SaveTrip.startWithUnsaved(activity);
+        activity.finish();
+      } // unsavedTrip
+    });
   } // isAlreadyActive
 
   private void uploadLeftOverTrips() {

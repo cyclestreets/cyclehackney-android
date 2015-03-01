@@ -1,4 +1,4 @@
-package uk.gov.hackney.track;
+package uk.gov.hackney;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -22,10 +22,13 @@ import net.cyclestreets.views.CycleMapView;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
-import uk.gov.hackney.CycleHackney;
-import uk.gov.hackney.R;
+import net.cyclestreets.track.IRecordService;
+import net.cyclestreets.track.JourneyOverlay;
+import net.cyclestreets.track.RecordingService;
+import net.cyclestreets.track.SaveTrip;
+import net.cyclestreets.track.TripData;
 
-public class RecordingFragment extends Fragment
+public class HackneyRecordingFragment extends Fragment
     implements View.OnClickListener, ServiceConnection, RecordingService.RecordingListener {
   private IRecordService rs_;
   private TripData trip_;

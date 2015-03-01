@@ -22,16 +22,6 @@
               android:launchMode="singleTop"
               android:theme="@android:style/Theme.Black.NoTitleBar"
               android:screenOrientation="portrait" />
-    <activity android:name=".track.SaveTrip"
-              android:label="@string/app_name"
-              android:theme="@android:style/Theme.Black.NoTitleBar"
-              android:screenOrientation="portrait" />
-    <activity android:name=".track.ShowJourney"
-              android:label="Cycle Hackey : Completed Journey"
-              android:theme="@android:style/Theme.Black.NoTitleBar"
-              android:screenOrientation="portrait" />
-
-    <service android:name=".track.RecordingService"/>
 
     <meta-data android:name="CycleStreetsAPIKey" android:value="${cyclestreets.api.key}" />
     <meta-data android:name="CycleStreetsPhotoUpload" android:value="ByKey|AllowTextOnly|NoShare" />
