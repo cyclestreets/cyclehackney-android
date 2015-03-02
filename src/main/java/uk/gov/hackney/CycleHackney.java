@@ -33,7 +33,7 @@ public class CycleHackney extends MainTabbedActivity {
 
     isAlreadyActive(this);
 
-    uploadLeftOverTrips();
+    Tracker.uploadLeftOverTrips(this);
   } // onCreate
 
   private void isAlreadyActive(final Activity activity) {
@@ -48,18 +48,6 @@ public class CycleHackney extends MainTabbedActivity {
       } // unsavedTrip
     });
   } // isAlreadyActive
-
-  private void uploadLeftOverTrips() {
-    final List<Integer> trips = DbAdapter.unUploadedTrips(this);
-    if (trips.size() == 0)
-      return;
-
-    final List<TripData> tripData = new ArrayList<TripData>();
-    for (int id : trips)
-      tripData.add(TripData.fetchTrip(this, id));
-
-    TripDataUploader.upload(this, tripData);
-  } // uploadLeftOverTrips
 
   protected void addTabs(final TabHost tabHost) {
     addTab("Journey Log", R.drawable.ic_tab_navigate, LogJourneyFragment.class);
