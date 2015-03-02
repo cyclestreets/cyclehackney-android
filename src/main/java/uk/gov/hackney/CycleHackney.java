@@ -12,15 +12,9 @@ import net.cyclestreets.AboutFragment;
 import net.cyclestreets.PhotoUploadFragment;
 import net.cyclestreets.fragments.R;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.cyclestreets.track.DbAdapter;
 import net.cyclestreets.track.SaveTrip;
 import net.cyclestreets.track.Tracker;
-import net.cyclestreets.track.TrackerStatusListener;
-import net.cyclestreets.track.TripData;
-import net.cyclestreets.track.TripDataUploader;
+import net.cyclestreets.track.StatusCallback;
 
 public class CycleHackney extends MainTabbedActivity {
   public static void start(final Context context) {
@@ -37,11 +31,11 @@ public class CycleHackney extends MainTabbedActivity {
   } // onCreate
 
   private void isAlreadyActive(final Activity activity) {
-    Tracker.checkStatus(this, new TrackerStatusListener() {
-      public void recordingActive() {
+    Tracker.checkStatus(this, new StatusCallback() {
+      public void alreadyRecording() {
         HackneyRecordingActivity.start(activity);
         activity.finish();
-      } // recordingActive
+      } // alreadyRecording
       public void unsavedTrip() {
         SaveTrip.startWithUnsaved(activity);
         activity.finish();
