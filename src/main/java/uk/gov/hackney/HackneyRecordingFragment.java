@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import net.cyclestreets.track.TrackListener;
 import net.cyclestreets.util.MessageBox;
 import net.cyclestreets.views.CycleMapView;
 
@@ -29,7 +30,7 @@ import net.cyclestreets.track.SaveTrip;
 import net.cyclestreets.track.TripData;
 
 public class HackneyRecordingFragment extends Fragment
-    implements View.OnClickListener, ServiceConnection, RecordingService.RecordingListener {
+    implements View.OnClickListener, ServiceConnection, TrackListener {
   private IRecordService rs_;
   private TripData trip_;
   private float spdCurrent_;
