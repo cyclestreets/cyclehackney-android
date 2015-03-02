@@ -109,6 +109,19 @@ public class HackneyRecordingFragment extends Fragment
     finishTrip();
   } // riderHasStopped
 
+  @Override
+  public void completed() {
+    SaveTrip.start(getActivity(), trip_.id());
+    getActivity().finish();
+  } // completed
+
+  @Override
+  public void abandoned() {
+    Toast.makeText(getActivity().getBaseContext(), "No GPS data acquired; nothing to submit.", Toast.LENGTH_SHORT).show();
+    CycleHackney.start(getActivity());
+    getActivity().finish();
+  } // abandoned
+
   /////////////////////////////////////////////////////////////////////////////
   @Override
   public void onServiceConnected(ComponentName name, IBinder service) {
@@ -149,21 +162,7 @@ public class HackneyRecordingFragment extends Fragment
   } // confirmFinishTrip
 
   private void finishTrip() {
-    // If we have points, go to the save-trip activity
-    if (trip_.dataAvailable()) {
-      rs_.finishRecording();
-
-      SaveTrip.start(getActivity(), trip_.id());
-    } else {
-      rs_.cancelRecording();
-
-      // Otherwise, cancel and go back to main screen
-      Toast.makeText(getActivity().getBaseContext(), "No GPS data acquired; nothing to submit.", Toast.LENGTH_SHORT).show();
-
-      CycleHackney.start(getActivity());
-    } // if ...
-
-    getActivity().finish();
+    rs_.stopRecording();
   } // finishedTrip
 
   /////////////////////////////////////////////////////////////////////////////
