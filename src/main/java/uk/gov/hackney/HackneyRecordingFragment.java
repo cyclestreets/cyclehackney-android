@@ -33,7 +33,6 @@ public class HackneyRecordingFragment extends Fragment
     implements View.OnClickListener, ServiceConnection, TrackListener {
   private IRecordService rs_;
   private TripData trip_;
-  private float spdCurrent_;
 
   private Button finishButton_;
   private TextView txtDistance_;
@@ -84,25 +83,16 @@ public class HackneyRecordingFragment extends Fragment
   } // onCreateView
 
   @Override
-  public void updateStatus(float spdCurrent, float spdMax) {
-    spdCurrent_ = spdCurrent;
+  public void updateStatus(float currentMph, TripData tripData) {
+    long millisecondsElapsed = tripData.secondsElapsed() * 1000L;
+    txtDuration_.setText(sdf.format(millisecondsElapsed));
 
-    displaySpeedAndDistance();
+    txtCurSpeed_.setText(String.format("%1.1f mph", currentMph));
+
+    txtDistance_.setText(String.format("%1.1f miles", tripData.distanceTravelled()));
 
     mapView_.invalidate();
   } // updateStatus
-
-  @Override
-  public void updateTimer(long elapsedMS) {
-    txtDuration_.setText(sdf.format(elapsedMS));
-
-    displaySpeedAndDistance();
-  } // updateTimer
-
-  private void displaySpeedAndDistance() {
-    txtCurSpeed_.setText(String.format("%1.1f mph", spdCurrent_));
-    txtDistance_.setText(String.format("%1.1f miles", trip_.distanceTravelled()));
-  } // displaySpeedAndDistance
 
   @Override
   public void riderHasStopped() {
