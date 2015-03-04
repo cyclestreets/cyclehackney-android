@@ -16,23 +16,23 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import net.cyclestreets.routing.Journey;
 import net.cyclestreets.track.TrackListener;
+import net.cyclestreets.track.Tracker;
+import net.cyclestreets.track.TrackerControl;
 import net.cyclestreets.util.MessageBox;
 import net.cyclestreets.views.CycleMapView;
 
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
-import net.cyclestreets.track.IRecordService;
 import net.cyclestreets.track.JourneyOverlay;
-import net.cyclestreets.track.RecordingService;
 import net.cyclestreets.track.SaveTrip;
 import net.cyclestreets.track.TripData;
 
 public class HackneyRecordingFragment extends Fragment
-    implements View.OnClickListener, ServiceConnection, TrackListener {
-  private IRecordService rs_;
-  private TripData trip_;
+    implements View.OnClickListener, TrackListener {
+  private TrackerControl control_;
 
   private Button finishButton_;
   private TextView txtDistance_;
@@ -40,6 +40,7 @@ public class HackneyRecordingFragment extends Fragment
   private TextView txtCurSpeed_;
 
   private CycleMapView mapView_;
+  private JourneyOverlay journeyOverlay_;
 
   private final SimpleDateFormat sdf = new SimpleDateFormat("H:mm:ss");
 
@@ -55,6 +56,7 @@ public class HackneyRecordingFragment extends Fragment
     mapView_.hideLocationButton();
     mapView_.lockOnLocation();
     mapView_.getController().setZoom(16);
+    journeyOverlay_ = null;
 
     final RelativeLayout v = (RelativeLayout)rootView.findViewById(R.id.mapholder);
     v.addView(mapView_,
@@ -69,18 +71,22 @@ public class HackneyRecordingFragment extends Fragment
 
     sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
 
-    if (trip_ == null) {
-      final Intent rService = new Intent(getActivity(), RecordingService.class);
-      getActivity().startService(rService);
-      getActivity().bindService(rService, this, Context.BIND_AUTO_CREATE);
-    } else
-      addJourneyOverlay();
+    if (control_ == null)
+      control_ = Tracker.create(getActivity(), this);
+    control_.start();
+
+    getActivity().setTitle("Cycle Hackney - Recording...");
 
     // Finish button
     finishButton_.setOnClickListener(this);
 
     return rootView;
   } // onCreateView
+
+  ///////////////////////////////////////////////
+  @Override
+  public void started(TripData trip) {
+  } // started
 
   @Override
   public void updateStatus(float currentMph, TripData trip) {
@@ -91,7 +97,7 @@ public class HackneyRecordingFragment extends Fragment
 
     txtDistance_.setText(String.format("%1.1f miles", trip.distanceTravelled()));
 
-    mapView_.invalidate();
+    updateOverlay(trip);
   } // updateStatus
 
   @Override
@@ -101,7 +107,7 @@ public class HackneyRecordingFragment extends Fragment
 
   @Override
   public void completed(final TripData trip) {
-    SaveTrip.start(getActivity(), trip_.id());
+    SaveTrip.start(getActivity(), trip.id());
     getActivity().finish();
   } // completed
 
@@ -113,25 +119,14 @@ public class HackneyRecordingFragment extends Fragment
   } // abandoned
 
   /////////////////////////////////////////////////////////////////////////////
-  @Override
-  public void onServiceConnected(ComponentName name, IBinder service) {
-    rs_ = (IRecordService)service;
+  private void updateOverlay(TripData trip) {
+    if (journeyOverlay_ == null) {
+      journeyOverlay_ = JourneyOverlay.InProgressJourneyOverlay(getActivity(), mapView_, trip);
+      mapView_.overlayPushTop(journeyOverlay_);
+    } // ...
 
-    trip_ = rs_.startRecording();
-    addJourneyOverlay();
-
-    rs_.setListener(this);
-  } // onServiceConnected
-
-  private void addJourneyOverlay() {
-    getActivity().setTitle("Cycle Hackney - Recording...");
-    mapView_.overlayPushTop(JourneyOverlay.InProgressJourneyOverlay(getActivity(), mapView_, trip_));
+    journeyOverlay_.update(trip);
   } // addJourneyOverlay
-
-  @Override
-  public void onServiceDisconnected(ComponentName name) {
-    rs_ = null;
-  } // onServiceDisconnected
 
   /////////////////////////////////////////////////////////////////////////////
   @Override
@@ -152,7 +147,7 @@ public class HackneyRecordingFragment extends Fragment
   } // confirmFinishTrip
 
   private void finishTrip() {
-    rs_.stopRecording();
+    control_.stop();
   } // finishedTrip
 
   /////////////////////////////////////////////////////////////////////////////
@@ -170,8 +165,8 @@ public class HackneyRecordingFragment extends Fragment
 
   @Override
   public void onDestroy() {
-    getActivity().unbindService(this);
+    if (control_ != null)
+      control_.stop();
     super.onDestroy();
-  }
-
+  } // onDestroy
 } // class RecordingFragment
