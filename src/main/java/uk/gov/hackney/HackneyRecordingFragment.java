@@ -83,30 +83,30 @@ public class HackneyRecordingFragment extends Fragment
   } // onCreateView
 
   @Override
-  public void updateStatus(float currentMph, TripData tripData) {
-    long millisecondsElapsed = tripData.secondsElapsed() * 1000L;
+  public void updateStatus(float currentMph, TripData trip) {
+    long millisecondsElapsed = trip.secondsElapsed() * 1000L;
     txtDuration_.setText(sdf.format(millisecondsElapsed));
 
     txtCurSpeed_.setText(String.format("%1.1f mph", currentMph));
 
-    txtDistance_.setText(String.format("%1.1f miles", tripData.distanceTravelled()));
+    txtDistance_.setText(String.format("%1.1f miles", trip.distanceTravelled()));
 
     mapView_.invalidate();
   } // updateStatus
 
   @Override
-  public void riderHasStopped() {
+  public void riderHasStopped(final TripData trip) {
     finishTrip();
   } // riderHasStopped
 
   @Override
-  public void completed() {
+  public void completed(final TripData trip) {
     SaveTrip.start(getActivity(), trip_.id());
     getActivity().finish();
   } // completed
 
   @Override
-  public void abandoned() {
+  public void abandoned(final TripData trip) {
     Toast.makeText(getActivity().getBaseContext(), "No GPS data acquired; nothing to submit.", Toast.LENGTH_SHORT).show();
     CycleHackney.start(getActivity());
     getActivity().finish();
